@@ -31,12 +31,14 @@ meals = [
 
 class Meals(Resource):
 
-    def get(self, name):
+    def delete(self, name):
         """
-        This function returns only one meal as specified
+        This method deletes meal from the application
         """
-        meal = [meal for meal in meals if meal['name'] == name]
-        return jsonify({"meal" : meal[0]})
+        global meals
+        meal = [meal for meal in meals if meal['name'] != name]
+        return "{} was deleted.".format(name), 200
+
 
 
 api.add_resource(Meals, '/api/v1/meals/<name>')
