@@ -1,19 +1,15 @@
-from flask import Flask, jsonify
-from flask_restful import Api, Resource
+
 
 app = Flask(__name__)
 api = Api(app)
+
 
 meals = [
     {
         "id" : 1,
         "name" : "Rice & Beef",
         "price" : 160
-    },
-    {
-        "id": 2,
-        "name" : "Chapati & Kuku",
-        "price" : 300
+
     },
 
     {
@@ -29,9 +25,34 @@ meals = [
     }
 ]
 
-class Meals(Resource):
 
-    def delete(self, name):
+
+class Meals(Resource):
+  def post(self):
+        """
+        This method adds a new meal to meals list
+        """
+        
+        json_data = request.get_json(force=True)
+        id = len(meals) + 1
+        name = json_data['name']
+        price = json_data['price']
+        meal = {"id" : id, "name" : name, "price" : price}
+        meals.append(meal)
+        return jsonify({"meals" : meals})
+      
+  def put(self, name):
+        """This method updates an existing meals
+        """
+
+        meal = [meal for meal in meals if meal['name'] == name]
+        json_data = request.get_json(force=True)
+        meal[0]['id'] = meal[0]['id']
+        meal[0]['name'] = json_data['name']
+        meal[0]['price'] = json_data['price']
+        return jsonify({"meal" : meal[0]})
+      
+  def delete(self, name):
         """
         This method deletes meal from the application
         """
@@ -40,5 +61,3 @@ class Meals(Resource):
         return "{} was deleted.".format(name), 200
 
 
-
-api.add_resource(Meals, '/api/v1/meals/<name>')
