@@ -10,8 +10,6 @@ meals = [
         "name" : "Rice & Beef",
         "price" : 160
 
-        "name" : "Chapati & Kuku",
-        "price" : 300
     },
 
     {
@@ -29,6 +27,7 @@ meals = [
 
 
 
+
 class Meals(Resource):
   def post(self):
         """
@@ -42,3 +41,15 @@ class Meals(Resource):
         meal = {"id" : id, "name" : name, "price" : price}
         meals.append(meal)
         return jsonify({"meals" : meals})
+      
+  def put(self, name):
+        """This method updates an existing meals
+        """
+
+        meal = [meal for meal in meals if meal['name'] == name]
+        json_data = request.get_json(force=True)
+        meal[0]['id'] = meal[0]['id']
+        meal[0]['name'] = json_data['name']
+        meal[0]['price'] = json_data['price']
+        return jsonify({"meal" : meal[0]})
+
