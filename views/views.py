@@ -27,7 +27,6 @@ meals = [
 
 
 
-
 class Meals(Resource):
   def post(self):
         """
@@ -52,4 +51,13 @@ class Meals(Resource):
         meal[0]['name'] = json_data['name']
         meal[0]['price'] = json_data['price']
         return jsonify({"meal" : meal[0]})
+      
+  def delete(self, name):
+        """
+        This method deletes meal from the application
+        """
+        global meals
+        meal = [meal for meal in meals if meal['name'] != name]
+        return "{} was deleted.".format(name), 200
+
 
