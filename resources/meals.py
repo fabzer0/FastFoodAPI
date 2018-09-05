@@ -25,7 +25,7 @@ class MealList(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(MealList, self).__init__()
 
     def post(self):
         """
@@ -63,7 +63,7 @@ class Meal(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(Meal, self).__init__()
 
     def get(self, meal_id):
         """
@@ -113,7 +113,7 @@ class MenuList(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(MenuList, self).__init__()
 
     def post(self):
         """
@@ -151,7 +151,7 @@ class Menu(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(Menu, self).__init__()
 
     def get(self, menu_id):
         """
@@ -204,7 +204,7 @@ class OrderList(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(OrderList, self).__init__()
 
     def post(self):
         """
@@ -243,7 +243,7 @@ class Order(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-        super().__init__()
+        super(Order, self).__init__()
 
     def get(self, order_id):
         """Get a particular order"""
