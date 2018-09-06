@@ -114,6 +114,45 @@ class MealTest(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+    #orders
+    def test_get_all_orders(self):
+        response = self.app.get('api/v1/orders')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_one_order(self):
+        response = self.app.get('api/v1/orders/2')
+        self.assertEqual(response.status_code, 200)
+
+    def test_successful_order_creation(self):
+        data = json.dumps({"order_item" : "Tea", "price" : 340})
+        response = self.app.post('api/v1/orders', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get('order_item'), 'Tea')
+        self.assertEqual(result.get('price'), 340)
+        self.assertEqual(response.status_code, 201)
+
+    def test_get_non_existing_orderr(self):
+        response = self.app.get('api/v1/orders/24')
+        self.assertEqual(response.status_code, 404)
+
+    def test_successful_order_update(self):
+        data = json.dumps({"order_item" : "Beans", "price" : 320})
+        response = self.app.put('api/v1/orders/2', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_non_existing_order(self):
+        data = json.dumps({"order_item" : "Bread", "price" : 70})
+        response = self.app.put('api/v1/orders/28', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+
+    def test_successful_order_deletion(self):
+        response = self.app.delete('api/v1/orders/2')
+        self.assertEqual(response.status_code, 200)
+
+    def test_deletion_non_existing_order(self):
+        response = self.app.delete('api/v1/orders/33')
+        self.assertEqual(response.status_code, 404)
+
 
 
 if __name__ == '__main__':
