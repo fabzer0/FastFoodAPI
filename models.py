@@ -109,7 +109,7 @@ class Meal(object):
             del all_meals[meal_id]
             return {"message" : "meal item successfully deleted"}
         except KeyError:
-            return {"message" : "meal item does note exist"}
+            return {"message" : "meal item does not exist"}
 
 
 class Menu(object):
