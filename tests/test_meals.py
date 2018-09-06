@@ -40,6 +40,24 @@ class MealTest(unittest.TestCase):
         result = json.loads(response2.data.decode('utf-8'))
         self.assertEqual(result.get("message"), "meal item with that name already exist")
 
+    def test_create_meal_with_empty_name(self):
+        data = json.dumps({"meal_item" : "", "price" : 40})
+        response = self.app.post('/api/v1/meals', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"meal_item" : "kindly provide a meal item"})
+
+    def test_create_meal_with_empty_price(self):
+        data = json.dumps({"meal_item" : "Ugali & Chicken", "price" : ""})
+        response = self.app.post('/api/v1/meals', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price" : "kindly provide a price(should be a valid number)"})
+
+    def test_create_meal_invalid_price(self):
+        data = json.dumps({"meal_item" : "Kuku", "price" : "one hundred"})
+        response = self.app.post('/api/v1/meals', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price" : "kindly provide a price(should be a valid number)"})
+
     def test_return_one_meal(self):
         response = self.app.get('/api/v1/meals/1')
         self.assertEqual(response.status_code, 200)
@@ -62,9 +80,9 @@ class MealTest(unittest.TestCase):
         response = self.app.delete('/api/v1/meals/30')
         self.assertEqual(response.status_code, 200)
 
-    #def test_deleting_non_existing_meal(self):
-        #response = self.app.delete('/api/v1/meals/130')
-        #self.assertEqual(response.status_code, 404)
+    def test_deleting_non_existing_meal(self):
+        response = self.app.delete('/api/v1/meals/130')
+        self.assertEqual(response.status_code, 404)
 
 
     #menu
@@ -87,6 +105,24 @@ class MealTest(unittest.TestCase):
         result = json.loads(response2.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'menu option with that name already exist')
 
+    def test_create_menu_with_empty_name(self):
+        data = json.dumps({"menu_option" : "", "price" : 100})
+        response = self.app.post('/api/v1/menu', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"menu_option" : "kindly provide a menu option"})
+
+    def test_create_menu_with_empty_price(self):
+        data = json.dumps({"menu_option" : "Coffee", "price" : ""})
+        response = self.app.post('/api/v1/menu', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price" : "kindly provide a price(should be a valid number)"})
+
+    def test_create_menu_with_invalid_price(self):
+        data = json.dumps({"menu_option" : "Rice & Pork", "price" : "one hundred"})
+        response = self.app.post('/api/v1/menu', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price": "kindly provide a price(should be a valid number)"})
+
     def test_get_one_menu(self):
         response = self.app.get('/api/v1/menu/1')
         self.assertEqual(response.status_code, 200)
@@ -100,10 +136,10 @@ class MealTest(unittest.TestCase):
         response = self.app.put('/api/v1/menu/2', data=data, content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    #def test_updating_non_existing_menu(self):
-        #data = json.dumps({"menu_option" : "Rice", "price" : 20})
-        #response = self.app.put('/api/v1/menu/1', data=data, content_type='application/json')
-        #self.assertEqual(response.status_code, 404)
+    def test_updating_non_existing_menu(self):
+        data = json.dumps({"menu_option" : "Rice", "price" : 20})
+        response = self.app.put('/api/v1/menu/1', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 404)
 
     def test_successful_menu_deletion(self):
         response = self.app.delete('api/v1/menu/1')
@@ -131,7 +167,26 @@ class MealTest(unittest.TestCase):
         self.assertEqual(result.get('price'), 340)
         self.assertEqual(response.status_code, 201)
 
-    def test_get_non_existing_orderr(self):
+    def test_create_order_empty_name(self):
+        data = json.dumps({"order_item" : "", "price" : 400})
+        response = self.app.post('/api/v1/orders', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"order_item": "kindly provide an order item"})
+
+    def test_create_order_empty_price(self):
+        data = json.dumps({"order_item" : "Ugali & Kuku", "price" : ""})
+        response = self.app.post('/api/v1/orders', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price": "kindly provide a price(should be a valid number)"})
+
+    def test_create_order_invalid_price(self):
+        data = json.dumps({"order_item" : "Ugali & Beef", "price" : "one hundred"})
+        response = self.app.post('/api/v1/orders', data=data, content_type='application/json')
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"price": "kindly provide a price(should be a valid number)"})
+
+
+    def test_get_non_existing_order(self):
         response = self.app.get('api/v1/orders/24')
         self.assertEqual(response.status_code, 404)
 
