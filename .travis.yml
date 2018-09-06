@@ -1,16 +1,16 @@
 language: python
 python:
-  - "3.6.6"
+  - 3.5
 
-#install dependencies
+# command to install dependencies
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
-
+  - pip install -r requirements.txt
+  - pip install coveralls
 script:
   - python -m pytest --cov-report term-missing --cov=resources
-
 after_success:
   - coveralls
+notifications:
+  email: false
 
-cache: pip
+cache : pip
