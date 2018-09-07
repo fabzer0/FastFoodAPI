@@ -31,5 +31,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, port=PORT)
+    app.run(debug=True, port=8080)

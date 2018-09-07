@@ -322,8 +322,7 @@ def delete_order():
 @app.route('/')
 def hello_world():
     "test that flask app is running"
-    return "To view the docs visit: https://nameless-thicket-80333.herokuapp.com/"
+    return "To view the docs visit: https://fast-food-fast-api-97.herokuapp.com/"
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run('', port=port)
+    app.run(port=8080)
