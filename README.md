@@ -101,7 +101,7 @@ Ensure you use Production config settings where DEBUG=False
 
 ## GitHub pages
 
-https://fabischapeli.github.io/
+https://fabischapeli.github.io/UI/index.html
 
 ## Heroku
 
