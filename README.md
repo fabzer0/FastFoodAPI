@@ -1,4 +1,6 @@
-[![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=master)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=master)
+[![Build Status](https://travis-ci.com/fabischapeli/fast-food-fast-v1.svg?branch=develop-v1)](https://travis-ci.com/fabischapeli/fast-food-fast-v1)
+
+[![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=develop-v1)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=develop-v1)
 
 
 
