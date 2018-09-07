@@ -173,7 +173,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(response2.status_code, 401)
 
     def test_successful_user_update(self):
-        original_data = json.dumps(
+        data = json.dumps(
             {
                 "username" : "fabischapeli",
                 "email" : "fabischapeli97@gmail.com",
@@ -181,29 +181,9 @@ class UserTest(unittest.TestCase):
                 "confirm_password" : "pass12342"
             }
         )
-        response1 = self.app.post('/api/v1/auth/signup', data=original_data, content_type='application/json')
-        self.assertEqual(response1.status_code, 201)
+        response = self.app.put('/api/v1/users/2', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
-        new_data = json.dumps(
-            {
-                "username" : "fabischapeli",
-                "email" : "fabischapeli97@gmail.com",
-                "password" : "pass123423",
-                "confirm_password" : "pass123423"
-            }
-        )
-        response2 = self.app.put('/api/v1/users/1', data=new_data, content_type='application/json')
-        self.assertEqual(response2.status_code, 200)
-
-        new_data = json.dumps(
-            {
-                "username" : "fabischapeli",
-                "email" : "fabischapeli97@gmail.com",
-                "password" : "pass123422",
-            }
-        )
-        response2 = self.app.put('/api/v1/users/1', data=new_data, content_type='application/json')
-        self.assertEqual(response2.status_code, 200)
 
     def test_updating_non_existing_user(self):
         data = json.dumps(

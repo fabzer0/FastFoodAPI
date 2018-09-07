@@ -136,11 +136,6 @@ class MealTest(unittest.TestCase):
         response = self.app.put('/api/v1/menu/2', data=data, content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_updating_non_existing_menu(self):
-        data = json.dumps({"menu_option" : "Rice", "price" : 50})
-        response = self.app.put('/api/v1/menu/7', data=data, content_type='application/json')
-        self.assertEqual(response.status_code, 404)
-
     def test_successful_menu_deletion(self):
         data = json.dumps({"menu_option" : "Rice", "price" : 20})
         response = self.app.delete('api/v1/menu/1', data=data, content_type='application/json')
