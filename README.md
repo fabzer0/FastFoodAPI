@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/fabischapeli/fast-food-fast-v1.svg?branch=develop-v1)](https://travis-ci.com/fabischapeli/fast-food-fast-v1)[![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=develop-v1)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=develop-v1)
+[![Build Status](https://travis-ci.com/fabischapeli/fast-food-fast-v1.svg?branch=develop-v1)](https://travis-ci.com/fabischapeli/fast-food-fast-v1) [![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=develop-v1)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=develop-v1) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
