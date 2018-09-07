@@ -1,6 +1,7 @@
 """
 Create an app instance, register the blueprints and run the Flask App
 """
+import os
 from flask import Flask
 
 from resources.meals import MEALS_API
@@ -30,4 +31,5 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    PORT = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, port=PORT)
