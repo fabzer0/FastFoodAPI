@@ -3,7 +3,7 @@ Contains various settings for each process of development
 """
 
 
-class Config(object):
+class Config:
     """Base class with all the constant config variables"""
     DEBUG = False
     TESTING = False

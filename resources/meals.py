@@ -1,10 +1,18 @@
 """
 Contains all endpoints to manipulate meal information
 """
+import sys
+import os
 import datetime
 from flask import jsonify, Blueprint, make_response
 from flask_restful import Resource, Api, reqparse, inputs
 import models as data
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+
+
+
 
 class MealList(Resource):
     """
@@ -32,8 +40,8 @@ class MealList(Resource):
         Adds a new meal item
         """
         kwargs = self.reqparse.parse_args()
-        for meal_id in data.all_meals:
-            if data.all_meals.get(meal_id)['meal_item'] == kwargs.get('meal_item'):
+        for meal_id in data.ALL_MEALS:
+            if data.ALL_MEALS.get(meal_id)['meal_item'] == kwargs.get('meal_item'):
                 return jsonify({"message" : "meal item with that name already exist"})
         result = data.Meal.create_meal(**kwargs)
         return make_response(jsonify(result), 201)
@@ -42,7 +50,7 @@ class MealList(Resource):
         """
         Returns all meals
         """
-        return make_response(jsonify(data.all_meals), 200)
+        return make_response(jsonify(data.ALL_MEALS), 200)
 
 class Meal(Resource):
     """
@@ -70,7 +78,7 @@ class Meal(Resource):
         Get a particular meal
         """
         try:
-            meal = data.all_meals[meal_id]
+            meal = data.ALL_MEALS[meal_id]
             return make_response(jsonify(meal), 200)
         except KeyError:
             return make_response(jsonify({"message" : "meal item does not exist"}), 404)
@@ -120,8 +128,8 @@ class MenuList(Resource):
         Adds meal option to the menu
         """
         kwargs = self.reqparse.parse_args()
-        for menu_id in data.all_menu:
-            if data.all_menu.get(menu_id)['menu_option'] == kwargs.get('menu_option'):
+        for menu_id in data.ALL_MENU:
+            if data.ALL_MENU.get(menu_id)['menu_option'] == kwargs.get('menu_option'):
                 return jsonify({"message" : "menu option with that name already exist"})
         result = data.Menu.create_menu(**kwargs)
         return make_response(jsonify(result), 201)
@@ -130,7 +138,7 @@ class MenuList(Resource):
         """
         Gets all menu options on the menu
         """
-        return make_response(jsonify(data.all_menu), 200)
+        return make_response(jsonify(data.ALL_MENU), 200)
 
 class Menu(Resource):
     """
@@ -158,7 +166,7 @@ class Menu(Resource):
         Get a particular menu option
         """
         try:
-            meal = data.all_menu[menu_id]
+            meal = data.ALL_MENU[menu_id]
             return make_response(jsonify(meal), 200)
         except KeyError:
             return make_response(jsonify({"message" : "menu option does not exist"}), 404)
@@ -214,12 +222,13 @@ class OrderList(Resource):
         if self.now.hour < self.closing.hour:
             result = data.Order.create_order(**kwargs)
             return make_response(jsonify(result), 201)
-        return make_response(jsonify({"message" : "sorry, you cannot make an order past 10PM"}), 200)
+        return make_response(jsonify(
+            {"message" : "sorry, you cannot make an order past 10PM"}), 200)
 
 
     def get(self):
         """Gets all orders"""
-        return make_response(jsonify(data.all_orders), 200)
+        return make_response(jsonify(data.ALL_ORDERS), 200)
 
 
 class Order(Resource):
@@ -248,7 +257,7 @@ class Order(Resource):
     def get(self, order_id):
         """Get a particular order"""
         try:
-            order = data.all_orders[order_id]
+            order = data.ALL_ORDERS[order_id]
             return make_response(jsonify(order), 200)
         except KeyError:
             return make_response(jsonify({"message" : "order item does not exist"}), 404)
@@ -261,7 +270,8 @@ class Order(Resource):
             if result != {"message" : "order item does not exist"}:
                 return make_response(jsonify(result), 200)
             return make_response(jsonify(result), 404)
-        return make_response(jsonify({"message" : "sorry, you cannot modify an order past 10PM"}), 200)
+        return make_response(jsonify(
+            {"message" : "sorry, you cannot modify an order past 10PM"}), 200)
 
 
     def delete(self, order_id):
@@ -272,13 +282,13 @@ class Order(Resource):
         return make_response(jsonify(result), 404)
 
 
-meals_api = Blueprint('resources.meals', __name__)
-api = Api(meals_api) # create the API
-api.add_resource(MealList, '/meals', endpoint='meals')
-api.add_resource(Meal, '/meals/<int:meal_id>', endpoint='meal')
+MEALS_API = Blueprint('resources.meals', __name__)
+API = Api(MEALS_API) # create the API
+API.add_resource(MealList, '/meals', endpoint='meals')
+API.add_resource(Meal, '/meals/<int:meal_id>', endpoint='meal')
 
-api.add_resource(MenuList, '/menu', endpoint='menus')
-api.add_resource(Menu, '/menu/<int:menu_id>', endpoint='menu')
+API.add_resource(MenuList, '/menu', endpoint='menus')
+API.add_resource(Menu, '/menu/<int:menu_id>', endpoint='menu')
 
-api.add_resource(OrderList, '/orders', endpoint='orders')
-api.add_resource(Order, '/orders/<int:order_id>', endpoint='order')
+API.add_resource(OrderList, '/orders', endpoint='orders')
+API.add_resource(Order, '/orders/<int:order_id>', endpoint='order')

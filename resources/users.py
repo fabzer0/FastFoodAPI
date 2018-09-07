@@ -1,10 +1,8 @@
 """
 Contains all endpoints to manipulate user information
 """
-
 from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api, reqparse, inputs
-
 import models as data
 
 class Signup(Resource):
@@ -55,8 +53,8 @@ class Signup(Resource):
         Register a new user
         """
         kwargs = self.reqparse.parse_args()
-        for user_id in data.all_users:
-            if data.all_users.get(user_id)['email'] == kwargs.get('email'):
+        for user_id in data.ALL_USERS:
+            if data.ALL_USERS.get(user_id)['email'] == kwargs.get('email'):
                 return jsonify({"message" : "user with that email already exist"})
 
         if kwargs.get('password') == kwargs.get('confirm_password'):
@@ -95,9 +93,9 @@ class Login(Resource):
         Logs in a user
         """
         kwargs = self.reqparse.parse_args()
-        for user_id in data.all_users:
-            if data.all_users.get(user_id)['email'] == kwargs.get('email') and \
-                data.all_users.get(user_id)['password'] == kwargs.get('password'):
+        for user_id in data.ALL_USERS:
+            if data.ALL_USERS.get(user_id)['email'] == kwargs.get('email') and \
+                data.ALL_USERS.get(user_id)['password'] == kwargs.get('password'):
                 return make_response(jsonify({"message" : "you have successfully logged in"}), 200)
             return make_response(jsonify({"message" : "invalid email address or password"}), 401)
 
@@ -110,7 +108,7 @@ class UserList(Resource):
         """
         Get all users
         """
-        return make_response(jsonify(data.all_users), 200)
+        return make_response(jsonify(data.ALL_USERS), 200)
 
 class User(Resource):
     """
@@ -159,7 +157,7 @@ class User(Resource):
         Get a particular user
         """
         try:
-            user = data.all_users[user_id]
+            user = data.ALL_USERS[user_id]
             return make_response(jsonify(user), 200)
         except KeyError:
             return make_response(jsonify({"message" : "user does not exist"}), 401)
@@ -184,9 +182,9 @@ class User(Resource):
         return make_response(jsonify(result), 404)
 
 
-users_api = Blueprint('resources.users', __name__)
-api = Api(users_api)
-api.add_resource(Signup, '/auth/signup', endpoint='signup')
-api.add_resource(Login, 'auth/login', endpoint='login')
-api.add_resource(UserList, '/users', endpoint='users')
-api.add_resource(User, '/users/<int:user_id>', endpoint='user')
+USERS_API = Blueprint('resources.users', __name__)
+API = Api(USERS_API)
+API.add_resource(Signup, '/auth/signup', endpoint='signup')
+API.add_resource(Login, 'auth/login', endpoint='login')
+API.add_resource(UserList, '/users', endpoint='users')
+API.add_resource(User, '/users/<int:user_id>', endpoint='user')

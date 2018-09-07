@@ -2,20 +2,20 @@
 Dummy storage for Users, Meals, Menus and Orders
 """
 
-all_users = {}
-user_count = 1
+ALL_USERS = {}
+USER_COUNT = 1
 
-all_meals = {}
-meal_count = 1
+ALL_MEALS = {}
+MEAL_COUNT = 1
 
-all_menu = {}
-menu_count = 1
+ALL_MENU = {}
+MENU_COUNT = 1
 
-all_orders = {}
-order_count = 1
+ALL_ORDERS = {}
+ORDER_COUNT = 1
 
 
-class User(object):
+class User:
     """
     Contains the methods to add, update and delete a user
     """
@@ -25,17 +25,17 @@ class User(object):
         """
         Creates a new user and appends his information to all_users dictionary
         """
-        global all_users
-        global user_count
-        all_users[user_count] = {
-             "id" : user_count,
-             "username" : username,
-             "email" : email,
-             "password" : password,
-             "admin" : admin
+        global ALL_USERS
+        global USER_COUNT
+        ALL_USERS[USER_COUNT] = {
+            "id" : USER_COUNT,
+            "username" : username,
+            "email" : email,
+            "password" : password,
+            "admin" : admin
         }
-        new_user = all_users[user_count]
-        user_count += 1
+        new_user = ALL_USERS[USER_COUNT]
+        USER_COUNT += 1
         return new_user
 
     @staticmethod
@@ -43,15 +43,15 @@ class User(object):
         """
         Updates user information
         """
-        if user_id in all_users.keys():
-            all_users[user_id] = {
+        if user_id in ALL_USERS.keys():
+            ALL_USERS[user_id] = {
                 "id" : user_id,
                 "username" : username,
                 "email" : email,
                 "password" : password,
                 "admin" : admin
             }
-            return all_users[user_id]
+            return ALL_USERS[user_id]
         return {"message" : "user does not exist"}
 
     @staticmethod
@@ -60,12 +60,12 @@ class User(object):
         Deletes an existing user
         """
         try:
-            del all_users[user_id]
+            del ALL_USERS[user_id]
             return {"message" : "user successfully deleted"}
         except KeyError:
             return {"message" : "user does not exist"}
 
-class Meal(object):
+class Meal:
     """
     Contains methods to add, update and delete meal item
     """
@@ -75,15 +75,15 @@ class Meal(object):
         """
         Creates a new meal item and appends it to the all_meals dictionary
         """
-        global all_meals
-        global meal_count
-        all_meals[meal_count] = {
-            "id" : meal_count,
+        global ALL_MEALS
+        global MEAL_COUNT
+        ALL_MEALS[MEAL_COUNT] = {
+            "id" : MEAL_COUNT,
             "meal_item" : meal_item,
             "price" : price
         }
-        new_meal = all_meals[meal_count]
-        meal_count += 1
+        new_meal = ALL_MEALS[MEAL_COUNT]
+        MEAL_COUNT += 1
         return new_meal
 
     @staticmethod
@@ -91,13 +91,13 @@ class Meal(object):
         """
         Updates meal item information
         """
-        if meal_id in all_meals.keys():
-            all_meals[meal_id] = {
+        if meal_id in ALL_MEALS.keys():
+            ALL_MEALS[meal_id] = {
                 "id" : meal_id,
                 "meal_item" : meal_item,
                 "price" : price
             }
-            return all_meals[meal_id]
+            return ALL_MEALS[meal_id]
         return {"message" : "meal item does not exist"}
 
     @staticmethod
@@ -106,13 +106,13 @@ class Meal(object):
         Deletes a meal from the dictionary
         """
         try:
-            del all_meals[meal_id]
+            del ALL_MEALS[meal_id]
             return {"message" : "meal item successfully deleted"}
         except KeyError:
             return {"message" : "meal item does not exist"}
 
 
-class Menu(object):
+class Menu:
     """
     Contains methods to add, update and delete menu options
     """
@@ -122,15 +122,15 @@ class Menu(object):
         """
         Creates a new menu option and appends it to all_menu dictionary
         """
-        global all_menu
-        global menu_count
-        all_menu[menu_count] = {
-            "id" : menu_count,
+        global ALL_MENU
+        global MENU_COUNT
+        ALL_MENU[MENU_COUNT] = {
+            "id" : MENU_COUNT,
             "menu_option" : menu_option,
             "price" : price
         }
-        new_menu_option = all_menu[menu_count]
-        menu_count += 1
+        new_menu_option = ALL_MENU[MENU_COUNT]
+        MENU_COUNT += 1
         return new_menu_option
 
     @staticmethod
@@ -138,13 +138,13 @@ class Menu(object):
         """
         Updates menu option existing information
         """
-        if menu_id in all_menu.keys():
-            all_menu[menu_id] = {
+        if menu_id in ALL_MENU.keys():
+            ALL_MENU[menu_id] = {
                 "id" : menu_id,
                 "menu_option" : menu_option,
                 "price" : price
             }
-            return all_menu[menu_id]
+            return ALL_MENU[menu_id]
         return {"message" : "menu options does not exist"}
 
     @staticmethod
@@ -154,13 +154,13 @@ class Menu(object):
         """
 
         try:
-            del all_menu[menu_id]
+            del ALL_MENU[menu_id]
             return {"message" : "menu option successfully deleted"}
         except KeyError:
             return {"message" : "menu option does not exist"}
 
 
-class Order(object):
+class Order:
     """
     Contains methods that add, update and delete orders
     """
@@ -170,15 +170,15 @@ class Order(object):
         """
         Creates a new order and appends this information to all_orders dictionary
         """
-        global all_orders
-        global order_count
-        all_orders[order_count] = {
-            "id" : order_count,
+        global ALL_ORDERS
+        global ORDER_COUNT
+        ALL_ORDERS[ORDER_COUNT] = {
+            "id" : ORDER_COUNT,
             "order_item" : order_item,
             "price" : price
         }
-        new_order = all_orders[order_count]
-        order_count += 1
+        new_order = ALL_ORDERS[ORDER_COUNT]
+        ORDER_COUNT += 1
         return new_order
 
 
@@ -187,19 +187,22 @@ class Order(object):
         """
         Updates order information
         """
-        if order_id in all_orders.keys():
-            all_orders[order_id] = {
+        if order_id in ALL_ORDERS.keys():
+            ALL_ORDERS[order_id] = {
                 "id" : order_id,
                 "order_item" : order_item,
                 "price" : price
             }
-            return all_orders[order_id]
+            return ALL_ORDERS[order_id]
         return {"message" : "order item does not exist"}
 
     @staticmethod
     def delete_order(order_id):
+        """
+        This methods allow deletion of orders
+        """
         try:
-            del all_orders[order_id]
+            del ALL_ORDERS[order_id]
             return {"message" : "order item successfully deleted"}
         except KeyError:
             return {"message" : "order item does not exist"}
