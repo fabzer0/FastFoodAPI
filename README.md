@@ -101,7 +101,7 @@ Ensure you use Production config settings where DEBUG=False
 
 ## GitHub pages
 
-https://fabischapeli.github.io/UI/index.html
+https://fabischapeli.github.io/fast-food-fast/UI/index.html
 
 ## Heroku
 
