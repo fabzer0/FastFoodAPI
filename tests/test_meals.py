@@ -20,7 +20,6 @@ class MealTest(unittest.TestCase):
         self.existing_menu = self.app.post('/api/v1/menu', data=self.menu, content_type='application/json')
         self.existing_order = self.app.post('/api/v1/orders', data=self.order, content_type='application/json')
 
-
     def test_get_all_meals(self):
         response = self.app.get('/api/v1/meals')
         self.assertEqual(response.status_code, 200)
@@ -67,13 +66,9 @@ class MealTest(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_successful_meal_update(self):
-        original_data = json.dumps({"meal_item" : "Ugali & Kuku", "price" : 320})
-        response1 = self.app.post('/api/v1/meals', data=original_data, content_type='application/json')
-        self.assertEqual(response1.status_code, 201)
-
-        new_data = json.dumps({"meal_item" : "Rice & Kuku", "price" : 320})
-        response2 = self.app.put('/api/v1/meals/1', data=new_data, content_type='application/json')
-        self.assertEqual(response2.status_code, 200)
+        data = json.dumps({"meal_item" : "Chapati", "price" : 20})
+        response = self.app.put('/api/v1/meals/2', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
 
     def test_update_non_existing_meal(self):
@@ -142,20 +137,14 @@ class MealTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_updating_non_existing_menu(self):
-        original_data = json.dumps({"menu_option" : "Rice", "price" : 20})
-        response1 = self.app.post('/api/v1/menu', data=original_data, content_type='application/json')
-        self.assertEqual(response1.status_code, 201)
-
-        new_data = json.dumps({"menu_option" : "Rice", "price" : 50})
-        response2 = self.app.put('/api/v1/menu/2', data=new_data, content_type='application/json')
-        self.assertEqual(response2.status_code, 404)
+        data = json.dumps({"menu_option" : "Rice", "price" : 50})
+        response = self.app.put('/api/v1/menu/7', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 404)
 
     def test_successful_menu_deletion(self):
-        original_data = json.dumps({"menu_option" : "Rice", "price" : 20})
-        response1 = self.app.post('/api/v1/menu', data=original_data, content_type='application/json')
-        self.assertEqual(response1.status_code, 201)
-        response2 = self.app.delete('api/v1/menu/1')
-        self.assertEqual(response2.status_code, 200)
+        data = json.dumps({"menu_option" : "Rice", "price" : 20})
+        response = self.app.delete('api/v1/menu/1', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
     def test__menu_deletion_non_existing(self):
         original_data = json.dumps({"menu_option" : "Rice", "price" : 20})

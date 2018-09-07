@@ -1,3 +1,7 @@
+[![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=master)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=master)
+
+
+
 # Fast-Food-Fast
 
 Fast-Food-Fast is an application that allows users(customers) order their favorite meals online and get deliveries in time
