@@ -48,9 +48,9 @@ class MealTest(unittest.TestCase):
         self.assertEqual(result.get("price"), 100)
         self.assertEqual(response.status_code, 201)
 
-    def test_meal_existence(self):
+    def test_meal_creation_existing_name(self):
         """
-        This method tests to check if a unique meal exists
+        This method unsuccessfully creates a new meal because the meal with the same name exists
         """
         data = json.dumps({"meal_item" : "Fries & Chicken", "price" : 250})
         self.app.post('/api/v1/meals', data=data, content_type='application/json')
@@ -212,6 +212,15 @@ class MealTest(unittest.TestCase):
         data = json.dumps({"menu_option" : "Chapati", "price" : 20})
         response = self.app.put('/api/v1/menu/2', data=data, content_type='application/json')
         self.assertEqual(response.status_code, 200)
+
+    def test_updating_non_existing_menu(self):
+        """
+        Tests updating a meal that does not exist
+        """
+        data = json.dumps({"menu_option" : "Pilau & Ndengu", "price" : 600})
+        self.app.post('/api/v1/menu', data=data, content_type='application/json')
+        response = self.app.put('/api/v1/menu/27', data=json.dumps(dict(price=340)), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
 
     def test_successful_menu_deletion(self):
         """

@@ -10,10 +10,6 @@ import models as data
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-
-
-
-
 class MealList(Resource):
     """
     Has get and post methods
@@ -269,7 +265,7 @@ class Order(Resource):
             result = data.Order.update_order(order_id, **kwargs)
             if result != {"message" : "order item does not exist"}:
                 return make_response(jsonify(result), 200)
-            return make_response(jsonify(result), 404)
+            return make_response(jsonify(result), 400)
         return make_response(jsonify(
             {"message" : "sorry, you cannot modify an order past 10PM"}), 200)
 
