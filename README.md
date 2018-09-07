@@ -109,7 +109,7 @@ https://fabischapeli.github.io/fast-food-fast/UI/index.html
 
 ## Heroku
 
-https://enigmatic-meadow-32475.herokuapp.com/
+https://fast-food-fast-api-97.herokuapp.com
 
 ## Versioning
 
