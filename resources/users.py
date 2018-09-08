@@ -42,11 +42,10 @@ class Signup(Resource):
         self.reqparse.add_argument(
             'admin',
             required=False,
-            nullable=True,
             default=False,
             type=bool,
             location=['form', 'json'])
-        super().__init__()
+        super(Signup, self).__init__()
 
     def post(self):
         """
@@ -86,7 +85,7 @@ class Login(Resource):
             trim=True,
             help='kindly provide a valid password',
             location=['form', 'json'])
-        super().__init__()
+        super(Login, self).__init__()
 
     def post(self):
         """
@@ -96,7 +95,8 @@ class Login(Resource):
         for user_id in data.ALL_USERS:
             if data.ALL_USERS.get(user_id)['email'] == kwargs.get('email') and \
                 data.ALL_USERS.get(user_id)['password'] == kwargs.get('password'):
-                return make_response(jsonify({"message" : "you have successfully logged in"}), 200)
+                return make_response(jsonify(
+                    {"message" : "you have successfully logged in"}), 200)
             return make_response(jsonify({"message" : "invalid email address or password"}), 401)
 
 class UserList(Resource):
@@ -146,11 +146,10 @@ class User(Resource):
         self.reqparse.add_argument(
             'admin',
             required=False,
-            nullable=True,
             default=False,
             type=bool,
             location=['form', 'json'])
-        super().__init__()
+        super(User, self).__init__()
 
     def get(self, user_id):
         """
@@ -185,6 +184,6 @@ class User(Resource):
 USERS_API = Blueprint('resources.users', __name__)
 API = Api(USERS_API)
 API.add_resource(Signup, '/auth/signup', endpoint='signup')
-API.add_resource(Login, 'auth/login', endpoint='login')
+API.add_resource(Login, '/auth/login', endpoint='login')
 API.add_resource(UserList, '/users', endpoint='users')
 API.add_resource(User, '/users/<int:user_id>', endpoint='user')
