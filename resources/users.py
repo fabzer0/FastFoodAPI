@@ -20,7 +20,7 @@ class Signup(Resource):
             required=True,
             help='kindly provide a valid username',
             type=inputs.regex(r"(.*\S.*)"),
-            location=['form', 'json']) #the one that comes last is looked at first
+            location=['form', 'json']) 
         self.reqparse.add_argument(
             'email',
             required=True,
@@ -122,9 +122,8 @@ class User(Resource):
             'username',
             required=True,
             help='kindly provide a valid username',
-            # match anything but newline + something not whitespace + anything but newline
             type=inputs.regex(r"(.*\S.*)"),
-            location=['form', 'json']) # the one that comes last is looked at  first
+            location=['form', 'json'])
         self.reqparse.add_argument(
             'email',
             required=True,

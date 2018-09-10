@@ -193,8 +193,8 @@ class OrderList(Resource):
     """
 
     def __init__(self):
-        self.now = datetime.time(10, 0, 0) # timer
-        self.closing = datetime.time(15, 0, 0)
+        self.now = datetime.time(8, 59, 59)
+        self.closing = datetime.time(16, 59, 59)
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
             'order_item',
@@ -219,7 +219,7 @@ class OrderList(Resource):
             result = data.Order.create_order(**kwargs)
             return make_response(jsonify(result), 201)
         return make_response(jsonify(
-            {"message" : "sorry, you cannot make an order past 10PM"}), 200)
+            {"message" : "sorry, you cannot make an order between 5pm and 8am"}), 200)
 
 
     def get(self):
@@ -233,8 +233,8 @@ class Order(Resource):
     """
 
     def __init__(self):
-        self.now = datetime.time(10, 0, 0) # timer
-        self.closing = datetime.time(15, 0, 0)
+        self.now = datetime.time(8, 59, 59)
+        self.closing = datetime.time(16, 59, 59)
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
             'order_item',
@@ -267,7 +267,7 @@ class Order(Resource):
                 return make_response(jsonify(result), 200)
             return make_response(jsonify(result), 400)
         return make_response(jsonify(
-            {"message" : "sorry, you cannot modify an order past 10PM"}), 200)
+            {"message" : "sorry, you cannot modify an order between 5pm and 8am"}), 200)
 
 
     def delete(self, order_id):
@@ -279,12 +279,10 @@ class Order(Resource):
 
 
 MEALS_API = Blueprint('resources.meals', __name__)
-API = Api(MEALS_API) # create the API
+API = Api(MEALS_API)
 API.add_resource(MealList, '/meals', endpoint='meals')
 API.add_resource(Meal, '/meals/<int:meal_id>', endpoint='meal')
-
 API.add_resource(MenuList, '/menu', endpoint='menus')
 API.add_resource(Menu, '/menu/<int:menu_id>', endpoint='menu')
-
 API.add_resource(OrderList, '/orders', endpoint='orders')
 API.add_resource(Order, '/orders/<int:order_id>', endpoint='order')

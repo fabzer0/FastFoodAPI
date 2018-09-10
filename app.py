@@ -1,7 +1,6 @@
 """
 Create an app instance, register the blueprints and run the Flask App
 """
-import os
 from flask import Flask
 
 from resources.meals import MEALS_API
