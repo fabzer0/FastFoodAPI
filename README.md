@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/fabischapeli/fast-food-fast-v1.svg?branch=develop-v1)](https://travis-ci.com/fabischapeli/fast-food-fast-v1) [![Coverage Status](https://coveralls.io/repos/github/fabischapeli/fast-food-fast-v1/badge.svg?branch=develop-v1)](https://coveralls.io/github/fabischapeli/fast-food-fast-v1?branch=develop-v1) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.com/fabischolasi/fast-food-fast-v1.svg?branch=develop-v1)](https://travis-ci.com/fabischolasi/fast-food-fast-v1) [![Coverage Status](https://coveralls.io/repos/github/fabischolasi/fast-food-fast-v1/badge.svg?branch=develop-v1)](https://coveralls.io/github/fabischolasi/fast-food-fast-v1?branch=develop-v1) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 
@@ -22,7 +22,7 @@ This will give you guidance on how you can run the program on your machine and t
 1. Clone the repository
 
 ```
-$ git clone https://github.com/fabischapeli/fast-food-fast-v1.git
+$ git clone https://github.com/fabischolasi/fast-food-fast-v1.git
 $ cd <dir>
 ```
 
@@ -105,7 +105,7 @@ Ensure you use Production config settings where DEBUG=False
 
 ## GitHub pages
 
-https://fabischapeli.github.io/fast-food-fast/UI/index.html
+https://fabischolasi.github.io/fast-food-fast/UI/index.html
 
 ## Heroku
 
