@@ -1,264 +1,310 @@
 """
-This module facilitates Testing
+This module facilitates testing
 """
 import unittest
 import json
 import sys
 import os
-import app
+from base_setup import BaseTest
+from models import ALL_USERS
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-app = app.create_app()
-app.config.from_object('config.Testing')
 
-
-class UserTest(unittest.TestCase):
+class TestUserRegistration(BaseTest):
     """
-    This class contains tests for users manipulation
+    This class contains methods to test user manipulation
     """
 
-    def setUp(self):
-        self.app = app.test_client()
-        self.data = json.dumps(
-            {
-                "username" : "fabischapeli",
-                "email" : "fabischapeli97@gmail.com",
-                "password" : "pass123",
-                "confirm_password" : "pass123"
-            }
-        )
-
-        self.existing_user = self.app.post("/api/v1/auth/signup",
-                                           data=self.data, content_type='application/json')
-
-
-    #'/api/v1/auth/signup'
     def test_successful_user_creation(self):
         """
-        This method tests if a user is successfully created
+        Tests successful user creation
         """
-        data = json.dumps(
-            {
-                "username" : "rkelly",
-                "email" : "rkelly@gmail.com",
-                "password" : "secret12345",
-                "confirm_password" : "secret12345"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("username"), "rkelly")
-        self.assertEqual(result.get("email"), "rkelly@gmail.com")
-        self.assertEqual(result.get("password"), "secret12345")
+        first_user = self.client().post('/api/v1/auth/signup', data=self.user_1)
+        self.assertEqual(first_user.status_code, 201)
+        result_1 = json.loads(first_user.data.decode('utf-8'))
+        self.assertEqual(result_1['username'], 'fabischapeli')
+        second_user = self.client().post('/api/v1/auth/signup', data=self.user_2)
+        self.assertEqual(second_user.status_code, 201)
+        result_2 = json.loads(second_user.data.decode('utf-8'))
+        self.assertEqual(result_2['username'], 'enockolasi')
+        self.assertTrue(len(ALL_USERS) > 0)
+
+    def test_return_all_users(self):
+        """
+        Tests successful return of all users
+        """
+        data_1 = {
+            "username": "mercyapril",
+            "email": "mercyapril@gmail.com",
+            "password": "alwaysimple",
+            "confirm_password": "alwaysimple"
+        }
+        data_2 = {
+            "username": "melvinfreizer",
+            "email": "melvinfreizer@gmail.com",
+            "password": "alwaysfreizer",
+            "confirm_password": "alwaysfreizer"
+        }
+        self.client().post('/api/v1/auth/signup', data=data_1)
+        self.client().post('/api/v1/auth/signup', data=data_2)
+        response = self.client().get('/api/v1/users')
+        self.assertEqual(response.status_code, 200)
+
+    def test_return_one_user(self):
+        """
+        Tests successful return of a particular user
+        """
+        data = {
+            "username": "jamalcassidy",
+            "email": "jamalcassidy@gmail.com",
+            "password": "alwayscassidy",
+            "confirm_password": "alwayscassidy"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
         self.assertEqual(response.status_code, 201)
-
-    def test_user_creation_existing_email(self):
-        """
-        This method should return error if user created already exist
-        """
-        data = json.dumps(
-            {
-                "username" : "rkelly",
-                "email" : "rkelly@gmail.com",
-                "password" : "secret1234",
-                "confirm_password" : "secret1234"
-            }
-        )
-        self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
+        res = self.client().get('/api/v1/users')
+        self.assertEqual(res.status_code, 200)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), "user with that email already exist")
-
-    def test_user_creation_non_identical_passwords(self):
-        """
-        This method return error if user provides un identical passwors during registration
-        """
-        data = json.dumps(
-            {
-                "username" : "rkelly",
-                "email" : "nikkita@gmail.com",
-                "password" : "secret",
-                "confirm_password" : "secret123"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), "password and confirm password should be identical")
-
-    def test_user_creation_short_password(self):
-        """
-        This method returns error is password is too short during registration
-        """
-        data = json.dumps(
-            {
-                "username" : "rkelly",
-                "email" : "geazy@gmail.com",
-                "password" : "sec",
-                "confirm_password" : "sec"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), "password should be atleast 8 characters")
-
-    def test_create_user_empty_username(self):
-        """
-        This method returns error if user is created with an empty username
-        """
-        data = json.dumps(
-            {
-                "username" : "",
-                "email" : "geazy@gmail.com",
-                "password" : "sec",
-                "confirm_password" : "secretkey123"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), {"username": "kindly provide a valid username"})
-
-    def test_user_creation_empty_email(self):
-        """
-        This method returns error if user is created with an empty email
-        """
-        data = json.dumps(
-            {
-                "username" : "rkelly",
-                "email" : "",
-                "password" : "secretkey",
-                "confirm_password" : "secretkey"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), {"email": "kindly provide a valid email address"})
-
-    def test_create_user_invalid_email(self):
-        """
-        This method returns error if user is created with an invalid email
-        """
-        data = json.dumps(
-            {
-                "username" : "apeli",
-                "email" : "apelifabischgmail.com",
-                "password" : "secretsanta",
-                "confirm_password" : "secretsanta"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), {"email": "kindly provide a valid email address"})
-
-    def test_create_user_empty_password(self):
-        """
-        This method returns error if user is created with an empty password
-        """
-        data = json.dumps(
-            {
-                "username" : "apeli",
-                "email" : "apelifabisch@gmail.com",
-                "password" : "",
-                "confirm_password" : "secretsanta"
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), "password and confirm password should be identical")
-
-    def test_user_create_empty_confirm_password(self):
-        """
-        This method returns error if user is created with an empty confirm password
-        """
-        data = json.dumps(
-            {
-                "username" : "apeli",
-                "email" : "apelifabisch@gmail.com",
-                "password" : "secretsanta",
-                "confirm_password" : ""
-            }
-        )
-        response = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get("message"), "password and confirm password should be identical")
-
-
-    #'/api/v1/users'
-    def test_get_all_users(self):
-        """
-        This method returns all users
-        """
-        response = self.app.get('/api/v1/users')
-        self.assertEqual(response.status_code, 200)
-
-    def test_get_one_user(self):
-        """
-        This method returns one user
-        """
-        response = self.app.get('/api/v1/users/1')
-        self.assertEqual(response.status_code, 200)
-
-    def test_get_non_existing_user(self):
-        """
-        This method returns error if trying to get non-existing user
-        """
-        data = json.dumps(
-            {
-                "username" : "fabischapeli",
-                "email" : "fabischapeli97@gmail.com",
-                "password" : "pass12342",
-                "confirm_password" : "pass12342"
-            }
-        )
-        response1 = self.app.post('/api/v1/auth/signup', data=data, content_type='application/json')
-        self.assertEqual(response1.status_code, 201)
-        response2 = self.app.get('/api/v1/users/2')
-        self.assertEqual(response2.status_code, 401)
+        self.assertEqual(result['email'], 'jamalcassidy@gmail.com')
+        list_user = []
+        list_user.append(result)
+        self.assertTrue(len(list_user) == 1)
 
     def test_successful_user_update(self):
         """
         This method successfully updates user
         """
-        data = json.dumps(
-            {
-                "username" : "fabischapeli",
-                "email" : "fabischapeli97@gmail.com",
-                "password" : "pass12342",
-                "confirm_password" : "pass12342"
-            }
-        )
-        response = self.app.put('/api/v1/users/2', data=data, content_type='application/json')
+        data = {
+            "username" : "fabischapeli",
+            "email" : "fabischapeli97@gmail.com",
+            "password" : "pass12342",
+            "confirm_password" : "pass12342"
+        }
+        response = self.client().put('/api/v1/users/2', data=data)
         self.assertEqual(response.status_code, 200)
 
-
-    def test_updating_non_existing_user(self):
+    def test_delete_an_existing_user(self):
         """
-        This method returns error if non-existing user is updated
+        Tests successful deletion of a user
         """
-        data = json.dumps(
-            {
-                "username" : "graceunah",
-                "email" : "graceunah@gmail.com",
-                "password" : "secret12345",
-                "confirm_password" : "secret12345"
-            }
-        )
-        response = self.app.put('/api/v1/users/99', data=data, content_type='application/json')
-        self.assertEqual(response.status_code, 404)
-
-    def test_successful_user_deletion(self):
-        """
-        This method tests successful user deletion
-        """
-        response = self.app.delete('/api/v1/users/1')
+        response = self.client().delete('/api/v1/users/1')
         self.assertEqual(response.status_code, 200)
 
-    def test_deleting_non_existing_user(self):
+    def test_create_user_with_existing_email(self):
         """
-        This method returns error if user that doesnt exist is deleted
+        Tests return of error if email matches an already existing one during creation
         """
-        response = self.app.delete('/api/v1/users/23')
-        self.assertEqual(response.status_code, 404)
+        data = {
+            "username": "jamiefoxx",
+            "email": "jamiefoxx@gmail.com",
+            "password": "alwaysjamie",
+            "confirm_password": "alwaysjamie"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        self.assertEqual(response.status_code, 201)
+        res = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'user with that email already exist')
+
+    def test_get_non_existing_user(self):
+        """
+        Tests error return for getting a non existing user
+        """
+        data = {
+            "username": "anikasavannah",
+            "email": "anikasavannah@gmail.com",
+            "password": "alwaysanika",
+            "confirm_password": "alwaysanika"
+        }
+        self.client().post('/api/v1/auth/signup', data=data)
+        res = self.client().get('/api/v1/users/11')
+        self.assertEqual(res.status_code, 401)
+
+    def test_edit_user_that_doest_not_exist(self):
+        """
+        Tests error returned for updating a non existing user
+        """
+        old_data = {
+            "username": "pierramakena",
+            "email": "pierramakena@gmail.com",
+            "password": "alwaysmakena",
+            "confirm_password": "alwaysmakena"
+        }
+        new_data = {
+            "username": "pierramakena",
+            "email": "pierramakena@gmail.com",
+            "password": "alwayspierra",
+            "confirm_password": "alwayspierra"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=old_data)
+        self.assertEqual(response.status_code, 201)
+        res = self.client().put('/api/v1/users/2', data=new_data)
+        self.assertEqual(res.status_code, 200)
+
+    def test_delete_user_that_doest_not_exist(self):
+        """
+        Tests error returned for deleting a non existing user
+        """
+        res = self.client().delete('/api/v1/users/25')
+        self.assertEqual(res.status_code, 404)
+
+    def test_create_user_non_identical_passwords(self):
+        """
+        Tests ensuring password and confirm_password are identical
+        """
+        data = {
+            "username": "niklaus",
+            "email": "niklaus@gmail.com",
+            "password": "alwaysnikki",
+            "confirm_password": "alwaysniklaus"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], "password and confirm password should be identical")
+
+    def test_user_creation_short_password(self):
+        """
+        Tests return error for short passwords
+        """
+        data = {
+            "username": "remyma",
+            "email": "remyma@gmail.com",
+            "password": "remyma",
+            "confirm_password": "remyma"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result['message'], "password should be atleast 8 characters")
+
+    def test_create_user_empty_username(self):
+        """
+        This method returns error if user is created with an empty username
+        """
+        data = {
+            "username" : "",
+            "email" : "geazy@gmail.com",
+            "password" : "sec",
+            "confirm_password" : "secretkey123"
+            }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], {"username": "kindly provide a valid username"})
+
+    def test_user_creation_empty_email(self):
+        """
+        This method returns error if user is created with an empty email
+        """
+        data = {
+            "username" : "rkelly",
+            "email" : "",
+            "password" : "secretkey",
+            "confirm_password" : "secretkey"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], {"email": "kindly provide a valid email address"})
+
+    def test_create_user_invalid_email(self):
+        """
+        This method returns error if user is created with an invalid email
+        """
+        data = {
+            "username" : "apeli",
+            "email" : "apelifabischgmail.com",
+            "password" : "secretsanta",
+            "confirm_password" : "secretsanta"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], {"email": "kindly provide a valid email address"})
+
+    def test_create_user_empty_password(self):
+        """
+        This method returns error if user is created with an empty password
+        """
+        data = {
+            "username" : "apeli",
+            "email" : "apelifabisch@gmail.com",
+            "password" : "",
+            "confirm_password" : "secretsanta"
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], "password and confirm password should be identical")
+
+    def test_user_create_empty_confirm_password(self):
+        """
+        This method returns error if user is created with an empty confirm password
+        """
+        data = {
+            "username" : "apeli",
+            "email" : "apelifabisch@gmail.com",
+            "password" : "secretsanta",
+            "confirm_password" : ""
+        }
+        response = self.client().post('/api/v1/auth/signup', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], "password and confirm password should be identical")
+
+
+class TestUserLogin(BaseTest):
+    """
+    This class contains tests for user login manipulation
+    """
+
+    def test_successful_user_login(self):
+        """
+        Tests successful user login
+        """
+        data = {
+            "email": "jasonderulo@gmail.com",
+            "password": "secretjason"
+        }
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result["message"], "you have successfully logged in")
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_invalid_email(self):
+        """
+        Test a unsuccessful because of email that does not pass email regex
+        """
+        data = {"email" : "jasonderulo.com", "password" : "secretjason"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), {"email": "kindly provide a valid email address"})
+        self.assertEqual(response.status_code, 400)
+
+    def test_login_wrong_email(self):
+        """
+        Test a unsuccessful login because of wrong email
+        """
+        data = {"email" : "jason@gmail.com", "password" : "secretjason"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
+
+    def test_login_empty_password(self):
+        """
+        Test a unsuccessful login because of empty password
+        """
+        data = {"email" : "jasonderulo@gmail.com", "password" : ""}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
+
+    def test_login_wrong_password(self):
+        """
+        Test a unsuccessful login because of wrong password
+        """
+        data = {"email" : "jasonderulo@gmail.com", "password" : "mysecretjason"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
 
 
 if __name__ == '__main__':

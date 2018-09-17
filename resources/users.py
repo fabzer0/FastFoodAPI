@@ -20,7 +20,7 @@ class Signup(Resource):
             required=True,
             help='kindly provide a valid username',
             type=inputs.regex(r"(.*\S.*)"),
-            location=['form', 'json']) 
+            location=['form', 'json'])
         self.reqparse.add_argument(
             'email',
             required=True,

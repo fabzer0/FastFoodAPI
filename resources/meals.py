@@ -216,6 +216,9 @@ class OrderList(Resource):
         """
         kwargs = self.reqparse.parse_args()
         if self.now.hour < self.closing.hour:
+            for order_id in data.ALL_ORDERS:
+                if data.ALL_ORDERS.get(order_id)["order_item"] == kwargs.get("order_item"):
+                    return jsonify({"message": "order item with that name already exist"})
             result = data.Order.create_order(**kwargs)
             return make_response(jsonify(result), 201)
         return make_response(jsonify(

@@ -45,7 +45,7 @@ $ pip install -r requirements.txt
 $ python app.py
 ```
 
-5. Navigate to [http://localhost:5000](http://localhost:5000)
+5. Navigate to [http://localhost:5000]
 
 At the / endpoint you should see Welcome to Fast-Food-Fast API displayed in your browser.
 
