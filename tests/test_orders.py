@@ -64,7 +64,7 @@ class OrderTest(BaseTest):
         response = self.client().delete('/api/v1/orders/2')
         self.assertEqual(response.status_code, 200)
         # test to see if it still exist, should return 404
-        result = self.client().get('/api/v1/orders/2')
+        result = self.client().g.et('/api/v1/orders/2')
         self.assertEqual(result.status_code, 404)
 
     def test_create_order_that_already_exist(self):

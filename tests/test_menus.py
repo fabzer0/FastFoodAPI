@@ -5,7 +5,7 @@ import unittest
 import json
 import sys
 import os
-from base_setup import BaseTest
+from .base_setup import BaseTest
 from models import ALL_MENU
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
