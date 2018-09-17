@@ -253,6 +253,22 @@ class TestUserLogin(BaseTest):
     This class contains tests for user login manipulation
     """
 
+    """def test_successful_user_login(self):
+        Tests successful user login
+        user = {
+            "username" : "tiny",
+            "email" : "tinybear@gmail.com",
+            "password" : "tinyboobear",
+            "confirm_password" : "tinyboobear"
+        }
+        res = self.client().post('/api/v1/auth/signup', data=user)
+        self.assertEqual(res.status_code, 201)
+        data = {"email": "tinybear@gmail.com", "password": "tinyboobear"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'you have successfully logged in')
+        self.assertEqual(response.status_code, 200)"""
+
     def test_login_invalid_email(self):
         """
         Test a unsuccessful because of email that does not pass email regex
