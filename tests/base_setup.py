@@ -8,6 +8,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app import create_app
 
 
+
 class BaseTest(unittest.TestCase):
     """
     This is a base class to be inherited by other test classes
