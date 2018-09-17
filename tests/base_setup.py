@@ -39,10 +39,3 @@ class BaseTest(unittest.TestCase):
             "password": "secretcircle",
             "confirm_password": "secretcircle"
         }
-        self.user_3 = {
-            "username": "jasonderulo",
-            "email": "jasonderulo@gmail.com",
-            "password": "secretjason",
-            "confirm_password": "secretjason"
-        }
-        self.make_user = self.client().post("/api/v1/auth/signup", data=self.user_3)
