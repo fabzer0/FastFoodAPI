@@ -12,6 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 
+
 class BaseTest(unittest.TestCase):
     """
     This is a base class to be inherited by other test classes
@@ -42,10 +43,3 @@ class BaseTest(unittest.TestCase):
             "password": "secretcircle",
             "confirm_password": "secretcircle"
         }
-        self.user_3 = {
-            "username": "jasonderulo",
-            "email": "jasonderulo@gmail.com",
-            "password": "secretjason",
-            "confirm_password": "secretjason"
-        }
-        self.make_user = self.client().post("/api/v1/auth/signup", data=self.user_3)
