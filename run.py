@@ -2,8 +2,7 @@ import os
 from app.base import create_app
 
 
-env_name = os.getenv('APP_SETTINGS')
-app = create_app(env_name)
+app = create_app()
 
 @app.route('/')
 def hello_world():
