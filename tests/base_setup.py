@@ -22,7 +22,7 @@ class BaseTest(unittest.TestCase):
         """
         This method sets up information to be used in testing
         """
-        env_name = os.getenv('TESTING')
+        env_name = os.getenv('APP_TESTING')
         self.app = create_app(env_name)
         self.client = self.app.test_client
         self.meal_1 = {"meal_item": "Ugali & Kuku", "price": 350}
