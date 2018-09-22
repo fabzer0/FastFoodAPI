@@ -5,9 +5,10 @@ import unittest
 import json
 import sys
 import os
-from base_setup import BaseTest
-from models import ALL_ORDERS
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from .base_setup import BaseTest
+from app.v1.models.models import ALL_ORDERS
+
 
 
 class OrderTest(BaseTest):
