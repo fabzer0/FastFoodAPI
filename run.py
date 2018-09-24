@@ -1,4 +1,3 @@
-import os
 from app.base import create_app
 
 

@@ -6,6 +6,7 @@
 
 Fast-Food-Fast is an application that allows users(customers) order their favorite meals online and get deliveries in time
 
+
 ## Getting Started
 
 This will give you guidance on how you can run the program on your machine and test it in development and testing mode configurations
@@ -42,7 +43,7 @@ $ pip install -r requirements.txt
 4. Run the development server
 
 ```
-$ python app.py
+$ python run.py
 ```
 
 5. Navigate to [http://localhost:5000]
