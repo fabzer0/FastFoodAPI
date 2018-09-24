@@ -102,9 +102,9 @@ class OrderTest(BaseTest):
         res = self.client().delete('/api/v1/orders/2')
         self.assertEqual(res.status_code, 404)
 
-    def test_create_order_empty_order_item(self):
+    def test_create_order_with_an_empty_order_item(self):
         """
-        Tests error returned for submitting empty order item during creation
+        Tests error returned for submitting order that is empty during creation
         """
         res = self.client().post('/api/v1/orders', data={'order_item': '', 'price': 98})
         result = json.loads(res.data.decode('utf-8'))

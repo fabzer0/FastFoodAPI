@@ -88,9 +88,18 @@ DELETE   /api/v1/orders/id | Delete unique order
 
 Coding styles tests are tests that ensure conformity to coding style guides. In our case, they test conformity to
 PEP 8 style guides
-
+You can run the following commands at the root directory:
 ```
-pylint app.py
+pylint app
+```
+```
+pylint tests
+```
+```
+pylint instance
+```
+```
+pylint run.py
 ```
 
 ## Deployment
