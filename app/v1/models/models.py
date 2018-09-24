@@ -166,7 +166,7 @@ class Order:
     """
 
     @staticmethod
-    def create_order(order_item, price, **kwargs):
+    def create_order(order_item, price, status, **kwargs):
         """
         Creates a new order and appends this information to all_orders dictionary
         """
@@ -175,7 +175,8 @@ class Order:
         ALL_ORDERS[ORDER_COUNT] = {
             "id" : ORDER_COUNT,
             "order_item" : order_item,
-            "price" : price
+            "price" : price,
+            "status": status
         }
         new_order = ALL_ORDERS[ORDER_COUNT]
         ORDER_COUNT += 1
@@ -183,16 +184,12 @@ class Order:
 
 
     @staticmethod
-    def update_order(order_id, order_item, price, **kwargs):
+    def update_order(order_id, status):
         """
         Updates order information
         """
         if order_id in ALL_ORDERS.keys():
-            ALL_ORDERS[order_id] = {
-                "id" : order_id,
-                "order_item" : order_item,
-                "price" : price
-            }
+            ALL_ORDERS[order_id]['status'] = status    
             return ALL_ORDERS[order_id]
         return {"message" : "order item does not exist"}
 

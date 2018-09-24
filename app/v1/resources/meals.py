@@ -208,6 +208,12 @@ class OrderList(Resource):
             type=float,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
+        self.reqparse.add_argument(
+            'status',
+            required=True,
+            type=str,
+            help='order status cannot be empty',
+            location=['form', 'json'])
         super(OrderList, self).__init__()
 
     def post(self):
@@ -240,16 +246,10 @@ class Order(Resource):
         self.closing = datetime.time(16, 59, 59)
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'order_item',
+            'status',
             required=True,
             type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide an order item',
-            location=['form', 'json'])
-        self.reqparse.add_argument(
-            'price',
-            required=True,
-            type=float,
-            help='kindly provide a price(should be a valid number)',
+            help='status has to be included',
             location=['form', 'json'])
         super(Order, self).__init__()
 
@@ -264,8 +264,9 @@ class Order(Resource):
     def put(self, order_id):
         """Update a particular order"""
         kwargs = self.reqparse.parse_args()
+        status = kwargs.get('status')
         if self.now.hour < self.closing.hour:
-            result = data.Order.update_order(order_id, **kwargs)
+            result = data.Order.update_order(order_id, status)
             if result != {"message" : "order item does not exist"}:
                 return make_response(jsonify(result), 200)
             return make_response(jsonify(result), 400)
