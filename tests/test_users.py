@@ -31,7 +31,7 @@ class TestUserRegistration(BaseTest):
         self.assertEqual(second_user.status_code, 201)
         result_2 = json.loads(second_user.data.decode('utf-8'))
         self.assertEqual(result_2['username'], 'enockolasi')
-    
+
 
     def test_return_all_users(self):
         """
@@ -255,20 +255,6 @@ class TestUserLogin(BaseTest):
     """
     This class contains tests for user login manipulation
     """
-
-    # def test_successful_user_login(self):
-    #     """
-    #     Tests successful user login
-    #     """
-    #     data = {
-    #         "email": "jasonderulo@gmail.com",
-    #         "password": "secretjason"
-    #     }
-    #     response = self.client().post('/api/v1/auth/login', data=data)
-    #     result = json.loads(response.data.decode('utf-8'))
-    #     self.assertEqual(result["message"], "you have successfully logged in")
-    #     self.assertEqual(response.status_code, 200)
-
     def test_login_invalid_email(self):
         """
         Test a unsuccessful because of email that does not pass email regex
@@ -279,37 +265,37 @@ class TestUserLogin(BaseTest):
         self.assertEqual(result.get("message"), {"email": "kindly provide a valid email address"})
         self.assertEqual(response.status_code, 400)
 
-    # def test_login_wrong_email(self):
-    #     """
-    #     Test a unsuccessful login because of wrong email
-    #     """
-    #     data = {"email" : "jason@gmail.com", "password" : "secretjason"}
-    #     response = self.client().post('/api/v1/auth/login', data=data)
-    #     result = json.loads(response.data.decode('utf-8'))
-    #     self.assertEqual(result.get("message"), "invalid email address or password")
-    #     self.assertEqual(response.status_code, 401)
-    #
-    # def test_login_empty_password(self):
-    #     """
-    #     Test a unsuccessful login because of empty password
-    #     """
-    #     data = {"email" : "jasonderulo@gmail.com", "password" : ""}
-    #     response = self.client().post('/api/v1/auth/login', data=data)
-    #     print(response.data.decode('utf-8'))
-    #     result = json.loads(response.data.decode('utf-8'))
-    #     print(result)
-    #     # self.assertEqual(result.get("message"), "invalid email address or password")
-    #     self.assertEqual(response.status_code, 401)
-    #
-    # def test_login_wrong_password(self):
-    #     """
-    #     Test a unsuccessful login because of wrong password
-    #     """
-    #     data = {"email" : "jasonderulo@gmail.com", "password" : "mysecretjason"}
-    #     response = self.client().post('/api/v1/auth/login', data=data)
-    #     result = json.loads(response.data.decode('utf-8'))
-    #     self.assertEqual(result.get("message"), "invalid email address or password")
-    #     self.assertEqual(response.status_code, 401)
+    def test_login_wrong_email(self):
+        """
+        Test a unsuccessful login because of wrong email
+        """
+        data = {"email" : "jason@gmail.com", "password" : "secretjason"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
+
+    def test_login_empty_password(self):
+        """
+        Test a unsuccessful login because of empty password
+        """
+        data = {"email" : "jasonderulo@gmail.com", "password" : ""}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        print(response.data.decode('utf-8'))
+        result = json.loads(response.data.decode('utf-8'))
+        print(result)
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
+
+    def test_login_wrong_password(self):
+        """
+        Test a unsuccessful login because of wrong password
+        """
+        data = {"email" : "jasonderulo@gmail.com", "password" : "mysecretjason"}
+        response = self.client().post('/api/v1/auth/login', data=data)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result.get("message"), "invalid email address or password")
+        self.assertEqual(response.status_code, 401)
 
 
 if __name__ == '__main__':
