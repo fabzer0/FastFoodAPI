@@ -1,9 +1,7 @@
 """
 This module calls the create app function to run our system
 """
-
 from app.base import create_app
-
 
 APP = create_app()
 

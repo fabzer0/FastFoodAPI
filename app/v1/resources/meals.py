@@ -1,14 +1,10 @@
 """
 Contains all endpoints to manipulate meal information
 """
-import sys
-import os
 import datetime
 from flask import jsonify, Blueprint, make_response
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models import models as data
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 class MealList(Resource):
     """
@@ -186,7 +182,6 @@ class Menu(Resource):
             return make_response(jsonify(result), 200)
         return make_response(jsonify(result), 404)
 
-
 class OrderList(Resource):
     """
     Contains get and post methods for manipulating orders
@@ -230,11 +225,9 @@ class OrderList(Resource):
         return make_response(jsonify(
             {"message" : "sorry, you cannot make an order between 5pm and 8am"}), 200)
 
-
     def get(self):
         """Gets all orders"""
         return make_response(jsonify(data.ALL_ORDERS), 200)
-
 
 class Order(Resource):
     """
@@ -272,7 +265,6 @@ class Order(Resource):
             return make_response(jsonify(result), 400)
         return make_response(jsonify(
             {"message" : "sorry, you cannot modify an order between 5pm and 8am"}), 200)
-
 
     def delete(self, order_id):
         """Delete a particular order"""

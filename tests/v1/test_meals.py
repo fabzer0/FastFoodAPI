@@ -3,19 +3,12 @@ This module facilitates testing
 """
 import unittest
 import json
-import sys
-import os
-
 from .base_setup import BaseTest
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 class MealTest(BaseTest):
     """
     This class contains tests to meals
     """
-
     def test_meal_creation(self):
         """
         This method test to confirm meals have been created
@@ -28,7 +21,6 @@ class MealTest(BaseTest):
         self.assertEqual(second_meal.status_code, 201)
         result_2 = json.loads(second_meal.data.decode('utf-8'))
         self.assertEqual(result_2['meal_item'], 'Chapati & Kuku')
-        
 
     def test_get_all_meals(self):
         """
@@ -128,7 +120,6 @@ class MealTest(BaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get("message"),
                          {"price" : "kindly provide a price(should be a valid number)"})
-
 
 
 if __name__ == '__main__':

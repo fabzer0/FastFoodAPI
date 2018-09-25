@@ -1,13 +1,9 @@
 """
 Contains all endpoints to manipulate user information
 """
-import sys
-import os
 from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models import models as data
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class Signup(Resource):
     """

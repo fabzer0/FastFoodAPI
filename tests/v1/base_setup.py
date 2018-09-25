@@ -2,13 +2,7 @@
 This module sets up information needed for testing
 """
 import unittest
-import sys
-import os
-
 from app.base import create_app
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 
 class BaseTest(unittest.TestCase):
     """
@@ -20,7 +14,7 @@ class BaseTest(unittest.TestCase):
         This method sets up information to be used in testing
         """
         self.app = create_app()
-        self.app.config.from_object('instance.config.Testing')
+        self.app.config.from_object('instance.v1.config.Testing')
         self.client = self.app.test_client
         self.meal_1 = {"meal_item": "Ugali & Kuku", "price": 350}
         self.meal_2 = {"meal_item": "Chapati & Kuku", "price": 250}

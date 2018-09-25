@@ -3,14 +3,7 @@ This module facilitates testing
 """
 import unittest
 import json
-import sys
-import os
 from .base_setup import BaseTest
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-
 
 class MenuTest(BaseTest):
     """
@@ -29,7 +22,6 @@ class MenuTest(BaseTest):
         self.assertEqual(second_meal.status_code, 201)
         result_2 = json.loads(second_meal.data.decode('utf-8'))
         self.assertEqual(result_2['menu_option'], 'Chapati & Kuku')
-        
 
     def test_get_all_menu(self):
         """
@@ -130,8 +122,6 @@ class MenuTest(BaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get("message"),
                          {"price": "kindly provide a price(should be a valid number)"})
-
-
 
 
 if __name__ == '__main__':

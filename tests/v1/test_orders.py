@@ -3,20 +3,12 @@ This module facilitates testing
 """
 import unittest
 import json
-import sys
-import os
 from .base_setup import BaseTest
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
-
 
 class OrderTest(BaseTest):
     """
     This class contains tests to orders
     """
-
     def test_order_creation(self):
         """
         This method test to confirm orders have been created
@@ -29,7 +21,6 @@ class OrderTest(BaseTest):
         self.assertEqual(second_order.status_code, 201)
         result_2 = json.loads(second_order.data.decode('utf-8'))
         self.assertEqual(result_2['order_item'], 'Chapati & Kuku')
-
 
     def test_get_all_orders(self):
         """
@@ -150,7 +141,6 @@ class OrderTest(BaseTest):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get("message"),
                          {"price": "kindly provide a price(should be a valid number)"})
-
 
 
 if __name__ == '__main__':

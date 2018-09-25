@@ -111,7 +111,6 @@ class Meal(object):
         except KeyError:
             return {"message" : "meal item does not exist"}
 
-
 class Menu(object):
     """
     Contains methods to add, update and delete menu options
@@ -158,7 +157,6 @@ class Menu(object):
             return {"message" : "menu option successfully deleted"}
         except KeyError:
             return {"message" : "menu option does not exist"}
-
 
 class Order(object):
     """
