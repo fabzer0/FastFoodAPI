@@ -1,3 +1,6 @@
+"""
+This module has the function that initializes our flask object
+"""
 from flask import Flask
 
 from app.v1.resources.meals import MEALS_API

@@ -15,7 +15,7 @@ ALL_ORDERS = {}
 ORDER_COUNT = 1
 
 
-class User:
+class User(object):
     """
     Contains the methods to add, update and delete a user
     """
@@ -65,7 +65,7 @@ class User:
         except KeyError:
             return {"message" : "user does not exist"}
 
-class Meal:
+class Meal(object):
     """
     Contains methods to add, update and delete meal item
     """
@@ -112,7 +112,7 @@ class Meal:
             return {"message" : "meal item does not exist"}
 
 
-class Menu:
+class Menu(object):
     """
     Contains methods to add, update and delete menu options
     """
@@ -160,7 +160,7 @@ class Menu:
             return {"message" : "menu option does not exist"}
 
 
-class Order:
+class Order(object):
     """
     Contains methods that add, update and delete orders
     """
@@ -189,7 +189,7 @@ class Order:
         Updates order information
         """
         if order_id in ALL_ORDERS.keys():
-            ALL_ORDERS[order_id]['status'] = status    
+            ALL_ORDERS[order_id]['status'] = status
             return ALL_ORDERS[order_id]
         return {"message" : "order item does not exist"}
 

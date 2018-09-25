@@ -5,9 +5,11 @@ import unittest
 import json
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from .base_setup import BaseTest
-from app.v1.models.models import ALL_MEALS
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 class MealTest(BaseTest):
     """
@@ -16,7 +18,7 @@ class MealTest(BaseTest):
 
     def test_meal_creation(self):
         """
-        This method test to confirm two meals have been created
+        This method test to confirm meals have been created
         """
         first_meal = self.client().post('/api/v1/meals', data=self.meal_1)
         self.assertEqual(first_meal.status_code, 201)
@@ -26,7 +28,7 @@ class MealTest(BaseTest):
         self.assertEqual(second_meal.status_code, 201)
         result_2 = json.loads(second_meal.data.decode('utf-8'))
         self.assertEqual(result_2['meal_item'], 'Chapati & Kuku')
-        self.assertTrue(len(ALL_MEALS) > 0)
+        
 
     def test_get_all_meals(self):
         """

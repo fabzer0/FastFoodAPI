@@ -5,9 +5,10 @@ import unittest
 import json
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .base_setup import BaseTest
-from app.v1.models.models import ALL_MENU
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
 
@@ -18,7 +19,7 @@ class MenuTest(BaseTest):
 
     def test_menu_creation(self):
         """
-        This method test to confirm two menus have been created
+        This method test to confirm menus have been created
         """
         first_menu = self.client().post('/api/v1/menu', data=self.menu_1)
         self.assertEqual(first_menu.status_code, 201)
@@ -28,7 +29,7 @@ class MenuTest(BaseTest):
         self.assertEqual(second_meal.status_code, 201)
         result_2 = json.loads(second_meal.data.decode('utf-8'))
         self.assertEqual(result_2['menu_option'], 'Chapati & Kuku')
-        self.assertTrue(len(ALL_MENU) > 0)
+        
 
     def test_get_all_menu(self):
         """

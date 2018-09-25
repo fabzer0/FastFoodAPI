@@ -6,9 +6,10 @@ import json
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .base_setup import BaseTest
-from app.v1.models.models import ALL_USERS
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
 
@@ -30,7 +31,7 @@ class TestUserRegistration(BaseTest):
         self.assertEqual(second_user.status_code, 201)
         result_2 = json.loads(second_user.data.decode('utf-8'))
         self.assertEqual(result_2['username'], 'enockolasi')
-        self.assertTrue(len(ALL_USERS) > 0)
+    
 
     def test_return_all_users(self):
         """

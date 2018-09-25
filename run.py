@@ -1,9 +1,13 @@
+"""
+This module calls the create app function to run our system
+"""
+
 from app.base import create_app
 
 
-app = create_app()
+APP = create_app()
 
-@app.route('/')
+@APP.route('/')
 def hello_world():
     """
     This method tests if flask is working in the browser
@@ -12,4 +16,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    APP.run(debug=True, port=8080)
