@@ -1,8 +1,11 @@
 """
 This module sets up information needed for testing
 """
+import os
+import sys
 import unittest
 from app.base import create_app
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class BaseTest(unittest.TestCase):
     """
