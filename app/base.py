@@ -1,13 +1,9 @@
 """
 This module has the function that initializes our flask object
 """
-import os
-import sys
 from flask import Flask
 from app.v1.resources.meals import MEALS_API
 from app.v1.resources.users import USERS_API
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def create_app():
     """
