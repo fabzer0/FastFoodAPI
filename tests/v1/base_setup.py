@@ -20,8 +20,8 @@ class BaseTest(unittest.TestCase):
         self.meal_2 = {"meal_item": "Chapati & Kuku", "price": 250}
         self.menu_1 = {"menu_option": "Ugali & Kuku", "price": 350}
         self.menu_2 = {"menu_option": "Chapati & Kuku", "price": 250}
-        self.order_1 = {"order_item": "Ugali & Kuku", "price": 350, "status": "not delivered"}
-        self.order_2 = {"order_item": "Chapati & Kuku", "price": 250, "status": "not delivered"}
+        self.order_1 = {"order_item": "Ugali & Kuku", "price": 350}
+        self.order_2 = {"order_item": "Chapati & Kuku", "price": 250}
         self.user_1 = {
             "username": "fabischapeli",
             "email": "fabischapeli97@gmail.com",

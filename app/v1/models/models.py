@@ -164,7 +164,7 @@ class Order(object):
     """
 
     @staticmethod
-    def create_order(order_item, price, status, **kwargs):
+    def create_order(order_item, price, **kwargs):
         """
         Creates a new order and appends this information to all_orders dictionary
         """
@@ -173,8 +173,7 @@ class Order(object):
         ALL_ORDERS[ORDER_COUNT] = {
             "id" : ORDER_COUNT,
             "order_item" : order_item,
-            "price" : price,
-            "status": status
+            "price" : price
         }
         new_order = ALL_ORDERS[ORDER_COUNT]
         ORDER_COUNT += 1
