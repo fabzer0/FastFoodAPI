@@ -41,7 +41,7 @@ class OrderList(Resource):
         if not orders:
             return make_response(jsonify({'message': 'you have no orders yet'}))
 
-        return make_response(jsonify({'orders': orders}))
+        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in orders]}))
 
 class UsersOrder(Resource):
 
@@ -60,14 +60,13 @@ class UsersOrder(Resource):
             return make_response(jsonify({'message': 'order has been deleted'}), 200)
 
 
-
 class AdminGetAllOrders(Resource):
 
     def get(self):
         orders = OrdersModel.get_all('orders')
         if not orders:
             return make_response(jsonify({'message': 'no orders yet'}), 404)
-        return make_response(jsonify({'all_orders': orders}), 200)
+        return make_response(jsonify({'all_orders': [OrdersModel.order_details(order) for order in orders]}), 200)
 
 class AdminGetSingleOrder(Resource):
 
@@ -85,7 +84,7 @@ class AdminGetSingleOrder(Resource):
         order = OrdersModel.get_one('orders', id=order_id)
         if not order:
             return make_response(jsonify({'message': 'order does not exist'}), 404)
-        return make_response(jsonify({'order': order}), 200)
+        return make_response(jsonify({'order': OrdersModel.order_details(order)}), 200)
 
     def put(self, order_id):
 

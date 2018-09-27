@@ -37,8 +37,8 @@ class MenusList(Resource):
         return make_response(jsonify({'message': 'menu has been successfully posted', 'menu': MenusModel.menu_details(menu)}), 201)
 
     def get(self):
-        menu = MenusModel.get_all('menu')
-        return make_response(jsonify({'menu': menu}))
+        menus = MenusModel.get_all('menu')
+        return make_response(jsonify({'menu': [MenusModel.menu_details(menu) for menu in menus]}))
 
 class Menus(Resource):
 
@@ -61,24 +61,26 @@ class Menus(Resource):
 
     def get(self, menu_id):
         menu = MenusModel.get_one('menu', id=menu_id)
-        return make_response(jsonify({'menu': menu}))
+        if menu:
+            return make_response(jsonify({'menu': MenusModel.menu_details(menu)}))
+        return make_response(jsonify({'message': 'menu item does not exist'}), 404)
 
-    # def put(self, menu_id):
-    #     kwargs = self.reqparse.parse_args()
-    #     menu_item = kwargs.get('menu_item')
-    #     price = kwargs.get('price')
-    #
-    #     menu = MenusModel.get_one('menu', id=menu_id)
-    #     if not menu:
-    #         return make_response(jsonify({'message': 'menu item does not exist'}), 404)
-    #     data = {}
-    #     if menu_item:
-    #         data.update({'menu_item': str(menu_item)})
-    #     if price:
-    #         data.update({'price': str(price)})
-    #     MenusModel.update('menu', id=menu[0], data=data)
-    #     menu = MenusModel.get_one('menu', id=menu_id)
-    #     return make_response(jsonify({'message': 'menu has been updated successfully', 'new_menu': MenusModel.menu_details(menu)}), 200)
+    def put(self, menu_id):
+        kwargs = self.reqparse.parse_args()
+        menu_item = kwargs.get('menu_item')
+        price = kwargs.get('price')
+
+        menu = MenusModel.get_one('menu', id=menu_id)
+        if not menu:
+            return make_response(jsonify({'message': 'menu item does not exist'}), 404)
+        data = {}
+        if menu_item:
+            data.update({'menu_item': str(menu_item)})
+        if price:
+            data.update({'price': str(price)})
+        MenusModel.update('menu', id=menu[0], data=data)
+        menu = MenusModel.get_one('menu', id=menu_id)
+        return make_response(jsonify({'message': 'menu has been updated successfully', 'new_menu': MenusModel.menu_details(menu)}), 200)
 
     def delete(self, menu_id):
 
@@ -87,9 +89,6 @@ class Menus(Resource):
             MenusModel.delete('menu', id=menu[0])
             return make_response(jsonify({'message': 'menu item has been deleted'}))
         return make_response(jsonify({'message': 'menu item does not exist'}))
-
-
-
 
 menus_api = Blueprint('resources.menus', __name__)
 api = Api(menus_api)
