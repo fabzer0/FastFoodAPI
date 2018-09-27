@@ -136,11 +136,6 @@ class OrdersModel(BaseModel):
             id=order[0],
             ordername=order[1],
             price=order[2],
-            created_at=order[3]
+            status=order[3],
+            created_at=order[4]
         )
-    # @staticmethod
-    # def get_user_orders(user_id):
-    #     query = 'SELECT * FROM orders WHERE user_id={}'.format(user_id)
-    #     cur.execute(query)
-    #     all_orders = cur.fetchall()
-    #     return all_orders

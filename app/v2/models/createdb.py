@@ -46,6 +46,7 @@ def create_orders_table(cur):
             id serial,
             ordername VARCHAR(50) NOT NULL,
             price INTEGER NOT NULL,
+            status VARCHAR,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );''')
 

@@ -52,7 +52,17 @@ class AdminGetAllOrders(Resource):
             return make_response(jsonify({'message': 'no orders yet'}), 404)
         return make_response(jsonify({'all_orders': orders}), 200)
 
-class AdminGetAllSingleOrder(Resource):
+class AdminGetSingleOrder(Resource):
+
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument(
+            'status',
+            required=True,
+            type=str,
+            help='please insert the status of an order',
+            location=['form', 'json']
+        )
 
     def get(self, order_id):
         order = OrdersModel.get_one('orders', id=order_id)
@@ -60,47 +70,28 @@ class AdminGetAllSingleOrder(Resource):
             return make_response(jsonify({'message': 'order does not exist'}), 404)
         return make_response(jsonify({'order': order}), 200)
 
-# class Order(Resource):
-#
-#     def __init__(self):
-#         self.reqparse = reqparse.RequestParser()
-#         self.reqparse.add_argument(
-#             'status',
-#             required=True,
-#             type=inputs.regex(r"(.*\S.*)"),
-#             help='kindly provide a valid name',
-#             location=['form', 'json'])
-#         super(Order, self).__init__()
-#
-#     def get(self, order_id):
-#         order = OrdersModel.get_one('orders', id=order_id)
-#         return make_response(jsonify({'order': order}))
-#
-#     def put(self, order_id):
-#
-#         order = OrdersModel.get_one('orders', id=order_id)
-#         if not order:
-#             return make_response(jsonify({'message': 'order item does not exist'}), 404)
-#         post_data = request.get_json()
-#         status = post_data.get('status')
-#         data = {}
-#         if status:
-#             data.update({'status': str(status)})
-#         OrdersModel.update('orders', id=order[0], data=data)
-#         order = OrdersModel.get_one('orders', id=order_id)
-#         return make_response(jsonify({'message': 'order has been updated successfully', 'new_order': OrdersModel.order_details(order)}), 200)
-#
-#     def delete(self, order_id):
-#         order = OrdersModel.get_one('orders', id=order_id)
-#         if order:
-#             OrdersModel.delete('orders', id=order[0])
-#             return make_response(jsonify({'message': 'order item has been deleted'}))
-#         return make_response(jsonify({'message': 'order item does not exist'}))
+    def put(self, order_id):
+
+        kwargs = self.reqparse.parse_args()
+        status = kwargs.get('status')
+        statuses = ['new', 'processing', 'cancelled', 'complete']
+
+        order = OrdersModel.get_one('orders', id=order_id)
+        if not order:
+            return make_response(jsonify({'message': 'order item does not exist'}), 404)
+        data = {}
+        if status:
+            if status not in statuses:
+                return make_response(jsonify({'message': 'status should either be new, processing, cancelled or complete'}), 400)
+            data.update({'status': str(status)})
+
+        OrdersModel.update('orders', id=order[0], data=data)
+        order = OrdersModel.get_one('orders', id=order_id)
+        return make_response(jsonify({'message': 'order has been updated successfully', 'new_order': OrdersModel.order_details(order)}), 200)
 
 
 orders_api = Blueprint('resources.orders', __name__)
 api = Api(orders_api)
 api.add_resource(OrderList, '/users/orders', endpoint='orders')
 api.add_resource(AdminGetAllOrders, '/orderss', endpoint='orderss')
-api.add_resource(AdminGetAllSingleOrder, '/orders/<int:order_id>', endpoint='order')
-# api.add_resource(Order, '/orders/<int:order_id>', endpoint='order')
+api.add_resource(AdminGetSingleOrder, '/orders/<int:order_id>', endpoint='order')
