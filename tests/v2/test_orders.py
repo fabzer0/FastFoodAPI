@@ -6,7 +6,7 @@ import os
 import sys
 import json
 
-from base_setup import BaseTests
+from tests.v2.base_setup import BaseTests
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -32,7 +32,7 @@ class OrdersTest(BaseTests):
         response = self.client().post(USERS_ORDERS_URL, data=order)
         self.assertEqual(response.status_code, 201)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'order successfully created')
+        self.assertEqual(result['message'], 'order has been successfully posted')
 
     def test_wrong_input_for_order_price_field(self):
         """
@@ -45,7 +45,7 @@ class OrdersTest(BaseTests):
         response = self.client().post(USERS_ORDERS_URL, data=order)
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'all fields are required')
+        self.assertEqual(result['message'], {'price': 'kindly provide a price(should be a valid number)'})
 
     def test_wrong_input_for_order_ordername_field(self):
         """
@@ -58,7 +58,7 @@ class OrdersTest(BaseTests):
         response = self.client().post(USERS_ORDERS_URL, data=order)
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'all fields are required')
+        self.assertEqual(result['message'], {'ordername': 'kindly provide a valid name'})
 
     def test_double_ordering(self):
         """
@@ -72,7 +72,7 @@ class OrdersTest(BaseTests):
         response = self.client().post(USERS_ORDERS_URL, data=order)
         self.assertEqual(response.status_code, 203)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'order already exist')
+        self.assertEqual(result['message'], 'order with that name already exist')
 
     def test_user_getting_all_orders(self):
         """
@@ -85,6 +85,12 @@ class OrdersTest(BaseTests):
         """
         This method tests successful return of an order by the user
         """
+        order = {
+            'ordername': 'Rice & Githeri',
+            'price': 30
+        }
+        res = self.client().post(USERS_ORDERS_URL, data=order)
+        self.assertEqual(res.status_code, 201)
         response = self.client().get(USERS_ORDERS_SPECIFIC_URL)
         self.assertEqual(response.status_code, 200)
 
@@ -114,6 +120,12 @@ class OrdersTest(BaseTests):
         """
         This method tests successful getting of orders by an admin
         """
+        order = {
+            'ordername': 'Chicken & Soup',
+            'price': 30
+        }
+        res = self.client().post(USERS_ORDERS_URL, data=order)
+        self.assertEqual(res.status_code, 201)
         response = self.client().get(ADMINS_ORDERS_URL)
         self.assertEqual(response.status_code, 200)
 
@@ -121,6 +133,12 @@ class OrdersTest(BaseTests):
         """
         This method tests successful getting of a particular order by an admin
         """
+        order = {
+            'ordername': 'Chicken & Beef',
+            'price': 30
+        }
+        res = self.client().post(USERS_ORDERS_URL, data=order)
+        self.assertEqual(res.status_code, 201)
         response = self.client().get(ADMINS_ORDERS_SPECIFIC_URL)
         self.assertEqual(response.status_code, 200)
 
@@ -145,12 +163,12 @@ class OrdersTest(BaseTests):
         response = self.client().post(USERS_ORDERS_URL, data=order)
         self.assertEqual(response.status_code, 201)
         data = {
-            "status": "accepted"
+            "status": "new"
         }
         res = self.client().put(ADMINS_ORDERS_SPECIFIC_URL, data=data)
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result.get('message'), 'order successfully updated')
+        self.assertEqual(result.get('message'), 'order has been updated successfully')
 
 
 if __name__ == '__main__':

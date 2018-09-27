@@ -2,7 +2,7 @@
 This module sets up information needed for testing
 """
 import unittest
-from app.base import create_app
+from app.basev1 import create_app
 
 class BaseTest(unittest.TestCase):
     """

@@ -46,6 +46,9 @@ class SignUp(Resource):
         email = kwargs.get('email')
         password = kwargs.get('password')
         confirm_password = kwargs.get('confirm_password')
+        username_exist = UserModel.get_one('users', username=username)
+        if username_exist:
+            return make_response(jsonify({'message': 'username already taken'}), 400)
         if password == confirm_password:
             if len(password) >= 8:
                 email_exists = UserModel.get_one('users', email=email)
@@ -86,12 +89,12 @@ class Login(Resource):
         user= UserModel.get_one('users', email=email)
 
         if user is None:
-            return make_response(jsonify({'message': 'invalid username or password'}), 404)
+            return make_response(jsonify({'message': 'invalid email or password'}), 404)
 
         if UserModel.validate_password(password=password, email=user[2]):
             token = UserModel.generate_token(user)
             return make_response(jsonify({'message': 'you are successfully logged in', 'token': token}), 200)
-        return make_response(jsonify({'message': 'invalid username or password'}), 401)
+        return make_response(jsonify({'message': 'invalid email or password'}), 401)
 
 
 

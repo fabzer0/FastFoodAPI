@@ -17,6 +17,6 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index_info():
-        return 'Great, the app works'
+        return 'Welcome to Fast Food Fast Version 2'
 
     return app

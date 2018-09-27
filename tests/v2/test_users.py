@@ -6,7 +6,7 @@ import os
 import sys
 import json
 
-from base_setup import BaseTests
+from tests.v2.base_setup import BaseTests
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -25,7 +25,8 @@ class UserTest(BaseTests):
         user = {
             "username": "jamalkim",
             "email": "jamal97@gmail.com",
-            "password": "pariskimmy"
+            "password": "pariskimmy",
+            "confirm_password": "pariskimmy"
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 201)
@@ -39,12 +40,13 @@ class UserTest(BaseTests):
         data = {
             'username': 'melvinkeys',
             'email': 'melvinkeys@gmail.com',
-            'password': ''
+            'password': '',
+            'confirm_password': 'jamesbond'
         }
         response = self.client().post(SIGNUP_URL, data=data)
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'all fields are required')
+        self.assertEqual(result['message'], 'password and confirm password should be identical')
 
     def test_double_signup(self):
         """
@@ -53,13 +55,14 @@ class UserTest(BaseTests):
         user = {
             'username': 'aliciakeys',
             'email': 'aliciakeys@gmail.com',
-            'password': 'aliciakeys'
+            'password': 'aliciakeys',
+            'confirm_password': 'aliciakeys'
         }
         self.client().post(SIGNUP_URL, data=user)
         response = self.client().post(SIGNUP_URL, data=user)
-        self.assertEqual(response.status_code, 203)
+        self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'that email is already taken')
+        self.assertEqual(result['message'], 'username already taken')
 
     def test_failed_registration_with_invalid_email(self):
         """
@@ -68,12 +71,13 @@ class UserTest(BaseTests):
         user = {
             'username': 'jamesbond',
             'email': 'jamesbondgmail.com',
-            'password': 'jamesbond'
+            'password': 'jamesbond',
+            'confirm_password': 'jamesbond'
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'invalid email address')
+        self.assertEqual(result.get('message'), {'email': 'kindly provide a valid email address'})
 
     def test_failed_registration_short_password(self):
         """
@@ -81,8 +85,9 @@ class UserTest(BaseTests):
         """
         user = {
             'username': 'jamesbond',
-            'email': 'jamesbondgmail.com',
-            'password': 'james'
+            'email': 'jamesbond@gmail.com',
+            'password': 'james',
+            'confirm_password': 'james'
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 400)
@@ -96,7 +101,8 @@ class UserTest(BaseTests):
         user = {
             'username': 'lucasthomas',
             'email': 'lucasthomas@gmail.com',
-            'password': 'lucasthomas'
+            'password': 'lucasthomas',
+            'confirm_password': 'lucasthomas'
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 201)
@@ -107,7 +113,7 @@ class UserTest(BaseTests):
         res = self.client().post(LOGIN_URL, data=data)
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'you have successfully logged in')
+        self.assertEqual(result['message'], 'you are successfully logged in')
 
     def test_fail_login_wrong_password(self):
         """
@@ -116,7 +122,8 @@ class UserTest(BaseTests):
         user = {
             'username': 'eminem',
             'email': 'eminem@gmail.com',
-            'password': 'kamikaze'
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 201)
@@ -127,7 +134,7 @@ class UserTest(BaseTests):
         res = self.client().post(LOGIN_URL, data=data)
         self.assertEqual(res.status_code, 401)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'wrong email or password')
+        self.assertEqual(result['message'], 'invalid email or password')
 
     def test_fail_login_wrong_email(self):
         """
@@ -136,7 +143,8 @@ class UserTest(BaseTests):
         user = {
             'username': 'eminem',
             'email': 'eminem@gmail.com',
-            'password': 'kamikaze'
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
         }
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 201)
@@ -145,9 +153,9 @@ class UserTest(BaseTests):
             'password': 'kamikaze'
         }
         res = self.client().post(LOGIN_URL, data=data)
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 404)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'wrong email or password')
+        self.assertEqual(result['message'], 'invalid email or password')
 
     def test_login_non_existing_user(self):
         """
@@ -156,12 +164,18 @@ class UserTest(BaseTests):
         user = {
             'username': 'eminem',
             'email': 'eminem@gmail.com',
-            'password': 'kamikaze'
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
         }
-        response = self.client().post(LOGIN_URL, data=user)
-        self.assertEqual(response.status_code, 404)
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'user does not exist')
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        data = {
+            'email': 'eminem97@gmail.com',
+            'password': 'kamikazeeer'
+        }
+        res = self.client().post(LOGIN_URL, data=data)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'invalid email or password')
 
 
 if __name__ == '__main__':
