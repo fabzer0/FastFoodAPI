@@ -65,8 +65,7 @@ class UserModel(BaseModel):
         return dict(
             id=user[0],
             username=user[1],
-            email=user[2],
-            in_menu=user[3]
+            email=user[2]
         )
 
     @staticmethod

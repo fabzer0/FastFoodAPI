@@ -2,6 +2,7 @@ from flask import Flask
 
 from app.v2.resources.menus import menus_api
 from app.v2.resources.orders import orders_api
+from app.v2.resources.users import users_api
 
 def create_app():
     from app.v2.models.createdb import main
@@ -11,6 +12,7 @@ def create_app():
 
     app.register_blueprint(menus_api, url_prefix='/api/v2')
     app.register_blueprint(orders_api, url_prefix='/api/v2')
+    app.register_blueprint(users_api, url_prefix='/api/v2')
     main()
 
     @app.route('/', methods=['GET'])
