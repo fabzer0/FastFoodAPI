@@ -90,7 +90,6 @@ class UserModel(BaseModel):
         payload = jwt.decode(token, str(app_config['development']), algorithm='HS256')
         return payload
 
-
 class MenusModel(BaseModel):
 
     def __init__(self, menu_item, price):
@@ -111,19 +110,37 @@ class MenusModel(BaseModel):
 
 class OrdersModel(BaseModel):
 
-    def __init__(self, ordername, price, status):
+    def __init__(self, ordername, price):
         self.ordername = ordername
         self.price = price
-        self.status = status
 
     def create_order(self):
-        cur.execute('INSERT INTO orders (ordername, price, status) VALUES (%s, %s)', (self.ordername, self.price, self.status))
+        cur.execute('INSERT INTO orders (ordername, price) VALUES (%s, %s)', (self.ordername, self.price))
         self.save()
+
+    @staticmethod
+    def get(user_id, order_id=None):
+        if order_id:
+            query = 'SELECT * FROM orders WHERE user_id={} AND id={}'.format(user_id, order_id)
+            cur.execute(query)
+            return cur.fetchone()
+        else:
+            query ='SELECT * FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
+            cur.execute(query)
+            user_orders = cur.fetchall()
+            return user_orders
 
     @staticmethod
     def order_details(order):
         return dict(
             id=order[0],
-            mealname=order[1],
-            price=order[2]
+            ordername=order[1],
+            price=order[2],
+            created_at=order[3]
         )
+    # @staticmethod
+    # def get_user_orders(user_id):
+    #     query = 'SELECT * FROM orders WHERE user_id={}'.format(user_id)
+    #     cur.execute(query)
+    #     all_orders = cur.fetchall()
+    #     return all_orders

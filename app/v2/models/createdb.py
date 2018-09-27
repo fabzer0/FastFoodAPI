@@ -43,11 +43,12 @@ def create_menu_table(cur):
 def create_orders_table(cur):
     cur.execute(
         '''CREATE TABLE orders (
-            id serial PRIMARY KEY,
+            id serial,
             ordername VARCHAR(50) NOT NULL,
             price INTEGER NOT NULL,
-            order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );''')
+
 
 
 def main(config=None):
