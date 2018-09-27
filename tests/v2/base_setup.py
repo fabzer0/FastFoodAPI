@@ -15,7 +15,7 @@ class BaseTests(unittest.TestCase):
         main('testing')
         self.app = create_app()
         with self.app.app_context():
-            from app.v2.models.models import UserModel, OrdersModel, MenuModel
+            from app.v2.models.models import UserModel, OrdersModel, MenusModel
         self.client = self.app.test_client
 
     def tearDown(self):

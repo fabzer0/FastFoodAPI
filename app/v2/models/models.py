@@ -92,7 +92,7 @@ class UserModel(BaseModel):
         return payload
 
 
-class MenuModel(BaseModel):
+class MenusModel(BaseModel):
 
     def __init__(self, menu_item, price):
         self.menu_item = menu_item

@@ -1,18 +1,20 @@
-"""
-This module has the function that initializes our flask object
-"""
 from flask import Flask
-from app.v1.resources.meals import MEALS_API
-from app.v1.resources.users import USERS_API
+
+from app.v2.resources.menus import menus_api
+from app.v2.resources.orders import orders_api
 
 def create_app():
-    """
-    Create the flask app
-    """
+    from app.v2.models.createdb import main
     app = Flask(__name__)
-    app.config.from_object('instance.v1.config.Development')
+    app.config.from_object('instance.v2.config.TestingEnv')
     app.url_map.strict_slashes = False
-    app.register_blueprint(MEALS_API, url_prefix='/api/v1')
-    app.register_blueprint(USERS_API, url_prefix='/api/v1')
+
+    app.register_blueprint(menus_api, url_prefix='/api/v2')
+    app.register_blueprint(orders_api, url_prefix='/api/v2')
+    main()
+
+    @app.route('/', methods=['GET'])
+    def index_info():
+        return 'Great, the app works'
 
     return app

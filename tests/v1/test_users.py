@@ -3,10 +3,7 @@ This module facilitates testing
 """
 import unittest
 import json
-import sys
-import os
-from base_setup import BaseTest
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from .base_setup import BaseTest
 
 class TestUserRegistration(BaseTest):
     """
