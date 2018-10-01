@@ -8,19 +8,15 @@ class Config:
     DEBUG = False
     TESTING = False
     SECRET_KEY = os.getenv('SECRET_KEY')
-    USER = os.getenv('DB_USERNAME')
-    PASSWORD = os.getenv('DB_PWD')
-    HOST = os.getenv('DB_HOST')
-    PORT = os.getenv('DB_PORT')
-
+    DATABASE = os.getenv('MAIN_DATABASE')
+    APP_SETTINGS = os.getenv('APP_SETTINGS')
 
 class DevelopmentEnv(Config):
     """
     Development environment configuration
     """
     DEBUG = True
-    APP_SETTINGS = 'development'
-    DB_NAME = os.getenv('DB_NAME')
+
 
 class TestingEnv(Config):
     """
@@ -28,7 +24,7 @@ class TestingEnv(Config):
     """
     TESTING = True
     DEBUG = True
-    DB_NAME = os.getenv('TEST_DB')
+    DATABASE = os.getenv('TEST_DATABASE')
 
 
 class ProductionEnv(Config):
@@ -37,7 +33,6 @@ class ProductionEnv(Config):
     """
     DEBUG = False
     TESTING = False
-    APP_SETTINGS = os.getenv('FLASK_RELEASE')
 
 
 app_config = {

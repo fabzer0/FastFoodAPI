@@ -5,11 +5,8 @@ import unittest
 import os
 import sys
 import json
-
 from tests.v2.base_setup import BaseTests
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 
 class MenuTests(BaseTests):
     """
@@ -27,6 +24,12 @@ class MenuTests(BaseTests):
         """
         This method tests if an admin successfully gets a particular menu
         """
+        data = {
+            "menu_item": "Ugali & Kales",
+            "price": 50
+        }
+        res = self.client().post('/api/v2/menus', data=data)
+        self.assertEqual(res.status_code, 201)
         response = self.client().get('api/v2/menus/1')
         self.assertEqual(response.status_code, 200)
 

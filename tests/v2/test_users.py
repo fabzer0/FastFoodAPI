@@ -5,10 +5,8 @@ import unittest
 import os
 import sys
 import json
-
 from tests.v2.base_setup import BaseTests
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 SIGNUP_URL = '/api/v2/auth/signup'
 LOGIN_URL = '/api/v2/auth/login'

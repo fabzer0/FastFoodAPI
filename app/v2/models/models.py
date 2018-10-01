@@ -1,15 +1,13 @@
 from datetime import datetime, timedelta
+from flask import jsonify
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from instance.v2.config import app_config
 from .createdb import connect_to_db
-
 
 conn = connect_to_db(app_config['development'])
 conn.set_session(autocommit=True)
 cur = conn.cursor()
-
 
 class BaseModel(object):
     '''Base class to set up database'''
@@ -65,7 +63,8 @@ class UserModel(BaseModel):
         return dict(
             id=user[0],
             username=user[1],
-            email=user[2]
+            email=user[2],
+            admin=user[4]
         )
 
     @staticmethod
@@ -77,11 +76,11 @@ class UserModel(BaseModel):
 
     @staticmethod
     def generate_token(user):
-        user_id, username = user[0], user[1]
+        user_id, admin = user[0], user[4]
         payload = {
-            'user_id': user_id,
-            'exp': datetime.utcnow()+timedelta(days=1),
-            'iat': datetime.utcnow()
+            'id': user_id,
+            'admin': admin,
+            'exp': datetime.utcnow()+timedelta(days=2),
         }
         return jwt.encode(payload, str(app_config['development']), algorithm='HS256').decode('utf-8')
 
@@ -90,52 +89,90 @@ class UserModel(BaseModel):
         payload = jwt.decode(token, str(app_config['development']), algorithm='HS256')
         return payload
 
-class MenusModel(BaseModel):
+class MealsModel(BaseModel):
 
-    def __init__(self, menu_item, price):
-        self.menu_item = menu_item
+    def __init__(self, mealname, price):
+        self.mealname = mealname
         self.price = price
 
-    def create_menu(self):
-        cur.execute('INSERT INTO menu (menu_item, price) VALUES (%s, %s)', (self.menu_item, self.price))
+    def create_meal(self):
+        cur.execute('INSERT INTO meals (mealname, price) VALUES (%s, %s)', (self.mealname, self.price))
         self.save()
 
     @staticmethod
-    def menu_details(menu):
+    def meal_details(meal):
         return dict(
-            id=menu[0],
-            mealname=menu[1],
-            price=menu[2]
+            id=meal[0],
+            mealname=meal[1],
+            price=meal[2],
+            in_menu=meal[3]
         )
+
+    @staticmethod
+    def add_to_menu(meal_id):
+        meal = MealsModel.get_one('meals', id=meal_id)
+        if not meal:
+            return jsonify({'message': 'meal does not exist'})
+        if meal[3]:
+            return jsonify({'message': 'meal already in menu'})
+        data = {'in_menu': True}
+        MealsModel.update('meals', id=meal[0], data=data)
+        meal = MealsModel.get_one('meals', id=meal[0])
+        return jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)})
+
+    @staticmethod
+    def remove_from_menu(meal_id):
+        meal = MealsModel.get_one('meals', id=meal_id)
+        if meal is None:
+            return jsonify({'message': 'meal does not exist'}), 404
+        if not meal[3]:
+            return jsonify({'message': 'meal already not in menu'}), 400
+        data = {'in_menu': False}
+        MealsModel.update('meals', id=meal[0], data=data)
+        meal = MealsModel.get_one('meals', id=meal[0])
+        return jsonify({'message': 'meal successfully removed from menu', 'meal': MealsModel.meal_details(meal)}), 200
+
+    @staticmethod
+    def get_menu(meal_id):
+
+        meal = MealsModel.get_one('meals', id=meal_id)
+        if meal is None:
+            return jsonify({'message': 'meal does not exist'})
+        if not meal[3]:
+            return jsonify({'message': 'kindly ensure this meal is in the menu'})
+        return {'menu': MealsModel.meal_details(meal)}
 
 class OrdersModel(BaseModel):
 
-    def __init__(self, ordername, price):
+    def __init__(self, ordername, price, user_id):
         self.ordername = ordername
         self.price = price
+        self.user_id = user_id
 
     def create_order(self):
-        cur.execute('INSERT INTO orders (ordername, price) VALUES (%s, %s)', (self.ordername, self.price))
+        cur.execute('INSERT INTO orders (user_id, ordername, price) VALUES (%s,%s, %s)', (self.user_id, self.ordername, self.price))
         self.save()
 
     @staticmethod
     def get(user_id, order_id=None):
+        """
+        Method for fetching both single and all orders
+        """
         if order_id:
             query = 'SELECT * FROM orders WHERE user_id={} AND id={}'.format(user_id, order_id)
             cur.execute(query)
             return cur.fetchone()
-        else:
-            query ='SELECT * FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
-            cur.execute(query)
-            user_orders = cur.fetchall()
-            return user_orders
+        query = 'SELECT orders.id, users.id, ordername, price, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
+        cur.execute(query)
+        user_orders = cur.fetchall()
+        return user_orders
 
     @staticmethod
     def order_details(order):
         return dict(
             id=order[0],
-            ordername=order[1],
-            price=order[2],
-            status=order[3],
-            created_at=order[4]
+            user_id=order[1],
+            ordername=order[2],
+            price=order[3],
+            status=order[4]
         )

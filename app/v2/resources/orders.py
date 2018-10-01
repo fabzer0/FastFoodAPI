@@ -1,8 +1,10 @@
+
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models.models import OrdersModel
+from ..models.decorators import admin_required, token_required
 
-class OrderList(Resource):
+class UserOrders(Resource):
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -19,49 +21,48 @@ class OrderList(Resource):
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
 
-        super(OrderList, self).__init__()
+        super(UserOrders, self).__init__()
 
-    def post(self):
+    @token_required
+    def post(self, user_id):
 
         kwargs = self.reqparse.parse_args()
         ordername = kwargs.get('ordername')
         price = kwargs.get('price')
 
-        order = OrdersModel.get_one('orders', ordername=ordername)
-        if order:
-            return make_response(jsonify({'message': 'order with that name already exist'}), 203)
+        # # RAISE A CONCERN TO AN LFA ABOUT ORDERS. CANT ORDER ANYMORE EVENTUALLY
+        # order = OrdersModel.get_one('orders', ordername=ordername)
+        # if order:
+        #     return make_response(jsonify({'message': 'order with that name already exist'}), 203)
 
-        order = OrdersModel(ordername=ordername, price=price)
+        order = OrdersModel(ordername=ordername, price=price, user_id=user_id)
         order.create_order()
         order = OrdersModel.get_one('orders', ordername=ordername)
         return make_response(jsonify({'message': 'order has been successfully posted', 'order': OrdersModel.order_details(order)}), 201)
 
-    def get(self):
-        orders = OrdersModel.get_all('orders')
-        if not orders:
-            return make_response(jsonify({'message': 'you have no orders yet'}))
+    @token_required
+    def get(self, user_id, order_id=None):
+        if order_id:
+            user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
+            if user_order:
+                return {'order': OrdersModel.order_details(user_order)}, 200
+            return {'message': 'order not found'}, 404
+        user_orders = OrdersModel.get(user_id=user_id)
+        if not user_orders:
+            return make_response(jsonify({'message': 'you have no orders yet'}), 404)
+        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in user_orders]}), 200)
 
-        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in orders]}))
-
-class UsersOrder(Resource):
-
-    def get(self, order_id):
-        order = OrdersModel.get_one('orders', id=order_id)
-        if not order:
-            return make_response(jsonify({'message': 'order does not exist'}), 404)
-        return make_response(jsonify({'order': OrdersModel.order_details(order)}), 200)
-
-    def delete(self, order_id):
-        order = OrdersModel.get_one('orders', id=order_id)
-        if not order:
-            return make_response(jsonify({'message': 'order does not exist'}), 404)
-        else:
-            OrdersModel.delete('orders', id=order_id)
-            return make_response(jsonify({'message': 'order has been deleted'}), 200)
-
+    @token_required
+    def delete(self, user_id, order_id):
+        user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
+        if user_order:
+            OrdersModel.delete('orders', id=user_order[0])
+            return {'message', 'order successfully deleted'}, 200
+        return {'message': 'order does not exist'}, 404
 
 class AdminGetAllOrders(Resource):
 
+    @admin_required
     def get(self):
         orders = OrdersModel.get_all('orders')
         if not orders:
@@ -80,12 +81,14 @@ class AdminGetSingleOrder(Resource):
             location=['form', 'json']
         )
 
+    @admin_required
     def get(self, order_id):
         order = OrdersModel.get_one('orders', id=order_id)
         if not order:
             return make_response(jsonify({'message': 'order does not exist'}), 404)
         return make_response(jsonify({'order': OrdersModel.order_details(order)}), 200)
 
+    @admin_required
     def put(self, order_id):
 
         kwargs = self.reqparse.parse_args()
@@ -108,7 +111,6 @@ class AdminGetSingleOrder(Resource):
 
 orders_api = Blueprint('resources.orders', __name__)
 api = Api(orders_api)
-api.add_resource(OrderList, '/users/orders')
-api.add_resource(UsersOrder, '/users/orders/<int:order_id>')
+api.add_resource(UserOrders, '/user/orders', '/user/orders/<int:order_id>')
 api.add_resource(AdminGetAllOrders, '/orders')
 api.add_resource(AdminGetSingleOrder, '/orders/<int:order_id>')
