@@ -2,6 +2,7 @@ from functools import wraps
 from flask import jsonify, request
 from models import UserModel
 
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -37,21 +38,6 @@ def admin_required(f):
     return decorated
 
 
-def jwt_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = None
-
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-        if token is None:
-            return {"message" : "kindly provide a valid token in the header"}, 401
-        try:
-            data = UserModel.decode_token(token)
-        except:
-            return {"message" : "kindly provide a valid token in the header"}, 401
-        return f(*args, **kwargs)
-    return decorated
 
 def is_blank(var):
     if var.strip() == '':

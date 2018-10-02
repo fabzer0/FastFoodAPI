@@ -1,7 +1,7 @@
 
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
-from ..models.models import OrdersModel
+from ..models.models import OrdersModel, MealsModel
 from ..models.decorators import admin_required, token_required
 
 class UserOrders(Resource):
@@ -9,37 +9,37 @@ class UserOrders(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'ordername',
+            'item',
             required=True,
             type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide a valid name',
+            help='item field is required',
             location=['form', 'json'])
         self.reqparse.add_argument(
-            'price',
+            'quantity',
             required=True,
             type=int,
-            help='kindly provide a price(should be a valid number)',
+            help='quantity field is required',
             location=['form', 'json'])
-
         super(UserOrders, self).__init__()
 
     @token_required
     def post(self, user_id):
 
         kwargs = self.reqparse.parse_args()
-        ordername = kwargs.get('ordername')
-        price = kwargs.get('price')
-
-        # # RAISE A CONCERN TO AN LFA ABOUT ORDERS. CANT ORDER ANYMORE EVENTUALLY
-        # order = OrdersModel.get_one('orders', ordername=ordername)
-        # if order:
-        #     return make_response(jsonify({'message': 'order with that name already exist'}), 203)
-
-        order = OrdersModel(ordername=ordername, price=price, user_id=user_id)
-        order.create_order()
-        order = OrdersModel.get_one('orders', ordername=ordername)
-        return make_response(jsonify({'message': 'order has been successfully posted', 'order': OrdersModel.order_details(order)}), 201)
-
+        item = kwargs.get('item')
+        quantity = kwargs.get('quantity')
+        meal = MealsModel.get_one('meals', mealname=item)
+        if not meal:
+            return {'message': 'order not in menu'}
+        if meal[3]:
+            price = meal[2]
+            totalprice = price * quantity
+            order = OrdersModel(user_id=user_id, item=item, totalprice=totalprice)
+            order.create_order()
+            order = OrdersModel.get_one('orders', item=item)
+            return make_response(jsonify({'message': 'order has been successfully added', 'order': OrdersModel.order_details(order)}), 201)
+        
+        
     @token_required
     def get(self, user_id, order_id=None):
         if order_id:
