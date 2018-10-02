@@ -52,17 +52,7 @@ class OrdersTest(BaseTests):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result['message'], {'ordername': 'kindly provide a valid name'})
 
-    def test_double_ordering(self):
-        """
-        This method tests double creation of an order
-        """
-        response = self.logged_in_user()
-        token = json.loads(response.data.decode('utf-8'))['token']
-        headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        self.client().post('/api/v2/user/orders', headers=headers, data=json.dumps(self.order_data), content_type='application/json')
-        response = self.client().post('/api/v2/user/orders', headers=headers, data=json.dumps(self.order_data), content_type='application/json')
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'order with that name already exist')
+
 
     def test_user_getting_all_orders(self):
         """

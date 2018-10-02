@@ -7,10 +7,16 @@ def connect_to_db(config=None):
     Function to connect to the required db
     """
     if config == 'testing':
-        url = os.getenv('TEST_DATABASE')
+        dbname = os.getenv('TEST_DB')
     else:
-        url = os.getenv('MAIN_DATABASE')
-    return psycopg2.connect(url)
+        dbname = os.getenv('MAIN_DB')
+
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USERNAME')
+    password = os.getenv('DB_PASSWORD')
+    port = os.getenv('DB_PORT')
+
+    return psycopg2.connect(user=user, password=password, host=host, port=port, dbname=dbname)
 
 def create_users_table(cur):
     """
