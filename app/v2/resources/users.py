@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models.decorators import admin_required
 from ..models.models import UserModel
+import os
 
 class SignUp(Resource):
 
@@ -22,10 +23,6 @@ class SignUp(Resource):
             help='kindly provide a valid email address',
             location=['form', 'json'],
             type=inputs.regex(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"))
-        self.reqparse.add_argument(
-            'admin',
-            required=False,
-            location=['form', 'json'])
         self.reqparse.add_argument(
             'password',
             required=True,
@@ -57,6 +54,14 @@ class SignUp(Resource):
             if len(password) >= 8:
                 email_exists = UserModel.get_one('users', email=email)
                 if not email_exists:
+                    if username == os.getenv('ADMIN'):
+                        user = UserModel(username=username, email=email, password=password)
+                        user.create_user()
+                        fetch_admin = UserModel.get_one('users', username=username)
+                        data = {'admin': True}
+                        UserModel.update('users', id=fetch_admin[0], data=data)
+                        user = UserModel.get_one('users', id=fetch_admin[0])
+                        return jsonify({'admin': UserModel.user_details(user)})
                     user = UserModel(username=username, email=email, password=password)
                     user.create_user()
                     user = UserModel.get_one('users', username=username)

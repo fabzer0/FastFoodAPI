@@ -28,9 +28,8 @@ class BaseTests(unittest.TestCase):
         }
 
         self.admin_data = {
-            'username': 'dennis',
-            'email': 'dennis@gmail.com',
-            'admin': True,
+            'username': 'admin',
+            'email': 'admin@gmail.com',
             'password': 'secretsanta',
             'confirm_password': 'secretsanta'
         }
@@ -64,7 +63,7 @@ class BaseTests(unittest.TestCase):
 
     def logged_in_admin(self):
         self.client().post('/api/v2/auth/signup', data=json.dumps(self.admin_data), content_type='application/json')
-        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'dennis@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
+        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'admin@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
         return res
 
 
