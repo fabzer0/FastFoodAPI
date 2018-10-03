@@ -134,6 +134,7 @@ class MealsModel(BaseModel):
 
     @staticmethod
     def get_menu(meal_id):
+
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
             return jsonify({'message': 'meal does not exist'})

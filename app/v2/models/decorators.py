@@ -32,7 +32,7 @@ def admin_required(f):
         except:
             return {'message': 'token is invalid'}
         if not admin:
-            return {'message': 'you are not authorized to perform this function as a non admin'}
+            return {'message': 'you are not authorized to perform this action as a non admin'}
         return f(*args, **kwargs)
     return decorated
 
