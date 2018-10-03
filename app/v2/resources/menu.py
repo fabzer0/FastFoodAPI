@@ -10,11 +10,12 @@ class MenuList(Resource):
         self.reqparse.add_argument(
             'meal_id',
             required=True,
-            type=int, 
+            type=int,
             help='kindly provide a valid meal id',
             location=['form', 'json'])
 
         super(MenuList, self).__init__()
+
 
     @admin_required
     def post(self):
@@ -34,9 +35,13 @@ class MenuList(Resource):
                 menu.append(meal)
         return jsonify({'all_menu': menu})
 
+    def delete(self, meal_id):
+        response = MealsModel.remove_from_menu(meal_id=meal_id)
+        return response
+ 
 
 
 menu_api = Blueprint('resources.menu', __name__)
 api = Api(menu_api)
-api.add_resource(MenuList, '/menu')
+api.add_resource(MenuList, '/menu', '/menu/<int:meal_id>')
 # api.add_resource(Menu, '/menu/<int:menu_id>')
