@@ -6,17 +6,8 @@ def connect_to_db(config=None):
     """
     Function to connect to the required db
     """
-    if config == 'testing':
-        dbname = os.getenv('TEST_DB')
-    else:
-        dbname = os.getenv('MAIN_DB')
 
-    host = os.getenv('DB_HOST')
-    user = os.getenv('DB_USERNAME')
-    password = os.getenv('DB_PASSWORD')
-    port = os.getenv('DB_PORT')
-
-    return psycopg2.connect(user=user, password=password, host=host, port=port, dbname=dbname)
+    return psycopg2.connect(os.getenv('DB_URL'))
 
 def create_users_table(cur):
     """
@@ -56,13 +47,13 @@ def create_orders_table(cur):
 def main(config=None):
     conn = connect_to_db(config=config)
     cur = conn.cursor()
-    # cur.execute('DROP TABLE IF EXISTS users CASCADE')
-    # cur.execute('DROP TABLE IF EXISTS meals CASCADE')
-    # cur.execute('DROP TABLE IF EXISTS orders CASCADE')
+    cur.execute('DROP TABLE IF EXISTS users CASCADE')
+    cur.execute('DROP TABLE IF EXISTS meals CASCADE')
+    cur.execute('DROP TABLE IF EXISTS orders CASCADE')
 
-    # create_users_table(cur)
-    # create_meals_table(cur)
-    # create_orders_table(cur)
+    create_users_table(cur)
+    create_meals_table(cur)
+    create_orders_table(cur)
 
     conn.commit()
     cur.close()
