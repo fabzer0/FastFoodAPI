@@ -30,7 +30,7 @@ class UserOrders(Resource):
         quantity = kwargs.get('quantity')
         meal = MealsModel.get_one('meals', mealname=item)
         if not meal:
-            return {'message': 'order not in menu'}
+            return {'message': 'meal item not in menu'}
         if meal[3]:
             price = meal[2]
             totalprice = price * quantity
@@ -38,6 +38,7 @@ class UserOrders(Resource):
             order.create_order()
             order = OrdersModel.get_one('orders', item=item)
             return make_response(jsonify({'message': 'order has been successfully added', 'order': OrdersModel.order_details(order)}), 201)
+        return {'message': 'meal item not in menu'}
         
         
     @token_required
@@ -57,7 +58,7 @@ class UserOrders(Resource):
         user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
         if user_order:
             OrdersModel.delete('orders', id=user_order[0])
-            return make_response(jsonify({'message', 'order successfully deleted'}))
+            return {'message': 'order successfully deleted'}
         return {'message': 'order does not exist'}, 404
 
 class AdminGetAllOrders(Resource):
@@ -93,7 +94,7 @@ class AdminGetSingleOrder(Resource):
 
         kwargs = self.reqparse.parse_args()
         status = kwargs.get('status')
-        statuses = ['new', 'processing', 'cancelled', 'complete']
+        statuses = ['processing', 'cancelled', 'complete']
 
         order = OrdersModel.get_one('orders', id=order_id)
         if not order:
@@ -101,7 +102,7 @@ class AdminGetSingleOrder(Resource):
         data = {}
         if status:
             if status not in statuses:
-                return make_response(jsonify({'message': 'status should either be new, processing, cancelled or complete'}), 400)
+                return make_response(jsonify({'message': 'status should either be processing, cancelled or complete'}), 400)
             data.update({'status': str(status)})
 
         OrdersModel.update('orders', id=order[0], data=data)

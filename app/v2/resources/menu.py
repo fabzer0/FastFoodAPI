@@ -1,6 +1,6 @@
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
-from ..models.decorators import admin_required, token_required, jwt_required
+from ..models.decorators import admin_required, token_required
 from ..models.models import MealsModel
 
 class MenuList(Resource):
@@ -16,7 +16,6 @@ class MenuList(Resource):
 
         super(MenuList, self).__init__()
 
-
     @admin_required
     def post(self):
 
@@ -29,9 +28,8 @@ class MenuList(Resource):
         meals = MealsModel.get_all('meals')
         menu = []
         for meal in meals:
-            # IT COMES BACK AS A TUPLE. IS THERE A WAY TO  MAKE THIS NICE?
             if meal[3]:
-                meal = MealsModel.meal_details(meal)
+                meal = MealsModel.menu_details(meal)
                 menu.append(meal)
         return jsonify({'all_menu': menu})
 
