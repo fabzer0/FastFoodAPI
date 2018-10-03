@@ -107,13 +107,6 @@ class MealsModel(BaseModel):
             price=meal[2],
             in_menu=meal[3]
         )
-    
-    @staticmethod
-    def menu_details(meal):
-        return dict(
-            mealname=meal[1],
-            price=meal[2]
-        )
 
     @staticmethod
     def add_to_menu(meal_id):
@@ -126,6 +119,7 @@ class MealsModel(BaseModel):
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
         return jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)})
+
 
     @staticmethod
     def remove_from_menu(meal_id):
@@ -151,14 +145,13 @@ class MealsModel(BaseModel):
 
 class OrdersModel(BaseModel):
 
-    def __init__(self, user_id, item, totalprice):
+    def __init__(self, ordername, price, user_id):
+        self.ordername = ordername
+        self.price = price
         self.user_id = user_id
-        self.item = item
-        self.totalprice = totalprice
-        
 
     def create_order(self):
-        cur.execute('INSERT INTO orders (user_id, item, totalprice) VALUES (%s, %s, %s)', (self.user_id, self.item, self.totalprice))
+        cur.execute('INSERT INTO orders (user_id, ordername, price) VALUES (%s,%s, %s)', (self.user_id, self.ordername, self.price))
         self.save()
 
     @staticmethod
@@ -170,7 +163,7 @@ class OrdersModel(BaseModel):
             query = 'SELECT * FROM orders WHERE user_id={} AND id={}'.format(user_id, order_id)
             cur.execute(query)
             return cur.fetchone()
-        query = 'SELECT orders.id, users.id, item, totalprice, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
+        query = 'SELECT orders.id, users.id, ordername, price, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
         cur.execute(query)
         user_orders = cur.fetchall()
         return user_orders
@@ -178,7 +171,9 @@ class OrdersModel(BaseModel):
     @staticmethod
     def order_details(order):
         return dict(
-            item=order[2],
-            totalprice=order[3],
+            id=order[0],
+            user_id=order[1],
+            ordername=order[2],
+            price=order[3],
             status=order[4]
         )
