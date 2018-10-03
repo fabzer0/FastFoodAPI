@@ -24,43 +24,43 @@ class MenuTests(BaseTests):
         """
         This method tests if an admin successfully gets a particular menu
         """
-        data = {
-            "menu_item": "Ugali & Kales",
-            "price": 50
-        }
-        res = self.client().post('/api/v2/menus', data=data)
-        self.assertEqual(res.status_code, 201)
-        response = self.client().get('api/v2/menus/1')
+        admin_response = self.logged_in_admin()
+        token = json.loads(admin_response.data.decode('utf-8'))['token']
+        headers = {'Content-Type': 'application/json', 'x-access-token': token}
+        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
         self.assertEqual(response.status_code, 200)
+        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        response = self.client().get('api/v2/menu')
+        self.assertEqual(response.status_code, 200)
+        
 
     def test_admin_create_menu(self):
         """
         This method tests a successful creation of menu
         """
-        data = {
-            "menu_item": "Ugali & Mboga",
-            "price": 50
-        }
-        response = self.client().post('/api/v2/menus', data=data)
-        self.assertEqual(response.status_code, 201)
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get('message'), 'menu has been successfully posted')
+        admin_response = self.logged_in_admin()
+        token = json.loads(admin_response.data.decode('utf-8'))['token']
+        headers = {'Content-Type': 'application/json', 'x-access-token': token}
+        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
 
     def test_admin_delete_a_particular_menu(self):
         """
         This method tests successful deletion of a particular menu
         """
-        data = {
-            "menu_item": "Ugali & Beef",
-            "price": 50
-        }
-        res = self.client().post('/api/v2/menus', data=data)
-        self.assertEqual(res.status_code, 201)
-        response = self.client().delete('/api/v2/menus/1')
+        admin_response = self.logged_in_admin()
+        token = json.loads(admin_response.data.decode('utf-8'))['token']
+        headers = {'Content-Type': 'application/json', 'x-access-token': token}
+        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
         self.assertEqual(response.status_code, 200)
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get('message'), 'menu item has been deleted')
+        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        response = self.client().delete('/api/v2/menu/1', headers=headers, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':
     unittest.main()
