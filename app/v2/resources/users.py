@@ -81,6 +81,7 @@ class AllUsers(Resource):
 
         return make_response(jsonify({'all_users': [UserModel.user_details(user) for user in users]}))
 
+
 class PromoteUser(Resource):
 
     @admin_required
