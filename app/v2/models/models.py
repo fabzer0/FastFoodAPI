@@ -130,7 +130,7 @@ class MealsModel(BaseModel):
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
-        return jsonify({'message': 'meal successfully removed from menu', 'meal': MealsModel.meal_details(meal)}), 200
+        return jsonify({'message': 'meal successfully removed from menu', 'meal': MealsModel.meal_details(meal)})
 
     @staticmethod
     def get_menu(meal_id):
