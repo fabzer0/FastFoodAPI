@@ -56,13 +56,13 @@ def create_orders_table(cur):
 def main(config=None):
     conn = connect_to_db(config=config)
     cur = conn.cursor()
-    # cur.execute('DROP TABLE IF EXISTS users CASCADE')
-    # cur.execute('DROP TABLE IF EXISTS meals CASCADE')
-    # cur.execute('DROP TABLE IF EXISTS orders CASCADE')
+    cur.execute('DROP TABLE IF EXISTS users CASCADE')
+    cur.execute('DROP TABLE IF EXISTS meals CASCADE')
+    cur.execute('DROP TABLE IF EXISTS orders CASCADE')
 
-    # create_users_table(cur)
-    # create_meals_table(cur)
-    # create_orders_table(cur)
+    create_users_table(cur)
+    create_meals_table(cur)
+    create_orders_table(cur)
 
     conn.commit()
     cur.close()

@@ -107,6 +107,13 @@ class MealsModel(BaseModel):
             price=meal[2],
             in_menu=meal[3]
         )
+    
+    @staticmethod
+    def menu_details(meal):
+        return dict(
+            mealname=meal[1],
+            price=meal[2]
+        )
 
     @staticmethod
     def add_to_menu(meal_id):
@@ -171,10 +178,7 @@ class OrdersModel(BaseModel):
     @staticmethod
     def order_details(order):
         return dict(
-            id=order[0],
-            user_id=order[1],
             item=order[2],
             totalprice=order[3],
-            status=order[4],
-            created_at=order[5]
+            status=order[4]
         )

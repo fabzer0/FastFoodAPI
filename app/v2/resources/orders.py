@@ -2,7 +2,7 @@
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models.models import OrdersModel, MealsModel
-from ..models.decorators import admin_required, token_required
+from ..models.decorators import admin_required, token_required, is_blank
 
 class UserOrders(Resource):
 
@@ -11,14 +11,14 @@ class UserOrders(Resource):
         self.reqparse.add_argument(
             'item',
             required=True,
-            type=inputs.regex(r"(.*\S.*)"),
             help='item field is required',
+            type=inputs.regex(r"(.*\S.*)"),
             location=['form', 'json'])
         self.reqparse.add_argument(
             'quantity',
             required=True,
-            type=int,
             help='quantity field is required',
+            type=int,
             location=['form', 'json'])
         super(UserOrders, self).__init__()
 
@@ -45,19 +45,19 @@ class UserOrders(Resource):
         if order_id:
             user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
             if user_order:
-                return {'order': OrdersModel.order_details(user_order)}, 200
+                return make_response(jsonify({'order': OrdersModel.order_details(user_order)}), 200)
             return {'message': 'order not found'}, 404
         user_orders = OrdersModel.get(user_id=user_id)
         if not user_orders:
             return make_response(jsonify({'message': 'you have no orders yet'}), 404)
-        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in user_orders]}), 200)
+        return {'orders': [OrdersModel.order_details(order) for order in user_orders]}, 200
 
     @token_required
     def delete(self, user_id, order_id):
         user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
         if user_order:
             OrdersModel.delete('orders', id=user_order[0])
-            return {'message', 'order successfully deleted'}, 200
+            return make_response(jsonify({'message', 'order successfully deleted'}))
         return {'message': 'order does not exist'}, 404
 
 class AdminGetAllOrders(Resource):

@@ -29,7 +29,7 @@ class MenuList(Resource):
         menu = []
         for meal in meals:
             if meal[3]:
-                meal = MealsModel.meal_details(meal)
+                meal = MealsModel.menu_details(meal)
                 menu.append(meal)
         return jsonify({'all_menu': menu})
 
