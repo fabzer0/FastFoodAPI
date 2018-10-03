@@ -6,6 +6,7 @@ from ..models.decorators import admin_required, token_required, is_blank
 
 class UserOrders(Resource):
 
+
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
