@@ -13,7 +13,6 @@ class MenuList(Resource):
             type=int,
             help='kindly provide a valid meal id',
             location=['form', 'json'])
-
         super(MenuList, self).__init__()
 
     @admin_required
@@ -26,15 +25,13 @@ class MenuList(Resource):
 
     def get(self):
         meals = MealsModel.get_all('meals')
-
         menu = []
         for meal in meals:
             if meal[3]:
                 meal = MealsModel.menu_details(meal)
                 menu.append(meal)
-        return jsonify({'all_menu': menu})
-
-    
+                return make_response(jsonify({'all_menu': menu}), 200)
+        return make_response(jsonify({'message': 'no meals in menu yet'}), 404)
 
 class Menu(Resource):
 
@@ -44,11 +41,9 @@ class Menu(Resource):
         return response
 
     def delete(self, meal_id):
-        
+
         response = MealsModel.remove_from_menu(meal_id=meal_id)
         return response
- 
-
 
 menu_api = Blueprint('resources.menu', __name__)
 api = Api(menu_api)

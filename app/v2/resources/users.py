@@ -37,7 +37,6 @@ class SignUp(Resource):
             location=['form', 'json'])
         super(SignUp, self).__init__()
 
-
     def post(self):
         """
         Register a new user
@@ -65,11 +64,10 @@ class SignUp(Resource):
                     user = UserModel(username=username, email=email, password=password)
                     user.create_user()
                     user = UserModel.get_one('users', username=username)
-                    return make_response(jsonify({'message': 'successfully registered', 'user': UserModel.user_details(user)}), 201)
-                return make_response(jsonify({'message': 'email already taken'}), 203)
+                    return make_response(jsonify({'message': 'you are successfully registered', 'user': UserModel.user_details(user)}), 201)
+                return make_response(jsonify({'message': 'email already taken'}), 400)
             return make_response(jsonify({'message': 'password should be atleast 8 characters'}), 400)
         return make_response(jsonify({"message" : "password and confirm password should be identical"}), 400)
-
 
 class AllUsers(Resource):
 
@@ -77,10 +75,8 @@ class AllUsers(Resource):
     def get(self):
         users = UserModel.get_all('users')
         if not users:
-            return jsonify({'message': 'no users found yet'})
-
-        return make_response(jsonify({'all_users': [UserModel.user_details(user) for user in users]}))
-
+            return jsonify({'message': 'no users found in the system yet'}), 404
+        return make_response(jsonify({'all_users': [UserModel.user_details(user) for user in users]}), 200)
 
 class PromoteUser(Resource):
 
@@ -88,12 +84,11 @@ class PromoteUser(Resource):
     def put(self, user_id):
         user = UserModel.get_one('users', id=user_id)
         if not user:
-            return jsonify({'message': 'user not found'})
+            return jsonify({'message': 'user not found'}), 404
         data = {'admin': True}
         UserModel.update('users', id=user[0], data=data)
         user = UserModel.get_one('users', id=user_id)
         return jsonify({'user': UserModel.user_details(user)})
-
 
 class Login(Resource):
 
@@ -119,16 +114,12 @@ class Login(Resource):
         email = kwargs.get('email')
         password = kwargs.get('password')
         user = UserModel.get_one('users', email=email)
-
         if user is None:
-            return make_response(jsonify({'message': 'invalid email or password'}), 404)
-
+            return make_response(jsonify({'message': 'a user with the specified username or password combination does not exist in the system.'}), 403)
         if UserModel.validate_password(password=password, email=user[2]):
             token = UserModel.generate_token(user)
-            return make_response(jsonify({'message': 'you are successfully logged in', 'token': token}), 200)
-        return make_response(jsonify({'message': 'invalid email or password'}), 401)
-
-
+            return make_response(jsonify({'message': 'login was successful', 'token': token}), 200)
+        return make_response(jsonify({'message': 'invalid email or password'}), 400)
 
 users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)

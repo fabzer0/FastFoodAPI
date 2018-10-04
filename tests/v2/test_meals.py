@@ -37,7 +37,6 @@ class MealsTests(BaseTests):
         response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
         response = self.client().get('/api/v2/meals', headers=headers, content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
@@ -60,7 +59,7 @@ class MealsTests(BaseTests):
         response = self.client().get('/api/v2/meals/2', headers=headers, content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'meal item does not exist')
-        
+
 
     def test_admin_successfully_updates_a_meal(self):
         response = self.logged_in_admin()
@@ -99,10 +98,10 @@ class MealsTests(BaseTests):
         response = self.client().delete('/api/v2/meals/2', headers=headers, content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'meal item does not exist')
-        
 
 
-    
+
+
 
 if __name__ == '__main__':
     unittest.main()

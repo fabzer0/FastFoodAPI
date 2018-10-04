@@ -5,10 +5,7 @@ def connect_to_db(config=None):
     """
     Function to connect to the required db
     """
-
-    return psycopg2.connect(os.getenv('DB_URL'))
-
-
+    return psycopg2.connect(os.getenv('DATABASE_URL'))
 
 def create_users_table(cur):
     """
@@ -60,4 +57,3 @@ def main(config=None):
     cur.close()
     conn.close()
     print('database successfully created')
-

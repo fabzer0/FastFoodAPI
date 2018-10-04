@@ -29,7 +29,7 @@ class UserTest(BaseTests):
         response = self.client().post(SIGNUP_URL, data=user)
         self.assertEqual(response.status_code, 201)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'successfully registered')
+        self.assertEqual(result['message'], 'you are successfully registered')
 
     def test_wrong_input_during_signup(self):
         """
@@ -111,7 +111,7 @@ class UserTest(BaseTests):
         res = self.client().post(LOGIN_URL, data=data)
         self.assertEqual(res.status_code, 200)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'you are successfully logged in')
+        self.assertEqual(result['message'], 'login was successful')
 
     def test_fail_login_wrong_password(self):
         """
@@ -130,7 +130,7 @@ class UserTest(BaseTests):
             'password': 'killshot'
         }
         res = self.client().post(LOGIN_URL, data=data)
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 400)
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['message'], 'invalid email or password')
 
@@ -151,9 +151,9 @@ class UserTest(BaseTests):
             'password': 'kamikaze'
         }
         res = self.client().post(LOGIN_URL, data=data)
-        self.assertEqual(res.status_code, 404)
+        self.assertEqual(res.status_code, 403)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'invalid email or password')
+        self.assertEqual(result['message'], 'a user with the specified username or password combination does not exist in the system.')
 
     def test_login_non_existing_user(self):
         """
@@ -173,7 +173,7 @@ class UserTest(BaseTests):
         }
         res = self.client().post(LOGIN_URL, data=data)
         result = json.loads(res.data.decode('utf-8'))
-        self.assertEqual(result['message'], 'invalid email or password')
+        self.assertEqual(result['message'], 'a user with the specified username or password combination does not exist in the system.')
 
 
 if __name__ == '__main__':

@@ -107,7 +107,7 @@ class MealsModel(BaseModel):
             price=meal[2],
             in_menu=meal[3]
         )
-    
+
     @staticmethod
     def menu_details(meal):
         return dict(
@@ -119,9 +119,9 @@ class MealsModel(BaseModel):
     def add_to_menu(meal_id):
         meal = MealsModel.get_one('meals', id=meal_id)
         if not meal:
-            return jsonify({'message': 'meal does not exist'})
+            return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if meal[3]:
-            return jsonify({'message': 'meal already in menu'})
+            return make_response(jsonify({'message': 'meal already in menu'}), 409)
         data = {'in_menu': True}
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
@@ -133,7 +133,7 @@ class MealsModel(BaseModel):
         if meal is None:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return make_response(jsonify({'message': 'meal already not in menu'}), 400)
+            return make_response(jsonify({'message': 'meal already not in menu'}), 404)
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
         return make_response(jsonify({'message': 'meal successfully removed from menu'}), 200)
@@ -143,10 +143,10 @@ class MealsModel(BaseModel):
 
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
-            return jsonify({'message': 'meal does not exist'})
+            return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return jsonify({'message': 'kindly ensure this meal is in the menu'})
-        return {'menu': MealsModel.menu_details(meal)}
+            return make_response(jsonify({'message': 'kindly ensure this meal is in the menu'}), 400)
+        return make_response(jsonify({'menu': MealsModel.menu_details(meal)}), 200)
 
 class OrdersModel(BaseModel):
 
@@ -154,7 +154,7 @@ class OrdersModel(BaseModel):
         self.user_id = user_id
         self.item = item
         self.totalprice = totalprice
-        
+
 
     def create_order(self):
         cur.execute('INSERT INTO orders (user_id, item, totalprice) VALUES (%s, %s, %s)', (self.user_id, self.item, self.totalprice))
