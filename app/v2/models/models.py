@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from flask import jsonify
+from flask import jsonify, make_response
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from instance.v2.config import app_config
@@ -125,18 +125,18 @@ class MealsModel(BaseModel):
         data = {'in_menu': True}
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
-        return jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)})
+        return make_response(jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)}), 201)
 
     @staticmethod
     def remove_from_menu(meal_id):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
-            return jsonify({'message': 'meal does not exist'}), 404
+            return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return jsonify({'message': 'meal already not in menu'}), 400
+            return make_response(jsonify({'message': 'meal already not in menu'}), 400)
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
-        return jsonify({'message': 'meal successfully removed from menu'})
+        return make_response(jsonify({'message': 'meal successfully removed from menu'}), 200)
 
     @staticmethod
     def get_menu(meal_id):

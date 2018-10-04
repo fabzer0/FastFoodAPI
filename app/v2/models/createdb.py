@@ -1,6 +1,5 @@
 import os
 import psycopg2
-# from flask import current_app
 
 def connect_to_db(config=None):
     """
@@ -8,6 +7,8 @@ def connect_to_db(config=None):
     """
 
     return psycopg2.connect(os.getenv('DB_URL'))
+
+
 
 def create_users_table(cur):
     """
@@ -60,6 +61,3 @@ def main(config=None):
     conn.close()
     print('database successfully created')
 
-
-if __name__ == '__main__':
-    main()
