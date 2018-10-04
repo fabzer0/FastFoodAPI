@@ -9,7 +9,6 @@ def connect_to_db(config=None):
     return psycopg2.connect(os.getenv('DATABASE_URL'))
 
 
-
 def create_users_table(cur):
     """
     Functions to create table for users
