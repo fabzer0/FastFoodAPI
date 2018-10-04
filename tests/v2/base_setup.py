@@ -72,7 +72,7 @@ class BaseTests(unittest.TestCase):
 
 
     def tearDown(self):
-        conn = connect_to_db()
+        conn = connect_to_db(app_config['testing'])
         cur = conn.cursor()
         cur.execute('DROP TABLE IF EXISTS users CASCADE')
         cur.execute('DROP TABLE IF EXISTS menu CASCADE')
