@@ -29,6 +29,8 @@ class UserOrders(Resource):
         kwargs = self.reqparse.parse_args()
         item = kwargs.get('item')
         quantity = kwargs.get('quantity')
+        if quantity < 0:
+            return {'message': 'quantity cannot be a negative number'}
         meal = MealsModel.get_one('meals', mealname=item)
         if not meal:
             return {'message': 'meal item not in menu'}
@@ -69,7 +71,7 @@ class AdminGetAllOrders(Resource):
         orders = OrdersModel.get_all('orders')
         if not orders:
             return make_response(jsonify({'message': 'no orders yet'}), 404)
-        return make_response(jsonify({'all_orders': [OrdersModel.order_details(order) for order in orders]}), 200)
+        return make_response(jsonify({'all_orders': [OrdersModel.admin_order_details(order) for order in orders]}), 200)
 
 class AdminGetSingleOrder(Resource):
 
@@ -78,8 +80,8 @@ class AdminGetSingleOrder(Resource):
         self.reqparse.add_argument(
             'status',
             required=True,
-            type=str,
             help='please insert the status of an order',
+            type=inputs.regex(r"(.*\S.*)"),
             location=['form', 'json']
         )
 
@@ -88,7 +90,7 @@ class AdminGetSingleOrder(Resource):
         order = OrdersModel.get_one('orders', id=order_id)
         if not order:
             return make_response(jsonify({'message': 'order does not exist'}), 404)
-        return make_response(jsonify({'order': OrdersModel.order_details(order)}), 200)
+        return make_response(jsonify({'order': OrdersModel.admin_order_details(order)}), 200)
 
     @admin_required
     def put(self, order_id):
@@ -96,7 +98,6 @@ class AdminGetSingleOrder(Resource):
         kwargs = self.reqparse.parse_args()
         status = kwargs.get('status')
         statuses = ['processing', 'cancelled', 'complete']
-
         order = OrdersModel.get_one('orders', id=order_id)
         if not order:
             return make_response(jsonify({'message': 'order item does not exist'}), 404)

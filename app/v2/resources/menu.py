@@ -26,6 +26,7 @@ class MenuList(Resource):
 
     def get(self):
         meals = MealsModel.get_all('meals')
+
         menu = []
         for meal in meals:
             if meal[3]:
@@ -33,7 +34,17 @@ class MenuList(Resource):
                 menu.append(meal)
         return jsonify({'all_menu': menu})
 
+    
+
+class Menu(Resource):
+
+    def get(self, meal_id):
+
+        response = MealsModel.get_menu(meal_id)
+        return response
+
     def delete(self, meal_id):
+        
         response = MealsModel.remove_from_menu(meal_id=meal_id)
         return response
  
@@ -41,5 +52,5 @@ class MenuList(Resource):
 
 menu_api = Blueprint('resources.menu', __name__)
 api = Api(menu_api)
-api.add_resource(MenuList, '/menu', '/menu/<int:meal_id>')
-# api.add_resource(Menu, '/menu/<int:menu_id>')
+api.add_resource(MenuList, '/menu')
+api.add_resource(Menu, '/menu/<int:meal_id>')

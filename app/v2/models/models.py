@@ -80,7 +80,7 @@ class UserModel(BaseModel):
         payload = {
             'id': user_id,
             'admin': admin,
-            'exp': datetime.utcnow()+timedelta(days=2),
+            'exp': datetime.utcnow()+timedelta(days=1)
         }
         return jwt.encode(payload, str(app_config['development']), algorithm='HS256').decode('utf-8')
 
@@ -136,8 +136,7 @@ class MealsModel(BaseModel):
             return jsonify({'message': 'meal already not in menu'}), 400
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
-        meal = MealsModel.get_one('meals', id=meal[0])
-        return jsonify({'message': 'meal successfully removed from menu', 'meal': MealsModel.meal_details(meal)}), 200
+        return jsonify({'message': 'meal successfully removed from menu'})
 
     @staticmethod
     def get_menu(meal_id):
@@ -147,7 +146,7 @@ class MealsModel(BaseModel):
             return jsonify({'message': 'meal does not exist'})
         if not meal[3]:
             return jsonify({'message': 'kindly ensure this meal is in the menu'})
-        return {'menu': MealsModel.meal_details(meal)}
+        return {'menu': MealsModel.menu_details(meal)}
 
 class OrdersModel(BaseModel):
 
@@ -178,6 +177,16 @@ class OrdersModel(BaseModel):
     @staticmethod
     def order_details(order):
         return dict(
+            item=order[2],
+            totalprice=order[3],
+            status=order[4]
+        )
+
+    @staticmethod
+    def admin_order_details(order):
+        return dict(
+            id=order[0],
+            user_id=order[1],
             item=order[2],
             totalprice=order[3],
             status=order[4]

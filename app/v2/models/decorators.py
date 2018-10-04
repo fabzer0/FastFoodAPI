@@ -14,7 +14,7 @@ def token_required(f):
         try:
             user_id = UserModel.decode_token(token)['id']    
         except:
-            return {'message': 'error while decoding token'}, 401
+            return {'message': 'error while decoding token, session might have expired'}, 401
         return f(user_id=user_id, *args, **kwargs)
     return decorated
 

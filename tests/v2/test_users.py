@@ -16,20 +16,20 @@ class UserTest(BaseTests):
     This class contain methods for user manipulation
     """
 
-    # def test_successful_registration(self):
-    #     """
-    #     This method tests successful user creation
-    #     """
-    #     user = {
-    #         "username": "jamalkim",
-    #         "email": "jamal97@gmail.com",
-    #         "password": "pariskimmy",
-    #         "confirm_password": "pariskimmy"
-    #     }
-    #     response = self.client().post(SIGNUP_URL, data=user)
-    #     self.assertEqual(response.status_code, 201)
-    #     result = json.loads(response.data.decode('utf-8'))
-    #     self.assertEqual(result['message'], 'successfully registered')
+    def test_successful_registration(self):
+        """
+        This method tests successful user creation
+        """
+        user = {
+            "username": "jamalkim",
+            "email": "jamal97@gmail.com",
+            "password": "pariskimmy",
+            "confirm_password": "pariskimmy"
+        }
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        result = json.loads(response.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'successfully registered')
 
     def test_wrong_input_during_signup(self):
         """
@@ -92,88 +92,88 @@ class UserTest(BaseTests):
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result['message'], 'password should be atleast 8 characters')
 
-    # def test_successful_login(self):
-    #     """
-    #     This method tests a successful login
-    #     """
-    #     user = {
-    #         'username': 'lucasthomas',
-    #         'email': 'lucasthomas@gmail.com',
-    #         'password': 'lucasthomas',
-    #         'confirm_password': 'lucasthomas'
-    #     }
-    #     response = self.client().post(SIGNUP_URL, data=user)
-    #     self.assertEqual(response.status_code, 201)
-    #     data = {
-    #         'email': 'lucasthomas@gmail.com',
-    #         'password': 'lucasthomas'
-    #     }
-    #     res = self.client().post(LOGIN_URL, data=data)
-    #     self.assertEqual(res.status_code, 200)
-    #     result = json.loads(res.data.decode('utf-8'))
-    #     self.assertEqual(result['message'], 'you are successfully logged in')
+    def test_successful_login(self):
+        """
+        This method tests a successful login
+        """
+        user = {
+            'username': 'lucasthomas',
+            'email': 'lucasthomas@gmail.com',
+            'password': 'lucasthomas',
+            'confirm_password': 'lucasthomas'
+        }
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        data = {
+            'email': 'lucasthomas@gmail.com',
+            'password': 'lucasthomas'
+        }
+        res = self.client().post(LOGIN_URL, data=data)
+        self.assertEqual(res.status_code, 200)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'you are successfully logged in')
 
-    # def test_fail_login_wrong_password(self):
-    #     """
-    #     This method tests unsuccessful login for wrong password
-    #     """
-    #     user = {
-    #         'username': 'eminem',
-    #         'email': 'eminem@gmail.com',
-    #         'password': 'kamikaze',
-    #         'confirm_password': 'kamikaze'
-    #     }
-    #     response = self.client().post(SIGNUP_URL, data=user)
-    #     self.assertEqual(response.status_code, 201)
-    #     data = {
-    #         'email': 'eminem@gmail.com',
-    #         'password': 'killshot'
-    #     }
-    #     res = self.client().post(LOGIN_URL, data=data)
-    #     self.assertEqual(res.status_code, 401)
-    #     result = json.loads(res.data.decode('utf-8'))
-    #     self.assertEqual(result['message'], 'invalid email or password')
+    def test_fail_login_wrong_password(self):
+        """
+        This method tests unsuccessful login for wrong password
+        """
+        user = {
+            'username': 'eminem',
+            'email': 'eminem@gmail.com',
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
+        }
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        data = {
+            'email': 'eminem@gmail.com',
+            'password': 'killshot'
+        }
+        res = self.client().post(LOGIN_URL, data=data)
+        self.assertEqual(res.status_code, 401)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'invalid email or password')
 
-    # def test_fail_login_wrong_email(self):
-    #     """
-    #     This method tests unsuccessful login for wrong email
-    #     """
-    #     user = {
-    #         'username': 'eminem',
-    #         'email': 'eminem@gmail.com',
-    #         'password': 'kamikaze',
-    #         'confirm_password': 'kamikaze'
-    #     }
-    #     response = self.client().post(SIGNUP_URL, data=user)
-    #     self.assertEqual(response.status_code, 201)
-    #     data = {
-    #         'email': 'emin@gmail.com',
-    #         'password': 'kamikaze'
-    #     }
-    #     res = self.client().post(LOGIN_URL, data=data)
-    #     self.assertEqual(res.status_code, 404)
-    #     result = json.loads(res.data.decode('utf-8'))
-    #     self.assertEqual(result['message'], 'invalid email or password')
+    def test_fail_login_wrong_email(self):
+        """
+        This method tests unsuccessful login for wrong email
+        """
+        user = {
+            'username': 'eminem',
+            'email': 'eminem@gmail.com',
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
+        }
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        data = {
+            'email': 'emin@gmail.com',
+            'password': 'kamikaze'
+        }
+        res = self.client().post(LOGIN_URL, data=data)
+        self.assertEqual(res.status_code, 404)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'invalid email or password')
 
-    # def test_login_non_existing_user(self):
-    #     """
-    #     This method tests unsuccessful login for a user that doesnt exist
-    #     """
-    #     user = {
-    #         'username': 'eminem',
-    #         'email': 'eminem@gmail.com',
-    #         'password': 'kamikaze',
-    #         'confirm_password': 'kamikaze'
-    #     }
-    #     response = self.client().post(SIGNUP_URL, data=user)
-    #     self.assertEqual(response.status_code, 201)
-    #     data = {
-    #         'email': 'eminem97@gmail.com',
-    #         'password': 'kamikazeeer'
-    #     }
-    #     res = self.client().post(LOGIN_URL, data=data)
-    #     result = json.loads(res.data.decode('utf-8'))
-    #     self.assertEqual(result['message'], 'invalid email or password')
+    def test_login_non_existing_user(self):
+        """
+        This method tests unsuccessful login for a user that doesnt exist
+        """
+        user = {
+            'username': 'eminem',
+            'email': 'eminem@gmail.com',
+            'password': 'kamikaze',
+            'confirm_password': 'kamikaze'
+        }
+        response = self.client().post(SIGNUP_URL, data=user)
+        self.assertEqual(response.status_code, 201)
+        data = {
+            'email': 'eminem97@gmail.com',
+            'password': 'kamikazeeer'
+        }
+        res = self.client().post(LOGIN_URL, data=data)
+        result = json.loads(res.data.decode('utf-8'))
+        self.assertEqual(result['message'], 'invalid email or password')
 
 
 if __name__ == '__main__':
