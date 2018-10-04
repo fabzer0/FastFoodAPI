@@ -1,6 +1,6 @@
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
-from ..models.decorators import admin_required, token_required, jwt_required
+from ..models.decorators import admin_required, token_required
 from ..models.models import MealsModel
 
 class MenuList(Resource):
@@ -26,17 +26,31 @@ class MenuList(Resource):
 
     def get(self):
         meals = MealsModel.get_all('meals')
+
         menu = []
         for meal in meals:
-            # IT COMES BACK AS A TUPLE. IS THERE A WAY TO  MAKE THIS NICE?
             if meal[3]:
-                meal = MealsModel.meal_details(meal)
+                meal = MealsModel.menu_details(meal)
                 menu.append(meal)
         return jsonify({'all_menu': menu})
 
+    
+
+class Menu(Resource):
+
+    def get(self, meal_id):
+
+        response = MealsModel.get_menu(meal_id)
+        return response
+
+    def delete(self, meal_id):
+        
+        response = MealsModel.remove_from_menu(meal_id=meal_id)
+        return response
+ 
 
 
 menu_api = Blueprint('resources.menu', __name__)
 api = Api(menu_api)
 api.add_resource(MenuList, '/menu')
-# api.add_resource(Menu, '/menu/<int:menu_id>')
+api.add_resource(Menu, '/menu/<int:meal_id>')

@@ -1,22 +1,14 @@
 import os
 import psycopg2
-# from flask import current_app
 
 def connect_to_db(config=None):
     """
     Function to connect to the required db
     """
-    if config == 'testing':
-        dbname = os.getenv('TEST_DB')
-    else:
-        dbname = os.getenv('MAIN_DB')
 
-    host = os.getenv('DB_HOST')
-    user = os.getenv('DB_USERNAME')
-    password = os.getenv('DB_PASSWORD')
-    port = os.getenv('DB_PORT')
+    return psycopg2.connect(os.getenv('DB_URL'))
 
-    return psycopg2.connect(user=user, password=password, host=host, port=port, dbname=dbname)
+
 
 def create_users_table(cur):
     """
@@ -45,9 +37,9 @@ def create_orders_table(cur):
         '''CREATE TABLE orders (
             id serial,
             user_id INTEGER NOT NULL,
-            ordername VARCHAR(50) NOT NULL,
-            price INTEGER NOT NULL,
-            status VARCHAR,
+            item VARCHAR(100) NOT NULL,
+            totalprice INTEGER,
+            status VARCHAR DEFAULT 'New',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE
@@ -69,5 +61,3 @@ def main(config=None):
     conn.close()
     print('database successfully created')
 
-if __name__ == '__main__':
-    main()

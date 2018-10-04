@@ -34,13 +34,13 @@ class MealList(Resource):
         meal = MealsModel(mealname=mealname, price=price)
         meal.create_meal()
         meal = MealsModel.get_one('meals', mealname=mealname)
-        return jsonify({'message': 'meal successfully created', 'meal': MealsModel.meal_details(meal)})
+        return make_response(jsonify({'message': 'meal successfully created', 'meal': MealsModel.meal_details(meal)}), 201)
 
     @admin_required
     def get(self):
         meals = MealsModel.get_all('meals')
         if not meals:
-            return jsonify({'message': 'no meals yet'})
+            return jsonify({'message': 'no meals yet'}), 404
         return jsonify({'all_meals': [MealsModel.meal_details(meal) for meal in meals]})
 
 class Meal(Resource):

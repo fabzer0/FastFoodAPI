@@ -1,0 +1,642 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Fast-Food-Fast
+  description: Fast food fast is an application that allows users to order meals online and get deliveries on time.
+  contact: {}
+host: localhost:5000
+basePath: /api/v2
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /auth/signup:
+    post:
+      description: This registers a special user who is an admin
+      summary: Register user
+      tags:
+      - SignUp
+      operationId: AuthSignupPost
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RegisterUserrequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /auth/login:
+    post:
+      description: This logs in a user
+      summary: Login user
+      tags:
+      - SignUp
+      operationId: AuthLoginPost
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/LoginUserrequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /users:
+    get:
+      description: This allows only the admin to promote other users
+      summary: Admin has the privillege to promote other users as admins
+      tags:
+      - Admin Get and Promote Users
+      operationId: UsersGet2
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /meals:
+    get:
+      description: This route allows the admin to view the meals on the database
+      summary: Admin can get and see all the meals in the database
+      tags:
+      - Admin Add, Get, Edit, Delete Meals
+      operationId: MealsGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+    post:
+      description: This route allows the admin to add meals to the database
+      summary: Admin needs to add meals in the system from this route
+      tags:
+      - Admin Add, Get, Edit, Delete Meals
+      operationId: MealsPost
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AdminNeedsToAddMealsInTheSystemFromThisRouterequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /meals/1:
+    get:
+      description: This route allows the admin to get a particular meal on the database
+      summary: Admin can get and see a particular meal in the database
+      tags:
+      - Admin Add, Get, Edit, Delete Meals
+      operationId: Meals1Get
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+    put:
+      summary: Admin can update a particular meals credentials in the database
+      tags:
+      - Admin Add, Get, Edit, Delete Meals
+      operationId: Meals1Put
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AdminCanUpdateAParticularMealsCredentialsInTheDatabaserequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+    delete:
+      summary: Admin can delete a particular meal  in the database
+      tags:
+      - Admin Add, Get, Edit, Delete Meals
+      operationId: Meals1Delete
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AdminCanDeleteAParticularMealInTheDatabaserequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /menu:
+    get:
+      summary: Anyone can see all meals in the menu
+      tags:
+      - Get Menu
+      operationId: MenuGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+    post:
+      summary: Admin can post a meal to the menu
+      tags:
+      - Admin Add to Menu
+      operationId: MenuPost
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AdminCanPostAMealToTheMenurequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /menu/1:
+    delete:
+      summary: Admin can delete a particular meal from the menu
+      tags:
+      - Admin Remove From Menu
+      operationId: Menu1Delete
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /user/orders:
+    get:
+      summary: A user can post an order
+      tags:
+      - User Add, Get, Delete Orders
+      operationId: UserOrdersGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /user/orders/3:
+    delete:
+      summary: A user can get all orders
+      tags:
+      - User Add, Get, Delete Orders
+      operationId: UserOrders3Delete
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AUserCanGetAllOrdersrequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /user/orders/1:
+    get:
+      summary: A user can get a single order
+      operationId: UserOrders1Get
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+    delete:
+      summary: A user can delete an order
+      tags:
+      - User Add, Get, Delete Orders
+      operationId: UserOrders1Delete
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AUserCanDeleteAnOrderrequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /orders:
+    get:
+      summary: An admin can view all the orders
+      tags:
+      - Admin Get and Edit User Orders
+      operationId: OrdersGet
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /orders/1:
+    get:
+      summary: An admin can get a particular order
+      tags:
+      - Admin Get and Edit User Orders
+      operationId: Orders1Get
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+  /orders/5:
+    put:
+      summary: An admin can update a particular order
+      tags:
+      - Admin Get and Edit User Orders
+      operationId: Orders5Put
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AnAdminCanUpdateAParticularOrderrequest'
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: x-access-token
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+definitions:
+  RegisterUserrequest:
+    title: Register userRequest
+    example:
+      username: admin
+      email: admin@gmail.com
+      password: secretsanta
+      confirm_password: secretsanta
+    type: object
+    properties:
+      username:
+        description: ''
+        example: admin
+        type: string
+      email:
+        description: ''
+        example: admin@gmail.com
+        type: string
+      password:
+        description: ''
+        example: secretsanta
+        type: string
+      confirm_password:
+        description: ''
+        example: secretsanta
+        type: string
+    required:
+    - username
+    - email
+    - password
+    - confirm_password
+  LoginUserrequest:
+    title: Login userRequest
+    example:
+      email: daniel@gmail.com
+      password: secretsanta
+    type: object
+    properties:
+      email:
+        description: ''
+        example: daniel@gmail.com
+        type: string
+      password:
+        description: ''
+        example: secretsanta
+        type: string
+    required:
+    - email
+    - password
+  AdminNeedsToAddMealsInTheSystemFromThisRouterequest:
+    title: Admin needs to add meals in the system from this routeRequest
+    example:
+      mealname: beans
+      price: 80
+    type: object
+    properties:
+      mealname:
+        description: ''
+        example: beans
+        type: string
+      price:
+        description: ''
+        example: 80
+        type: integer
+        format: int32
+    required:
+    - mealname
+    - price
+  AdminCanUpdateAParticularMealsCredentialsInTheDatabaserequest:
+    title: Admin can update a particular meals credentials in the databaseRequest
+    example:
+      mealname: chicken
+      price: 80
+    type: object
+    properties:
+      mealname:
+        description: ''
+        example: chicken
+        type: string
+      price:
+        description: ''
+        example: 80
+        type: integer
+        format: int32
+    required:
+    - mealname
+    - price
+  AdminCanDeleteAParticularMealInTheDatabaserequest:
+    title: Admin can delete a particular meal  in the databaseRequest
+    example:
+      mealname: chicken
+      price: 80
+    type: object
+    properties:
+      mealname:
+        description: ''
+        example: chicken
+        type: string
+      price:
+        description: ''
+        example: 80
+        type: integer
+        format: int32
+    required:
+    - mealname
+    - price
+  AdminCanPostAMealToTheMenurequest:
+    title: Admin can post a meal to the menuRequest
+    example:
+      meal_id: 3
+    type: object
+    properties:
+      meal_id:
+        description: ''
+        example: 3
+        type: integer
+        format: int32
+    required:
+    - meal_id
+  AUserCanGetAllOrdersrequest:
+    title: A user can get all ordersRequest
+    example:
+      item: chicken
+      quantity: 3
+    type: object
+    properties:
+      item:
+        description: ''
+        example: chicken
+        type: string
+      quantity:
+        description: ''
+        example: 3
+        type: integer
+        format: int32
+    required:
+    - item
+    - quantity
+  AUserCanDeleteAnOrderrequest:
+    title: A user can delete an orderRequest
+    example:
+      item: chicken
+      quantity: 3
+    type: object
+    properties:
+      item:
+        description: ''
+        example: chicken
+        type: string
+      quantity:
+        description: ''
+        example: 3
+        type: integer
+        format: int32
+    required:
+    - item
+    - quantity
+  AnAdminCanUpdateAParticularOrderrequest:
+    title: An admin can update a particular orderRequest
+    example:
+      status: processing
+    type: object
+    properties:
+      status:
+        description: ''
+        example: processing
+        type: string
+    required:
+    - status
+tags:
+- name: SignUp
+- name: Admin Get and Promote Users
+- name: Admin Add, Get, Edit, Delete Meals
+- name: Admin Add to Menu
+- name: Get Menu
+- name: Admin Remove From Menu
+- name: User Add, Get, Delete Orders
+- name: Admin Get and Edit User Orders

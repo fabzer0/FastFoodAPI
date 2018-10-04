@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from flask import jsonify
+from flask import jsonify, make_response
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from instance.v2.config import app_config
@@ -80,7 +80,7 @@ class UserModel(BaseModel):
         payload = {
             'id': user_id,
             'admin': admin,
-            'exp': datetime.utcnow()+timedelta(days=2),
+            'exp': datetime.utcnow()+timedelta(days=1)
         }
         return jwt.encode(payload, str(app_config['development']), algorithm='HS256').decode('utf-8')
 
@@ -107,6 +107,13 @@ class MealsModel(BaseModel):
             price=meal[2],
             in_menu=meal[3]
         )
+    
+    @staticmethod
+    def menu_details(meal):
+        return dict(
+            mealname=meal[1],
+            price=meal[2]
+        )
 
     @staticmethod
     def add_to_menu(meal_id):
@@ -118,19 +125,18 @@ class MealsModel(BaseModel):
         data = {'in_menu': True}
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
-        return jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)})
+        return make_response(jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)}), 201)
 
     @staticmethod
     def remove_from_menu(meal_id):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
-            return jsonify({'message': 'meal does not exist'}), 404
+            return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return jsonify({'message': 'meal already not in menu'}), 400
+            return make_response(jsonify({'message': 'meal already not in menu'}), 400)
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
-        meal = MealsModel.get_one('meals', id=meal[0])
-        return jsonify({'message': 'meal successfully removed from menu', 'meal': MealsModel.meal_details(meal)}), 200
+        return make_response(jsonify({'message': 'meal successfully removed from menu'}), 200)
 
     @staticmethod
     def get_menu(meal_id):
@@ -139,17 +145,18 @@ class MealsModel(BaseModel):
             return jsonify({'message': 'meal does not exist'})
         if not meal[3]:
             return jsonify({'message': 'kindly ensure this meal is in the menu'})
-        return {'menu': MealsModel.meal_details(meal)}
+        return {'menu': MealsModel.menu_details(meal)}
 
 class OrdersModel(BaseModel):
 
-    def __init__(self, ordername, price, user_id):
-        self.ordername = ordername
-        self.price = price
+    def __init__(self, user_id, item, totalprice):
         self.user_id = user_id
+        self.item = item
+        self.totalprice = totalprice
+        
 
     def create_order(self):
-        cur.execute('INSERT INTO orders (user_id, ordername, price) VALUES (%s,%s, %s)', (self.user_id, self.ordername, self.price))
+        cur.execute('INSERT INTO orders (user_id, item, totalprice) VALUES (%s, %s, %s)', (self.user_id, self.item, self.totalprice))
         self.save()
 
     @staticmethod
@@ -161,7 +168,7 @@ class OrdersModel(BaseModel):
             query = 'SELECT * FROM orders WHERE user_id={} AND id={}'.format(user_id, order_id)
             cur.execute(query)
             return cur.fetchone()
-        query = 'SELECT orders.id, users.id, ordername, price, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
+        query = 'SELECT orders.id, users.id, item, totalprice, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
         cur.execute(query)
         user_orders = cur.fetchall()
         return user_orders
@@ -169,9 +176,17 @@ class OrdersModel(BaseModel):
     @staticmethod
     def order_details(order):
         return dict(
+            item=order[2],
+            totalprice=order[3],
+            status=order[4]
+        )
+
+    @staticmethod
+    def admin_order_details(order):
+        return dict(
             id=order[0],
             user_id=order[1],
-            ordername=order[2],
-            price=order[3],
+            item=order[2],
+            totalprice=order[3],
             status=order[4]
         )
