@@ -27,10 +27,11 @@ class MealList(Resource):
         kwargs = self.reqparse.parse_args()
         mealname = kwargs.get('mealname')
         price = kwargs.get('price')
-
+        if price < 0:
+            return make_response(jsonify({'message': 'price field cannot be a negative number'}), 400)
         meal = MealsModel.get_one('meals', mealname=mealname)
         if meal:
-            return jsonify({'message': 'meal with that name already exist'})
+            return make_response(jsonify({'message': 'meal with that name already exist'}), 409)
         meal = MealsModel(mealname=mealname, price=price)
         meal.create_meal()
         meal = MealsModel.get_one('meals', mealname=mealname)
@@ -40,8 +41,8 @@ class MealList(Resource):
     def get(self):
         meals = MealsModel.get_all('meals')
         if not meals:
-            return jsonify({'message': 'no meals yet'}), 404
-        return jsonify({'all_meals': [MealsModel.meal_details(meal) for meal in meals]})
+            return make_response(jsonify({'message': 'no meals yet'}), 404)
+        return make_response(jsonify({'all_meals': [MealsModel.meal_details(meal) for meal in meals]}), 200)
 
 class Meal(Resource):
 
@@ -59,14 +60,13 @@ class Meal(Resource):
             type=int,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
-
         super(Meal, self).__init__()
 
     @admin_required
     def get(self, meal_id):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal:
-            return make_response(jsonify({'meal': MealsModel.meal_details(meal)}))
+            return make_response(jsonify({'meal': MealsModel.meal_details(meal)}), 200)
         return make_response(jsonify({'message': 'meal item does not exist'}), 404)
 
     @admin_required
@@ -74,7 +74,8 @@ class Meal(Resource):
         kwargs = self.reqparse.parse_args()
         mealname = kwargs.get('mealname')
         price = kwargs.get('price')
-
+        if price < 0:
+            return make_response(jsonify({'message': 'price field cannot be a negative number'}), 400)
         meal = MealsModel.get_one('meals', id=meal_id)
         if not meal:
             return make_response(jsonify({'message': 'meal item does not exist'}), 404)
@@ -93,8 +94,8 @@ class Meal(Resource):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal:
             MealsModel.delete('meals', id=meal[0])
-            return make_response(jsonify({'message': 'meal item has been deleted'}))
-        return make_response(jsonify({'message': 'meal item does not exist'}))
+            return make_response(jsonify({'message': 'meal item has been deleted'}), 200)
+        return make_response(jsonify({'message': 'meal item does not exist'}), 404)
 
 
 meals_api = Blueprint('resources.meals', __name__)

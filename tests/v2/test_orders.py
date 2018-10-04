@@ -198,7 +198,7 @@ class OrdersTest(BaseTests):
         response = self.client().get('/api/v2/orders/99', headers=headers, content_type='application/json')
         self.assertEqual(response.status_code, 404)
         result = json.loads(response.data.decode('utf-8'))
-        self.assertEqual(result.get('message'), 'order does not exist')
+        self.assertEqual(result.get('message'), 'order item does not exist')
 
 
     def test_admin_editing_an_order(self):
