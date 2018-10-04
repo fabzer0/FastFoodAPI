@@ -2,7 +2,6 @@ from functools import wraps
 from flask import jsonify, request, make_response
 from .models import UserModel
 
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
