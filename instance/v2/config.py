@@ -9,7 +9,7 @@ class Config:
     TESTING = False
     SECRET_KEY = os.getenv('SECRET_KEY')
     APP_SETTINGS = os.getenv('APP_SETTINGS')
-    DATABASE_URL = os.getenv('DB_URL')
+    DATABASE_URL = os.getenv('DATABASE_URL')
 
 class DevelopmentEnv(Config):
     """
@@ -25,7 +25,7 @@ class TestingEnv(Config):
     TESTING = True
     DEBUG = True
     DATABASE_URL = os.getenv('TEST_DB')
-    
+
 
 class ProductionEnv(Config):
     """
