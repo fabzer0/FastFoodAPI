@@ -175,6 +175,5 @@ class UserTest(BaseTests):
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['message'], 'a user with the specified username or password combination does not exist in the system.')
 
-
 if __name__ == '__main__':
     unittest.main()
