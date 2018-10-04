@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from instance.v2.config import app_config
 from .createdb import connect_to_db
 
-conn = connect_to_db(app_config['development'])
+conn = connect_to_db()
 conn.set_session(autocommit=True)
 cur = conn.cursor()
 
