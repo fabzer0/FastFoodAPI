@@ -6,6 +6,8 @@
 
 Fast-Food-Fast is an application that allows users(customers) order their favorite meals online and get deliveries in time
 
+![Home Image](https://raw.github.com/fabischolasi/fast-food-fast/develop/UI/static/css/img/pizza.jpg)
+
 ## Getting Started
 
 This will give you guidance on how you can run the program on your machine and test it in development and testing mode configurations
