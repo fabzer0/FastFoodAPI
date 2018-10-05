@@ -1,4 +1,3 @@
-
 """
 This module sets up information needed for testing
 """
@@ -21,16 +20,15 @@ class BaseTests(unittest.TestCase):
         self.client = self.app.test_client
 
         self.user_data = {
-            'username': 'fabisch',
-            'email': 'fabischapeli97@gmail.com',
+            'username': 'dariustanz',
+            'email': 'dariustanz@gmail.com',
             'password': 'secretsanta',
             'confirm_password': 'secretsanta'
         }
 
         self.admin_data = {
-            'username': 'dennis',
-            'email': 'dennis@gmail.com',
-            'admin': True,
+            'username': 'admin',
+            'email': 'admin@gmail.com',
             'password': 'secretsanta',
             'confirm_password': 'secretsanta'
         }
@@ -42,9 +40,14 @@ class BaseTests(unittest.TestCase):
             'confirm_password': 'secretsanta'
         }
 
+        self.meal_data = {
+            'mealname': 'chicken',
+            'price': 90
+        }
+
         self.order_data = {
-            'ordername': 'Rice Chicken',
-            'price': 45
+            'item': 'Rice Chicken',
+            'quantity': 4
         }
 
         self.order_data_1 = {
@@ -59,12 +62,12 @@ class BaseTests(unittest.TestCase):
 
     def logged_in_user(self):
         self.client().post('/api/v2/auth/signup', data=json.dumps(self.user_data), content_type='application/json')
-        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'fabischapeli97@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
+        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'dariustanz@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
         return res
 
     def logged_in_admin(self):
         self.client().post('/api/v2/auth/signup', data=json.dumps(self.admin_data), content_type='application/json')
-        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'dennis@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
+        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'admin@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
         return res
 
 

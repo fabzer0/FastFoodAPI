@@ -2,16 +2,26 @@ language: python
 python:
   - 3.5
 
+services:
+  - postgresql
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
   - pip install coveralls
+
+before_script:
+  - psql -c "CREATE DATABASE mealproject;" -U postgres
+  - psql -c "CREATE DATABASE test_db_mealproject;" -U postgres
+  - psql -c "CREATE USER apeli WITH PASSWORD 'secretsanta';" -U postgres
+
 script:
   - python -m pytest --cov-report term-missing --cov=app
+
 after_success:
   - coveralls
+
 notifications:
   email: false
-
 
 cache : pip
