@@ -78,7 +78,7 @@ PUT   /api/v1/orders/id | Update a unique order
 DELETE   /api/v1/orders/id | Delete unique order
 
 
-## API Endpoints version 1
+## API Endpoints version 2
 
 
 Endpoint                     | Functionality
@@ -131,15 +131,20 @@ Ensure you use Production config settings where DEBUG=False
 
 ## GitHub pages
 
-https://fabischolasi.github.io/fast-food-fast/UI/index.html
+[Github Pages](https://fabischolasi.github.io/fast-food-fast/UI/index.html)
 
 ## Heroku for version one
 
-https://fast-food-fast-api-97.herokuapp.com
+[Heroku](https://fast-food-fast-api-97.herokuapp.com)
+
+## Heroku for version two
+
+[Heroku](https://fast-food-fast-v2-api.herokuapp.com/)
+
 
 ## Versioning
 
-Version 1 & 2
+Version 1 & 2Github Pages
 
 ## Authors
 
