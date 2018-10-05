@@ -1,0 +1,362 @@
+FORMAT: 1A
+HOST: https://fast-food-fast-v2-api.herokuapp.com/api/v2
+
+# Fast-Food-Fast
+Fast food fast is an application that allows users to order meals online and get deliveries on time.
+
+# Group SignUp
+
+## Auth Signup [/auth/signup]
+
+### Register user [POST]
+This registers a special user who is an admin
+
++ Request (application/json)
+    + Attributes (Register userRequest)
+
+    + Body
+
+            {
+                "username": "apeli",
+                "email": "apeli@gmail.com",
+                "password": "secretsanta",
+                "confirm_password": "secretsanta"
+            }
+
+
++ Response 200 
+
+
+
+
+## Auth Login [/auth/login]
+
+### Login user [POST]
+This logs in a user
+
++ Request (application/json)
+    + Attributes (Login userRequest)
+
+    + Body
+
+            {
+                "email": "daniel@gmail.com",
+                "password": "secretsanta"
+            }
+
+
++ Response 200 
+
+
+
+
+
+# Group Admin Get and Promote Users
+
+## Users [/users]
+
+### Admin gets all the users in the database [GET]
+This allows only the admin to see the users available in the database
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+## Users 1 [/users/1]
+
+### Admin has the privillege to promote other users as admins [PUT]
+This allows only the admin to promote other users
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+
+# Group Admin Add Get Edit Delete Meals
+
+## Meals [/meals]
+
+### Admin needs to add meals in the system from this route [POST]
+This route allows the admin to add meals to the database
+
++ Request (application/json)
+    + Attributes (Admin needs to add meals in the system from this routeRequest)
+
+    + Body
+
+            {
+                "mealname": "beans",
+                "price": 80
+            }
+
+
++ Response 200 
+
+
+
+### Admin can get and see all the meals in the database [GET]
+This route allows the admin to view the meals on the database
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+## Meals 1 [/meals/1]
+
+### Admin can get and see a particular meal in the database [GET]
+This route allows the admin to get a particular meal on the database
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+### Admin can update a particular meals credentials in the database [PUT]
+
++ Request (application/json)
+    + Attributes (Admin can update a particular meals credentials in the databaseRequest)
+
+    + Body
+
+            {
+                "mealname": "chicken",
+                "price": 80
+            }
+
+
++ Response 200 
+
+
+
+### Admin can delete a particular meal  in the database [DELETE]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+
+# Group Admin Add to Menu
+
+## Menu [/menu]
+
+### Admin can post a meal to the menu [POST]
+
++ Request (application/json)
+    + Attributes (Admin can post a meal to the menuRequest)
+
+    + Body
+
+            {
+                "meal_id": 3
+            }
+
+
++ Response 200 
+
+
+
+
+
+# Group Get Menu
+
+## Menu [/menu]
+
+### Anyone can see all meals in the menu [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+
+# Group Admin Remove From Menu
+
+## Menu 1 [/menu/1]
+
+### Admin can delete a particular meal from the menu [DELETE]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+
+# Group User Add Get Delete Orders
+
+## Orders [/orders]
+
+### A user can post an order [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+## User Orders [/user/orders]
+
+### A user can get all orders [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+## User Orders 1 [/user/orders/1]
+
+### A user can delete an order [DELETE]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+
+# Group Admin Get and Edit User Orders
+
+## Orders [/orders]
+
+### An admin can view all the orders [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+## Orders 1 [/orders/1]
+
+### An admin can get a particular order [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+### An admin can update a particular order [PUT]
+
++ Request (application/json)
+    + Attributes (An admin can update a particular orderRequest)
+
+    + Body
+
+            {
+                "status": "processing"
+            }
+
+
++ Response 200 
+
+
+
+
+
+# User Orders 1 [/user/orders/1]
+
+## A user can get a single order [GET]
+
++ Request (application/json)
+
+
+
++ Response 200 
+
+
+
+
+# Data Structures
+
+## Register userRequest (object)
+
+
+### Properties
++ `username`: `apeli` (string, required) 
++ `email`: `apeli@gmail.com` (string, required) 
++ `password`: `secretsanta` (string, required) 
++ `confirm_password`: `secretsanta` (string, required) 
+
+
+## Login userRequest (object)
+
+
+### Properties
++ `email`: `daniel@gmail.com` (string, required) 
++ `password`: `secretsanta` (string, required) 
+
+
+## Admin needs to add meals in the system from this routeRequest (object)
+
+
+### Properties
++ `mealname`: `beans` (string, required) 
++ `price`: `80` (number, required) 
+
+
+## Admin can update a particular meals credentials in the databaseRequest (object)
+
+
+### Properties
++ `mealname`: `chicken` (string, required) 
++ `price`: `80` (number, required) 
+
+
+## Admin can post a meal to the menuRequest (object)
+
+
+### Properties
++ `meal_id`: `3` (number, required) 
+
+
+## An admin can update a particular orderRequest (object)
+
+
+### Properties
++ `status`: `processing` (string, required)
