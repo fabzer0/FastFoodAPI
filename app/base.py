@@ -18,6 +18,6 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index_info():
-        return redirect('https://fastfoodfast19.docs.apiary.io/#')
+        return redirect('https://fastfoodfast97.docs.apiary.io/#')
 
     return app
