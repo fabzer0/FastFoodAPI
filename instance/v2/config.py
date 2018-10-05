@@ -17,7 +17,6 @@ class DevelopmentEnv(Config):
     """
     DEBUG = True
 
-
 class TestingEnv(Config):
     """
     Testing environment configuration
@@ -26,14 +25,12 @@ class TestingEnv(Config):
     DEBUG = True
     DATABASE_URL = os.getenv('TEST_DB')
 
-
 class ProductionEnv(Config):
     """
     Production environment configuration
     """
     DEBUG = False
     TESTING = False
-
 
 app_config = {
     'development': DevelopmentEnv,

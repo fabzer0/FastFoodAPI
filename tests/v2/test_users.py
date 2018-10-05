@@ -156,7 +156,7 @@ class UserTest(BaseTests):
         self.assertEqual(result['message'], 'a user with the specified username or password combination does not exist in the system.')
 
     def test_login_non_existing_user(self):
-        """
+        """
         This method tests unsuccessful login for a user that doesnt exist
         """
         user = {
