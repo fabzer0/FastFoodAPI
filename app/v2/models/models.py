@@ -133,7 +133,7 @@ class MealsModel(BaseModel):
         if meal is None:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return make_response(jsonify({'message': 'meal already not in menu'}), 404)
+            return make_response(jsonify({'message': 'meal already not in menu'}), 400)
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
         return make_response(jsonify({'message': 'meal successfully removed from menu'}), 200)

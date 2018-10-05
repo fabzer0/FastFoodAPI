@@ -48,11 +48,11 @@ class UserOrders(Resource):
             user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
             if user_order:
                 return make_response(jsonify({'order': OrdersModel.order_details(user_order)}), 200)
-            return {'message': 'order not found'}, 404
+            return make_response(jsonify({'message': 'order not found'}), 404)
         user_orders = OrdersModel.get(user_id=user_id)
         if not user_orders:
             return make_response(jsonify({'message': 'you have no orders yet'}), 404)
-        return {'orders': [OrdersModel.order_details(order) for order in user_orders]}, 200
+        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in user_orders]}), 200)
 
     @token_required
     def delete(self, user_id, order_id):

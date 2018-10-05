@@ -48,7 +48,7 @@ class SignUp(Resource):
         confirm_password = kwargs.get('confirm_password')
         username_exist = UserModel.get_one('users', username=username)
         if username_exist:
-            return make_response(jsonify({'message': 'username already taken'}), 400)
+            return make_response(jsonify({'message': 'username already taken'}), 409)
         if password == confirm_password:
             if len(password) >= 8:
                 email_exists = UserModel.get_one('users', email=email)
@@ -60,12 +60,12 @@ class SignUp(Resource):
                         data = {'admin': True}
                         UserModel.update('users', id=fetch_admin[0], data=data)
                         user = UserModel.get_one('users', id=fetch_admin[0])
-                        return jsonify({'admin': UserModel.user_details(user)})
+                        return make_response(jsonify({'admin': UserModel.user_details(user)}), 201)
                     user = UserModel(username=username, email=email, password=password)
                     user.create_user()
                     user = UserModel.get_one('users', username=username)
                     return make_response(jsonify({'message': 'you are successfully registered', 'user': UserModel.user_details(user)}), 201)
-                return make_response(jsonify({'message': 'email already taken'}), 400)
+                return make_response(jsonify({'message': 'email already taken'}), 409)
             return make_response(jsonify({'message': 'password should be atleast 8 characters'}), 400)
         return make_response(jsonify({"message" : "password and confirm password should be identical"}), 400)
 
@@ -115,10 +115,10 @@ class Login(Resource):
         password = kwargs.get('password')
         user = UserModel.get_one('users', email=email)
         if user is None:
-            return make_response(jsonify({'message': 'a user with the specified username or password combination does not exist in the system.'}), 403)
+            return make_response(jsonify({'message': 'a user with the specified username or password combination does not exist in the system.'}), 404)
         if UserModel.validate_password(password=password, email=user[2]):
             token = UserModel.generate_token(user)
-            return jsonify({'message': 'login was successful', 'token': token})
+            return make_response(jsonify({'message': 'login was successful', 'token': token}), 201)
         return make_response(jsonify({'message': 'invalid email or password'}), 400)
 
 users_api = Blueprint('resources.users', __name__)

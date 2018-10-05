@@ -58,7 +58,7 @@ class UserTest(BaseTests):
         }
         self.client().post(SIGNUP_URL, data=user)
         response = self.client().post(SIGNUP_URL, data=user)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 409)
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result['message'], 'username already taken')
 
@@ -109,7 +109,7 @@ class UserTest(BaseTests):
             'password': 'lucasthomas'
         }
         res = self.client().post(LOGIN_URL, data=data)
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 201)
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['message'], 'login was successful')
 
@@ -151,12 +151,12 @@ class UserTest(BaseTests):
             'password': 'kamikaze'
         }
         res = self.client().post(LOGIN_URL, data=data)
-        self.assertEqual(res.status_code, 403)
+        self.assertEqual(res.status_code, 404)
         result = json.loads(res.data.decode('utf-8'))
         self.assertEqual(result['message'], 'a user with the specified username or password combination does not exist in the system.')
 
     def test_login_non_existing_user(self):
-        """
+        """
         This method tests unsuccessful login for a user that doesnt exist
         """
         user = {
