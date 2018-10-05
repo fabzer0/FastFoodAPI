@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from app.v2.resources.menu import menu_api
 from app.v2.resources.orders import orders_api
 from app.v2.resources.users import users_api
@@ -18,6 +18,6 @@ def create_app():
 
     @app.route('/', methods=['GET'])
     def index_info():
-        return 'Welcome to Fast Food Fast Version 2'
+        return redirect('https://fastfoodfast19.docs.apiary.io/#')
 
     return app

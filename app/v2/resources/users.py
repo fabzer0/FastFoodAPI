@@ -60,7 +60,7 @@ class SignUp(Resource):
                         data = {'admin': True}
                         UserModel.update('users', id=fetch_admin[0], data=data)
                         user = UserModel.get_one('users', id=fetch_admin[0])
-                        return jsonify({'admin': UserModel.user_details(user)})
+                        return jsonify({'admin': UserModel.user_details(user)}), 200
                     user = UserModel(username=username, email=email, password=password)
                     user.create_user()
                     user = UserModel.get_one('users', username=username)
