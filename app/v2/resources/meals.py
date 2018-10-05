@@ -97,7 +97,6 @@ class Meal(Resource):
             return make_response(jsonify({'message': 'meal item has been deleted'}), 200)
         return make_response(jsonify({'message': 'meal item does not exist'}), 404)
 
-
 meals_api = Blueprint('resources.meals', __name__)
 api = Api(meals_api)
 api.add_resource(MealList, '/meals')
