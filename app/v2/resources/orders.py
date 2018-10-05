@@ -29,10 +29,10 @@ class UserOrders(Resource):
         item = kwargs.get('item')
         quantity = kwargs.get('quantity')
         if quantity < 0:
-            return {'message': 'quantity field cannot be a negative number'}, 400
+            return make_response(jsonify({'message': 'quantity field cannot be a negative number'}), 400)
         meal = MealsModel.get_one('meals', mealname=item)
         if not meal:
-            return {'message': 'meal item not in menu'}, 404
+            return make_response(jsonify({'message': 'meal item not in menu'}), 404)
         if meal[3]:
             price = meal[2]
             totalprice = price * quantity
@@ -59,8 +59,8 @@ class UserOrders(Resource):
         user_order = OrdersModel.get(user_id=user_id, order_id=order_id)
         if user_order:
             OrdersModel.delete('orders', id=user_order[0])
-            return {'message': 'order successfully deleted'}, 200
-        return {'message': 'order does not exist'}, 404
+            return make_response(jsonify({'message': 'order successfully deleted'}), 200)
+        return make_response(jsonify({'message': 'order does not exist'}), 404)
 
 class AdminGetAllOrders(Resource):
 

@@ -60,7 +60,7 @@ class SignUp(Resource):
                         data = {'admin': True}
                         UserModel.update('users', id=fetch_admin[0], data=data)
                         user = UserModel.get_one('users', id=fetch_admin[0])
-                        return jsonify({'admin': UserModel.user_details(user)}), 200
+                        return jsonify({'admin': UserModel.user_details(user)})
                     user = UserModel(username=username, email=email, password=password)
                     user.create_user()
                     user = UserModel.get_one('users', username=username)
@@ -75,7 +75,7 @@ class AllUsers(Resource):
     def get(self):
         users = UserModel.get_all('users')
         if not users:
-            return jsonify({'message': 'no users found in the system yet'}), 404
+            return make_response(jsonify({'message': 'no users found in the system yet'}), 404)
         return make_response(jsonify({'all_users': [UserModel.user_details(user) for user in users]}), 200)
 
 class PromoteUser(Resource):
@@ -84,11 +84,11 @@ class PromoteUser(Resource):
     def put(self, user_id):
         user = UserModel.get_one('users', id=user_id)
         if not user:
-            return jsonify({'message': 'user not found'}), 404
+            return make_response(jsonify({'message': 'user not found'}), 404)
         data = {'admin': True}
         UserModel.update('users', id=user[0], data=data)
         user = UserModel.get_one('users', id=user_id)
-        return jsonify({'user': UserModel.user_details(user)})
+        return make_response(jsonify({'user': UserModel.user_details(user)}, 200))
 
 class Login(Resource):
 
@@ -118,7 +118,7 @@ class Login(Resource):
             return make_response(jsonify({'message': 'a user with the specified username or password combination does not exist in the system.'}), 403)
         if UserModel.validate_password(password=password, email=user[2]):
             token = UserModel.generate_token(user)
-            return make_response(jsonify({'message': 'login was successful', 'token': token}), 200)
+            return jsonify({'message': 'login was successful', 'token': token})
         return make_response(jsonify({'message': 'invalid email or password'}), 400)
 
 users_api = Blueprint('resources.users', __name__)
