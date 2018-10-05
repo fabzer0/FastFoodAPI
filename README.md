@@ -49,7 +49,7 @@ $ python run.py
 
 At the / endpoint you should see Welcome to Fast-Food-Fast API displayed in your browser.
 
-## API Endpoints
+## API Endpoints version 1
 
 Here are the projects api endpoints
 
@@ -76,6 +76,32 @@ GET   /api/v1/orders | Get all orders
 GET   /api/v1/orders/id | Get a unique order
 PUT   /api/v1/orders/id | Update a unique order
 DELETE   /api/v1/orders/id | Delete unique order
+
+
+## API Endpoints version 1
+
+
+Endpoint                     | Functionality
+---------------------------- | -------------------------------------------------
+POST   /api/v2/auth/signup   | Register a user
+POST   /api/v2/auth/login    | Log in user
+GET    /api/v2/users         | Admin to view all users
+PUT    /api/v2/users/id      | Admin to promote another user
+POST   /api/v2/meals         | Admin to add meal in the system
+GET    /api/v2/meals         | Admin to view all meals in the system
+PUT    /api/v2/meals/id      | Admin to update a particular meal in the system
+DELETE /api/v2/meals/id      | Admin to delete a particular meal from the system
+POST   /api/v2/user/orders   | User to post an order
+GET    /api/v2/user/orders   | User to view their orders
+GET    /api/v2/user/orders/id| User to view a particular order
+DELETE /api/v2/user/orders/id| User to delete a particular order
+POST   /api/v2/menu          | Admin to add meal to menu
+GET    /api/v2/menu          | Anyone to view menu
+GET    /api/v2/menu/id       | Anyone to filter and view a particular menu
+DELETE /api/v2/menu/id       | Admin to remove meal item from menu 
+GET    /api/v2/orders        | Admin to view all orders
+GET    /api/v2/orders/id     | Admin to view a particular order
+PUT    /api/v2/orders/id     | Admin to update a particular order
 
 ## Running the tests
 
@@ -107,13 +133,13 @@ Ensure you use Production config settings where DEBUG=False
 
 https://fabischolasi.github.io/fast-food-fast/UI/index.html
 
-## Heroku
+## Heroku for version one
 
 https://fast-food-fast-api-97.herokuapp.com
 
 ## Versioning
 
-Version 1
+Version 1 & 2
 
 ## Authors
 
