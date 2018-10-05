@@ -107,7 +107,7 @@ Ensure you use ProductionEnv settings where DEBUG is False
 
 ## GitHub pages
 
-[GitHub](https://github.com/fabischolasi/fast-food-fast-v1)
+[GitHub](https://fabischolasi.github.io/fast-food-fast/UI/index.html)
 
 ## Heroku
 
