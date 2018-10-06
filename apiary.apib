@@ -24,7 +24,7 @@ This registers a special user who is an admin
             }
 
 
-+ Response 200 
++ Response 201
 
 
 
@@ -45,7 +45,7 @@ This logs in a user
             }
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -62,7 +62,7 @@ This allows only the admin to see the users available in the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -76,7 +76,7 @@ This allows only the admin to promote other users
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -100,7 +100,7 @@ This route allows the admin to add meals to the database
             }
 
 
-+ Response 200 
++ Response 201
 
 
 
@@ -111,7 +111,7 @@ This route allows the admin to view the meals on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -125,7 +125,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -142,7 +142,7 @@ This route allows the admin to get a particular meal on the database
             }
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -152,7 +152,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -174,7 +174,7 @@ This route allows the admin to get a particular meal on the database
             }
 
 
-+ Response 200 
++ Response 201 
 
 
 
@@ -190,7 +190,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -206,7 +206,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -222,7 +222,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -235,7 +235,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -248,7 +248,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -264,7 +264,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -277,7 +277,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -293,7 +293,7 @@ This route allows the admin to get a particular meal on the database
             }
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -307,7 +307,7 @@ This route allows the admin to get a particular meal on the database
 
 
 
-+ Response 200 
++ Response 200
 
 
 
@@ -318,41 +318,41 @@ This route allows the admin to get a particular meal on the database
 
 
 ### Properties
-+ `username`: `apeli` (string, required) 
-+ `email`: `apeli@gmail.com` (string, required) 
-+ `password`: `secretsanta` (string, required) 
-+ `confirm_password`: `secretsanta` (string, required) 
++ `username`: `apeli` (string, required)
++ `email`: `apeli@gmail.com` (string, required)
++ `password`: `secretsanta` (string, required)
++ `confirm_password`: `secretsanta` (string, required)
 
 
 ## Login userRequest (object)
 
 
 ### Properties
-+ `email`: `daniel@gmail.com` (string, required) 
-+ `password`: `secretsanta` (string, required) 
++ `email`: `daniel@gmail.com` (string, required)
++ `password`: `secretsanta` (string, required)
 
 
 ## Admin needs to add meals in the system from this routeRequest (object)
 
 
 ### Properties
-+ `mealname`: `beans` (string, required) 
-+ `price`: `80` (number, required) 
++ `mealname`: `beans` (string, required)
++ `price`: `80` (number, required)
 
 
 ## Admin can update a particular meals credentials in the databaseRequest (object)
 
 
 ### Properties
-+ `mealname`: `chicken` (string, required) 
-+ `price`: `80` (number, required) 
++ `mealname`: `chicken` (string, required)
++ `price`: `80` (number, required)
 
 
 ## Admin can post a meal to the menuRequest (object)
 
 
 ### Properties
-+ `meal_id`: `3` (number, required) 
++ `meal_id`: `3` (number, required)
 
 
 ## An admin can update a particular orderRequest (object)
