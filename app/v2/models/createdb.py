@@ -1,3 +1,6 @@
+"""
+This module contains the creation and initialization of tables
+"""
 import os
 import psycopg2
 

@@ -1,3 +1,6 @@
+"""
+This modules contains all the configurations the app needs
+"""
 import os
 
 

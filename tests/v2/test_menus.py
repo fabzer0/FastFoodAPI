@@ -20,11 +20,13 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().get('api/v2/menu')
         self.assertEqual(response.status_code, 200)
@@ -36,11 +38,13 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().get('api/v2/menu/1')
         self.assertEqual(response.status_code, 200)
@@ -52,11 +56,13 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().get('api/v2/menu/2')
         self.assertEqual(response.status_code, 404)
@@ -68,11 +74,13 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_admin_create_menu_that_already_exist(self):
@@ -82,12 +90,15 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'meal already in menu')
 
@@ -98,13 +109,16 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().delete('/api/v2/menu/1', headers=headers, 
-        content_type='application/json')
+        response = self.client().delete('/api/v2/menu/1', headers=headers,
+                                        content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_admin_delete_a_particular_menu_that_doesnt_exist(self):
@@ -114,12 +128,16 @@ class MenuTests(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().delete('/api/v2/menu/4', headers=headers, content_type='application/json')
+        response = self.client().delete('/api/v2/menu/4', headers=headers,
+                                        content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':

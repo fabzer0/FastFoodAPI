@@ -1,4 +1,3 @@
-
 from flask  import Blueprint, jsonify, make_response, request
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models.models import OrdersModel, MealsModel
@@ -29,7 +28,8 @@ class UserOrders(Resource):
         item = kwargs.get('item')
         quantity = kwargs.get('quantity')
         if quantity < 0:
-            return make_response(jsonify({'message': 'quantity field cannot be a negative number'}), 400)
+            return make_response(jsonify({'message': 'quantity field cannot be a\
+                                          negative number'}), 400)
         meal = MealsModel.get_one('meals', mealname=item)
         if not meal:
             return make_response(jsonify({'message': 'meal item not in menu'}), 404)
@@ -39,7 +39,8 @@ class UserOrders(Resource):
             order = OrdersModel(user_id=user_id, item=item, totalprice=totalprice)
             order.create_order()
             order = OrdersModel.get_one('orders', item=item)
-            return make_response(jsonify({'message': 'order has been successfully added', 'order': OrdersModel.order_details(order)}), 201)
+            return make_response(jsonify({'message': 'order has been successfully added',
+                                          'order': OrdersModel.order_details(order)}), 201)
         return make_response(jsonify({'message': 'meal item not in menu'}), 404)
 
     @token_required
@@ -52,7 +53,8 @@ class UserOrders(Resource):
         user_orders = OrdersModel.get(user_id=user_id)
         if not user_orders:
             return make_response(jsonify({'message': 'you have no orders yet'}), 404)
-        return make_response(jsonify({'orders': [OrdersModel.order_details(order) for order in user_orders]}), 200)
+        return make_response(jsonify({'orders': [OrdersModel.order_details(order)\
+                                      for order in user_orders]}), 200)
 
     @token_required
     def delete(self, user_id, order_id):
@@ -69,7 +71,8 @@ class AdminGetAllOrders(Resource):
         orders = OrdersModel.get_all('orders')
         if not orders:
             return make_response(jsonify({'message': 'no orders yet'}), 404)
-        return make_response(jsonify({'all_orders': [OrdersModel.admin_order_details(order) for order in orders]}), 200)
+        return make_response(jsonify({'all_orders': [OrdersModel.admin_order_details(order)\
+                                      for order in orders]}), 200)
 
 class AdminGetSingleOrder(Resource):
 
@@ -102,12 +105,14 @@ class AdminGetSingleOrder(Resource):
         data = {}
         if status:
             if status not in statuses:
-                return make_response(jsonify({'message': 'orders should be updated as processing, cancelled or complete'}), 400)
+                return make_response(jsonify({'message': 'orders should be updated as processing,\
+                                              cancelled or complete'}), 400)
             data.update({'status': str(status)})
 
         OrdersModel.update('orders', id=order[0], data=data)
         order = OrdersModel.get_one('orders', id=order_id)
-        return make_response(jsonify({'message': 'order successfully updated', 'new_order': OrdersModel.order_details(order)}), 200)
+        return make_response(jsonify({'message': 'order successfully updated',
+                                      'new_order': OrdersModel.order_details(order)}), 200)
 
 orders_api = Blueprint('resources.orders', __name__)
 api = Api(orders_api)

@@ -1,3 +1,6 @@
+"""
+This module contains the registration of blueprints
+"""
 from flask import Flask, redirect
 from app.v2.resources.menu import menu_api
 from app.v2.resources.orders import orders_api

@@ -1,3 +1,6 @@
+"""
+Designing of table models
+"""
 from datetime import datetime, timedelta
 from flask import jsonify, make_response
 import jwt
@@ -96,7 +99,8 @@ class MealsModel(BaseModel):
         self.price = price
 
     def create_meal(self):
-        cur.execute('INSERT INTO meals (mealname, price) VALUES (%s, %s)', (self.mealname, self.price))
+        cur.execute('INSERT INTO meals (mealname, price) VALUES (%s, %s)',
+                    (self.mealname, self.price))
         self.save()
 
     @staticmethod
@@ -125,7 +129,8 @@ class MealsModel(BaseModel):
         data = {'in_menu': True}
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal[0])
-        return make_response(jsonify({'message': 'meal successfully added to menu', 'meal': MealsModel.meal_details(meal)}), 201)
+        return make_response(jsonify({'message': 'meal successfully added to menu',
+                                      'meal': MealsModel.meal_details(meal)}), 201)
 
     @staticmethod
     def remove_from_menu(meal_id):
@@ -145,7 +150,8 @@ class MealsModel(BaseModel):
         if meal is None:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
         if not meal[3]:
-            return make_response(jsonify({'message': 'kindly ensure this meal is in the menu'}), 400)
+            return make_response(jsonify({'message': 'kindly ensure this meal\
+                                         is in the menu'}), 400)
         return make_response(jsonify({'menu': MealsModel.menu_details(meal)}), 200)
 
 class OrdersModel(BaseModel):
@@ -157,7 +163,8 @@ class OrdersModel(BaseModel):
 
 
     def create_order(self):
-        cur.execute('INSERT INTO orders (user_id, item, totalprice) VALUES (%s, %s, %s)', (self.user_id, self.item, self.totalprice))
+        cur.execute('INSERT INTO orders (user_id, item, totalprice) VALUES (%s, %s, %s)',
+                    (self.user_id, self.item, self.totalprice))
         self.save()
 
     @staticmethod
@@ -169,7 +176,9 @@ class OrdersModel(BaseModel):
             query = 'SELECT * FROM orders WHERE user_id={} AND id={}'.format(user_id, order_id)
             cur.execute(query)
             return cur.fetchone()
-        query = 'SELECT orders.id, users.id, item, totalprice, status, created_at FROM users INNER JOIN orders ON orders.user_id=users.id WHERE users.id={} ORDER BY created_at'.format(user_id)
+        query = 'SELECT orders.id, users.id, item, totalprice, status, created_at FROM users\
+                INNER JOIN orders ON orders.user_id=users.id\
+                WHERE users.id={} ORDER BY created_at'.format(user_id)
         cur.execute(query)
         user_orders = cur.fetchall()
         return user_orders

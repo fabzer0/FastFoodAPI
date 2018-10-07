@@ -25,17 +25,20 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_wrong_input_for_order_price_field(self):
@@ -45,17 +48,20 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': ''}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': ''}),
+                                      content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), {"quantity": "quantity field is required"})
 
@@ -66,17 +72,20 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': '', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': '', 'quantity': 2}),
+                                      content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), {"item": "item field is required"})
 
@@ -87,16 +96,20 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().get('/api/v2/user/orders', headers=headers)
         self.assertEqual(response.status_code, 200)
@@ -108,19 +121,23 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().get('/api/v2/user/orders/1', headers=headers, 
-        content_type='application/json')
+        response = self.client().get('/api/v2/user/orders/1', headers=headers,
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_user_getting_specific_order_that_doesnt_exist(self):
@@ -130,8 +147,8 @@ class OrdersTest(BaseTests):
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().get('/api/v2/user/orders/1', headers=headers, 
-        content_type='application/json')
+        response = self.client().get('/api/v2/user/orders/1', headers=headers,
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 404)
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'order not found')
@@ -143,17 +160,20 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().delete('/api/v2/user/orders/1', headers=headers)
         self.assertEqual(response.status_code, 200)
@@ -165,22 +185,26 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, 
-        data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().get('/api/v2/orders', headers=headers, content_type='application/json')
+        response = self.client().get('/api/v2/orders', headers=headers,
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_admin_getting_specific_order(self):
@@ -190,21 +214,26 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().get('/api/v2/orders/1', headers=headers, content_type='application/json')
+        response = self.client().get('/api/v2/orders/1', headers=headers,
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_admin_getting_specific_order_that_doesnt_exist(self):
@@ -214,8 +243,8 @@ class OrdersTest(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().get('/api/v2/orders/99', headers=headers, 
-        content_type='application/json')
+        response = self.client().get('/api/v2/orders/99', headers=headers,
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 404)
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'order item does not exist')
@@ -227,22 +256,27 @@ class OrdersTest(BaseTests):
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+                                      data=json.dumps({'mealname': 'chicken', 'price': 90}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/menu', headers=headers, data=json.dumps({'meal_id': 1}), content_type='application/json')
+        response = self.client().post('/api/v2/menu', headers=headers,
+                                      data=json.dumps({'meal_id': 1}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.logged_in_user()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/user/orders', headers=headers, 
-        data=json.dumps({'item': 'chicken', 'quantity': 2}), content_type='application/json')
+        response = self.client().post('/api/v2/user/orders', headers=headers,
+                                      data=json.dumps({'item': 'chicken', 'quantity': 2}),
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         admin_response = self.logged_in_admin()
         token = json.loads(admin_response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().put('/api/v2/orders/1', headers=headers, 
-        data=json.dumps({'status': 'processing'}), content_type='application/json')
+        response = self.client().put('/api/v2/orders/1', headers=headers,
+                                     data=json.dumps({'status': 'processing'}),
+                                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
 if __name__ == '__main__':

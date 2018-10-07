@@ -28,21 +28,24 @@ class MealList(Resource):
         mealname = kwargs.get('mealname')
         price = kwargs.get('price')
         if price < 0:
-            return make_response(jsonify({'message': 'price field cannot be a negative number'}), 400)
+            return make_response(jsonify({'message': 'price field cannot be a\
+                                         negative number'}), 400)
         meal = MealsModel.get_one('meals', mealname=mealname)
         if meal:
             return make_response(jsonify({'message': 'meal with that name already exist'}), 409)
         meal = MealsModel(mealname=mealname, price=price)
         meal.create_meal()
         meal = MealsModel.get_one('meals', mealname=mealname)
-        return make_response(jsonify({'message': 'meal successfully created', 'meal': MealsModel.meal_details(meal)}), 201)
+        return make_response(jsonify({'message': 'meal successfully created',
+                                      'meal': MealsModel.meal_details(meal)}), 201)
 
     @admin_required
     def get(self):
         meals = MealsModel.get_all('meals')
         if not meals:
             return make_response(jsonify({'message': 'no meals yet'}), 404)
-        return make_response(jsonify({'all_meals': [MealsModel.meal_details(meal) for meal in meals]}), 200)
+        return make_response(jsonify({'all_meals': [MealsModel.meal_details(meal)\
+                                      for meal in meals]}), 200)
 
 class Meal(Resource):
 
@@ -75,7 +78,8 @@ class Meal(Resource):
         mealname = kwargs.get('mealname')
         price = kwargs.get('price')
         if price < 0:
-            return make_response(jsonify({'message': 'price field cannot be a negative number'}), 400)
+            return make_response(jsonify({'message': 'price field cannot be a negative\
+                                          number'}), 400)
         meal = MealsModel.get_one('meals', id=meal_id)
         if not meal:
             return make_response(jsonify({'message': 'meal item does not exist'}), 404)
@@ -86,7 +90,8 @@ class Meal(Resource):
             data.update({'price': str(price)})
         MealsModel.update('meals', id=meal[0], data=data)
         meal = MealsModel.get_one('meals', id=meal_id)
-        return make_response(jsonify({'message': 'meal has been updated successfully', 'new_meal': MealsModel.meal_details(meal)}), 200)
+        return make_response(jsonify({'message': 'meal has been updated successfully',
+                                      'new_meal': MealsModel.meal_details(meal)}), 200)
 
     @admin_required
     def delete(self, meal_id):

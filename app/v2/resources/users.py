@@ -1,8 +1,9 @@
+import os
 from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api, reqparse, inputs
 from ..models.decorators import admin_required
 from ..models.models import UserModel
-import os
+
 
 class SignUp(Resource):
 

@@ -12,11 +12,12 @@ from instance.v2.config import app_config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class BaseTests(unittest.TestCase):
+    """
+    This is the base set up class that would be inherited by other test classes
+    """
     def setUp(self):
         main('testing')
         self.app = create_app()
-        with self.app.app_context():
-            from app.v2.models.models import UserModel, OrdersModel, MealsModel
         self.client = self.app.test_client
 
         self.user_data = {
@@ -61,13 +62,21 @@ class BaseTests(unittest.TestCase):
         }
 
     def logged_in_user(self):
-        self.client().post('/api/v2/auth/signup', data=json.dumps(self.user_data), content_type='application/json')
-        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'dariustanz@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
+        self.client().post('/api/v2/auth/signup',
+                           data=json.dumps(self.user_data),
+                           content_type='application/json')
+        res = self.client().post('/api/v2/auth/login',
+                                 data=json.dumps({'email': 'dariustanz@gmail.com', 'password': 'secretsanta'}),
+                                 content_type='application/json')
         return res
 
     def logged_in_admin(self):
-        self.client().post('/api/v2/auth/signup', data=json.dumps(self.admin_data), content_type='application/json')
-        res = self.client().post('/api/v2/auth/login', data=json.dumps({'email': 'admin@gmail.com', 'password': 'secretsanta'}), content_type='application/json')
+        self.client().post('/api/v2/auth/signup',
+                           data=json.dumps(self.admin_data),
+                           content_type='application/json')
+        res = self.client().post('/api/v2/auth/login',
+                                 data=json.dumps({'email': 'admin@gmail.com', 'password': 'secretsanta'}),
+                                 content_type='application/json')
         return res
 
 
