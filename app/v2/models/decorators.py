@@ -12,8 +12,7 @@ def token_required(f):
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
-            return make_response(jsonify({'message': 'You did not provide authorization which\
-                                         is required for this operation.'}), 401)
+            return make_response(jsonify({'message': 'You did not provide authorization which is required for this operation.'}), 401)
         try:
             user_id = UserModel.decode_token(token)['id']
         except:
@@ -30,8 +29,7 @@ def admin_required(f):
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
         if not token:
-            return make_response(jsonify({'message': 'You did not provide authorization which\
-                                         is required for this operation.'}), 401)
+            return make_response(jsonify({'message': 'You did not provide authorization which is required for this operation.'}), 401)
         try:
             data = UserModel.decode_token(token)
             admin = data['admin']
