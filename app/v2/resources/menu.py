@@ -25,6 +25,8 @@ class MenuList(Resource):
 
     def get(self):
         meals = MealsModel.get_all('meals')
+        if not meals:
+            return make_response(jsonify({'message': 'meals not available'}), 404)
         menu = []
         for meal in meals:
             if not meal[3]:
