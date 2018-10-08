@@ -27,11 +27,12 @@ class MenuList(Resource):
         meals = MealsModel.get_all('meals')
         menu = []
         for meal in meals:
-            if meal[3]:
+            if not meal[3]:
+                return make_response(jsonify({'message': 'no meals in menu yet'}), 404)
+            else:
                 meal = MealsModel.menu_details(meal)
                 menu.append(meal)
-                return make_response(jsonify({'all_menu': menu}), 200)
-        return make_response(jsonify({'message': 'no meals in menu yet'}), 404)
+        return menu, 200
 
 class Menu(Resource):
 
