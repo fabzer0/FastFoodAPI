@@ -14,7 +14,7 @@ menuCreds.setAttribute('class', 'meal-creds');
 menu.appendChild(menuCreds);
 
 var request = new XMLHttpRequest();
-request.open('GET', 'localhost:5000/api/v2/menu', true);
+request.open('GET', 'https://fast-food-fast-v2-api.herokuapp.com/api/v2/menu', true);
 request.onload = function () {
     var data = JSON.parse(this.response);
     if (request.status >= 200 && request.status < 400) {
