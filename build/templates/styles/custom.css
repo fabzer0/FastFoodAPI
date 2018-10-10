@@ -1,0 +1,1006 @@
+html, body
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.container-signing {
+    height: 700px;
+    width: 100%;
+    font-family: 'Overlock', cursive;
+    background-color: black;
+    border-bottom: 1px solid grey;
+}
+
+.navbar {
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    height: 80px;
+    width: 100%;
+    background-color: grey;
+}
+
+.navbar h2 {
+  margin-left: 20%;
+  float: left;
+  width: 30%
+}
+
+.navbar ul {
+  float: left;
+  list-style-type: none;
+  overflow: hidden;
+  margin-top: 25px;
+  width: 50%;
+}
+
+.navbar ul li {
+  display: inline;
+  padding: 10px;
+}
+
+.navbar li a {
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.navbar li a:hover {
+  text-decoration: underline;
+}
+
+.navbar button {
+  margin-top: 25px;
+  border-radius: 30px;
+  height: 30px;
+  background-color: lightblue;
+
+}
+
+.navbar #button1 {
+  margin-left: 30%;
+  width: 90px;
+}
+
+.navbar #button2 {
+  margin-left: 10px;
+  width: 90px;
+}
+
+.navbar #button1:hover {
+  background-color: blue;
+}
+
+.navbar button a {
+  text-decoration: none;
+  color: black;
+}
+
+
+.navbar #button2:hover {
+  background-color: blue;
+}
+
+
+.signing-form {
+    height: 525px;
+}
+
+.signup {
+    height: 500px;
+    width: 500px;
+    margin-left: 500px;
+    margin-top: 100px;
+    border-radius: 7px 7px 7px 7px;
+    color: black;
+    background-color: white;
+}
+
+.signup input {
+    background-color: grey;
+    color: black;
+    width: 60%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+.signup button {
+    background-color: green;
+    height: 30px;
+    width: 60%;
+    border-style: none;
+    margin-left: 20%;
+}
+
+.signup #one {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.signup #two {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.signup #three p {
+  margin-left: 20%;
+}
+
+.signin button {
+    background-color: green;
+    height: 30px;
+    width: 60%;
+    border-style: none;
+    margin-left: 20%;
+}
+
+.signin {
+    height: 400px;
+    width: 500px;
+    margin-left: 500px;
+    margin-top: 100px;
+    border-radius: 7px 7px 7px 7px;
+    color: black;
+    background-color: white;
+}
+
+.signin input {
+    background-color: grey;
+    color: black;
+    width: 60%;
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+}
+
+.signin #one {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.signin #two {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.signin #three p {
+  margin-left: 20%;
+}
+
+.myfooter{
+  height: 50px;
+  background-color: black;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  color: white;
+  text-align: center;
+}
+
+.footer {
+    height: 50px;
+    background-color: black;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    font-family: 'Overlock', cursive;
+    position: relative;
+}
+
+
+.bg-image {
+    height: 1000px;
+    width: 100%;
+    background-image: url("img/home_bg.jpg");
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter: alpha(opacity=30); /* For IE8 and earlier */
+    position: relative;
+    overflow: hidden;
+    top: 0;
+}
+
+.sidebar-directions {
+    float: left;
+    width: 40%;
+    height: 1000px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+  }
+
+.navigation-links {
+    width: 60%;
+    overflow: hidden;
+    float: left;
+    height: 1000px;
+    color: white;
+}
+
+.inner-right-dir {
+    height: 1000px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 50%;
+    width: 50%;
+    background-color: black;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    color: white;
+
+}
+
+.inner-right-dir .my-name {
+    height: 140px;
+    margin: 0;
+    width: 100%;
+    border-bottom: 1px solid grey;
+}
+
+.my-name h1 {
+    text-align: center;
+    padding-top: 40px;
+    font-family: 'Great Vibes', cursive;
+}
+
+.inner-right-dir .welcome {
+    height: 380px;
+    margin: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid grey;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    text-align: center;
+}
+
+.welcome h3 {
+    text-align: center;
+
+
+}
+
+.welcome p {
+    text-align: center;
+
+}
+
+.welcome input {
+    width: 200px;
+    height: 30px;
+    background-color: grey;
+    border: none;
+}
+
+.inner-right-dir .more-info {
+    height: 165px;
+    margin-left: 0;
+    position: relative;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.more-info img {
+    padding-left: 5px;
+    margin-left: 5px;
+}
+
+.nav-links-top {
+    height: 150px;
+    margin-top: 0;
+    margin-left: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    top: 0;
+}
+
+.nav-links {
+    height: 80px;
+    width: 100%;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    margin-left: 0;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+
+}
+
+.nav-links #one {
+    text-transform: uppercase;
+    padding-top: 10px;
+    padding-left: 50px;
+}
+
+.nav-links #two {
+    text-transform: uppercase;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+.nav-links #three {
+    text-transform: uppercase;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+.nav-links #four {
+    text-transform: uppercase;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.nav-links #five {
+    text-transform: uppercase;
+    margin-top: 10px;
+    padding-left: 100px;
+}
+
+.nav-links #five button {
+  height: 40px;
+  font-size: 15px;
+  background-color: red;
+}
+
+.nav-links span a {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links span a:hover {
+    color: red;
+}
+
+.meal-order-menu {
+  height: 850px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.meal-table {
+  width: 100%;
+  height: 850px;
+  margin-left: 0;
+  margin-top: 10px;
+  background-color: black;
+  position: absolute;
+  border: 1px solid white;
+}
+
+.meal-header {
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.meal-header p {
+  font-size: 20px;
+  margin-left: 350px;
+}
+
+.meal-left-bar {
+  float: left;
+  width: 17%;
+  height: 790px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  border-right: 1px solid grey;
+}
+
+.dropdown {
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid grey;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+
+.dropdown button {
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  border: none;
+  border-style: none;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.dropdown button:hover {
+  background-color: grey;
+}
+
+.dropdown-content {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+#to-menu {
+  background-color: blue;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.meal-center-bar {
+  float: left;
+  width: 57.78%;
+  height: 790px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  border-right: 1px solid grey;
+}
+
+.meal-center-main-one {
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+}
+
+.meal-center-main-one #one {
+  height: 80px;
+  width: 300px;
+  margin-top: 20px;
+  margin-left: 115px;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+.meal-center-main-one h2 span, .meal-center-main-two h1 span {
+  font-size: 15px;
+}
+
+.meal-center-main-two {
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+#meal-center-main-three {
+  height: 590px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+
+}
+
+#menu-error {
+  margin-left: 200px;
+  margin-top: 60px;
+  color: red;
+}
+
+#meal-center-main-three #meals {
+  height: 150px;
+  width: 500px;
+  margin-left: 15px;
+  border-bottom: 1px solid grey;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+#meal-center-main-three .meal-image {
+  height: 100px;
+  width: 150px;
+  margin-top: 30px;
+  float: left;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#meal-center-main-three .meal-creds {
+  height: 100px;
+  width: 300px;
+  margin-top: 30px;
+  float: left;
+  overflow: hidden;
+}
+
+.meal-creds span {
+  margin-left: 10px;
+}
+
+#meal-center-main-three #meals img {
+  height: 100px;
+  width: 150px;
+}
+
+.meal-right-bar {
+    width: 25%;
+    overflow: hidden;
+    float: left;
+    height: 790px;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+
+}
+
+.order-number {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid grey;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.order-number #one {
+  margin-left: 10px;
+}
+
+.order-number #two {
+  margin-left: 90px;
+}
+
+#meal-in-cart-one {
+  height: 70px;
+  width: 205px;
+  margin-left: 10px;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+#meal-in-cart-one #two {
+  padding-left: 20px;
+}
+
+#meal-in-cart-two #two {
+  padding-left: 20px;
+}
+#meal-in-cart-three #two {
+  padding-left: 20px;
+}
+#meal-in-cart-four #two {
+  padding-left: 20px;
+}
+
+#meal-in-cart-two {
+  height: 70px;
+  width: 205px;
+  margin-left: 10px;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+#meal-in-cart-three {
+  height: 70px;
+  width: 205px;
+  margin-left: 10px;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+#meal-in-cart-four {
+  height: 70px;
+  width: 205px;
+  margin-left: 10px;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+
+#after-items {
+  height: 10px;
+  width: 205px;
+  margin-left: 10px;
+  border-bottom: 2px solid white;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.subtotal {
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.subtotal #one {
+  margin-left: 10px;
+}
+
+.subtotal #two {
+  margin-left: 90px;
+}
+
+.special-rq {
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.special-rq #special-rq {
+  width: 205px;
+  height: 50px;
+  margin-left: 10px;
+  border-bottom: 1px solid gray;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.order-button-div {
+  height: 250px;
+  width: 205px;
+  margin-left: 10px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+
+.order-button-div input {
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  outline: none;
+  border: none;
+  font-weight: bold;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  color: black;
+}
+
+.all-orders {
+  height: 920px;
+  width: 80%;
+  background-color: black;
+  margin-top: 30px;
+  margin-left: 10%;
+  color: white
+}
+.header {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.header p {
+  font-size: 20px;
+}
+
+.place-order {
+  height: 800px;
+  width: 1205px;
+}
+
+.place-order .col1 {
+  height: 800px;
+  width: 400px;
+  float: left;
+  overflow: hidden;
+  border-right: 1px solid gray;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+}
+
+.place-order .col2 {
+  height: 800px;
+  width: 400px;
+  float: left;
+  overflow: hidden;
+  border-right: 1px solid gray;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+}
+
+.place-order .col3 {
+  height: 800px;
+  width: 400px;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+
+}
+
+.total-price {
+  height: 70px;
+  width: 1205px;
+}
+
+.total-price p {
+  text-align: center;
+  padding-top: 15px;
+  font-size: 25px;
+}
+
+.meal-a {
+  height: 200px;
+  width: 100%;
+  border-bottom: 1px solid grey;
+  position: relative;
+  top: 0;
+  overflow: hidden;
+}
+
+.meal-a-img {
+  height: 130px;
+  width: 40%;
+  margin-top: 35px;
+  margin-left: 10px;
+  float: left;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.meal-a-cred {
+  height: 130px;
+  width: 56%;
+  margin-top: 35px;
+  float: left;
+  overflow: hidden;
+  color: white;
+}
+
+.meal-a-cred p {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.meal-a-img img {
+  height: 130px;
+  width: 100%;
+}
+
+.meal-a-cred #accept, #decline{
+  margin-left: 10px;
+}
+
+.meal-a-cred #accept button {
+  background-color: green;
+  height: 20px;
+  border: none;
+}
+
+.meal-a-cred #decline button {
+  background-color: red;
+  height: 20px;
+  border: none;
+}
+
+.meal-a-cred #menu button {
+  background-color: blue;
+  height: 20px;
+  border: none;
+  margin-left: 10px;
+}
+
+.user-profile {
+    height: 1000px;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    top: 0;
+    border-bottom: 1px solid grey;
+
+}
+
+#add-to-cart button {
+  margin-top: 10px;
+}
+
+.prof {
+  height: 200px;
+  width: 100%;
+}
+
+.prof-pic {
+  height: 200px;
+  width: 30%;
+  float: left;
+  overflow: hidden;
+}
+
+.prof-pic img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-top: 50px;
+  margin-left: 75%;
+}
+
+.prof-pic-creds {
+  height: 200px;
+  width: 40%;
+  float: left;
+  overflow: hidden;
+}
+
+.prof-pic-creds p {
+  margin-left: 10px;
+  margin-top: 70px;
+}
+
+.prof-nav {
+  height: 200px;
+  width: 30%;
+  float: left;
+  overflow: hidden;
+}
+
+.prof-nav button {
+  background-color: white;
+  margin-left: 20px;
+}
+
+.navbar #history-btn {
+  margin-left: 70px;
+}
+
+.navbar #logout-btn {
+  margin-left: 400px;
+}
+
+.more-creds {
+  width: 900px;
+  height: 600px;
+  background-color: lightblue;
+  margin-top: 30px;
+  margin-left: 20%;
+  border-radius: 3px;
+}
+
+.more-creds .left {
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  margin-left: 40px;
+  margin-top: 50px;
+  float: left;
+  overflow: hidden;
+  background-image: url("img/prof-image.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+}
+
+.more-creds .img {
+  height: 100px;
+  width: 100px;
+  margin-left: 30%;
+  background-image: url("img/fab.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  margin-top: 10px;
+}
+
+.more-creds .img-btm {
+  height: 100px;
+  width: 200px;
+  margin-top: 100px;
+  margin-left: 26%;
+  text-align: center;;
+}
+
+.more-creds .more-btm {
+  height: 100px;
+  width: 200px;
+  margin-left: 26%;
+  margin-top: 30px;
+}
+
+.more-creds .more-btm img {
+  height: 70px;
+  width: 70px;
+  margin-left: 65px;
+  margin-top: 10px;
+}
+
+.more-creds .right {
+  height: 450px;
+  width: 400px;
+  border-radius: 5px;
+  background-color: white;
+  margin-left: 20px;
+  margin-top: 50px;
+  float: left;
+  overflow: hidden;
+
+}
+
+.more-creds .first {
+  height: 50px;
+  width: 300px;
+  margin-left: 40px;
+  margin-top: 0px;
+
+}
+
+.more-creds .first button {
+  margin-left: 90px;
+  margin-top: 20px;
+}
+
+
+.more-creds #last {
+  height: 350px;
+  width: 300px;
+  margin-left: 40px;
+  margin-top: 30px;
+
+  display: none;
+}
