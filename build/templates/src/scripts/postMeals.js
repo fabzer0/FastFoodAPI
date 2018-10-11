@@ -15,6 +15,7 @@ mealForm.addEventListener('submit', event => {
   .then(response => {
     console.log(response.message)
     if (response.message === 'meal successfully created') {
+      sessionStorage.setItem('id', response.meal.id);
       window.location.href = './add-edit-delete.html';
     }
   })

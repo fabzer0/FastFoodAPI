@@ -1,7 +1,7 @@
 const editMealForm = document.getElementById('edit-meal-form');
-
 editMealForm.addEventListener('submit', event => {
   const token = localStorage.getItem('token');
+  const meal_id = sessionStorage.getItem('id');
   event.preventDefault();
   fetch(`https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals/${meal_id}`, {
     method: 'put',
