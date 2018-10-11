@@ -18,15 +18,18 @@
             <li><a href="admin-list-orders.html">Admin</a></li>
           </ul>
           <button id="button1" type="button" name="button"><a href="signup.html">Signup</a></button>
-
         </div>
         <div class="signing-form">
-              <form action="">
+              <form action="" id="login-form">
                   <div class="signin">
-                      <div id="one">Sign In</div>
+                      <div id="one">
+                        <p>Sign In</p>
+                      </div>
                       <div id="two">
-                          <input type="email" value="email address"><br><br>
-                          <input type="text" value="password"><br><br>
+                          <label for="email">Email Address:</label><br>
+                          <input type="email" id="my-email"><br><br>
+                          <label for="password">Password:</label><br>
+                          <input type="text" id="my-password"><br><br>
                       </div>
                       <div><button>Login</button></div>
                       <div id="three"><p>Don't have an account? <a href="signup.html">Sign up</a></p></div>
@@ -39,4 +42,7 @@
         </div>
       </div>
   </body>
+  <script src="src/scripts/register.js" charset="utf-8"></script>
+  <script src="src/scripts/login.js" charset="utf-8"></script>
+
 </html>
