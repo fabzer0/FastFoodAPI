@@ -12,7 +12,7 @@ loginForm.addEventListener('submit', event => {
     .then(response => response.json())
     .then(response => {
       if (response.token) {
-        storeToken.setItem('token', response.token);
+        localStorage.setItem('token', response.token);
         window.location.href = './user-order-food.html';
       }
     });

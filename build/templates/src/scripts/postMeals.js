@@ -1,7 +1,7 @@
 const mealForm = document.getElementById('meal-form');
 
 mealForm.addEventListener('submit', event => {
-  // const token = storeToken.getItem('token');
+  const token = localStorage.getItem('token');
   event.preventDefault();
   fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
     method: 'post',
@@ -9,7 +9,7 @@ mealForm.addEventListener('submit', event => {
       mealname: document.getElementById('mealname').value,
       price: document.getElementById('mealprice').value
     }),
-    // headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
   })
   .then(response => response.json())
   .then(response => {
