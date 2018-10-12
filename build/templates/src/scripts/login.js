@@ -11,6 +11,7 @@ loginForm.addEventListener('submit', event => {
   })
     .then(response => response.json())
     .then(response => {
+      console.log(response.message)
       if (response.token) {
         localStorage.setItem('token', response.token);
         window.location.href = './user-order-food.html';
