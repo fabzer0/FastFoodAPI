@@ -42,7 +42,8 @@ class BaseTests(unittest.TestCase):
 
         self.meal_data = {
             'mealname': 'chicken',
-            'price': 90
+            'price': 90,
+            'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'
         }
 
         self.order_data = {

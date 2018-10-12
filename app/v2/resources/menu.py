@@ -29,7 +29,7 @@ class MenuList(Resource):
             return make_response(jsonify({'message': 'meals not available'}), 404)
         menu = []
         for meal in meals:
-            if not meal[3]:
+            if not meal[4]:
                 return make_response(jsonify({'message': 'no meals in menu yet'}), 404)
             else:
                 meal = MealsModel.menu_details(meal)

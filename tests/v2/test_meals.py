@@ -20,8 +20,9 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}),
+         content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_admin_posting_a_meal_that_already_exist(self):
@@ -31,11 +32,11 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'meal with that name already exist')
 
@@ -46,12 +47,12 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
-        response = self.client().get('/api/v2/meals', headers=headers, 
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
+        response = self.client().get('/api/v2/meals', headers=headers,
         content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
@@ -62,10 +63,10 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().get('/api/v2/meals/1', headers=headers, 
+        response = self.client().get('/api/v2/meals/1', headers=headers,
         content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
@@ -76,10 +77,10 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().get('/api/v2/meals/2', headers=headers, 
+        response = self.client().get('/api/v2/meals/2', headers=headers,
         content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))
         self.assertEqual(result.get('message'), 'meal item does not exist')
@@ -91,11 +92,11 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v2/meals/1', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 45}), 
+        response = self.client().put('/api/v2/meals/1', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 45}),
         content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
@@ -106,11 +107,11 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v2/meals/2', headers=headers, 
-        data=json.dumps({'mealname': 'chicken', 'price': 45}), content_type='application/json')
+        response = self.client().put('/api/v2/meals/2', headers=headers,
+        data=json.dumps({'mealname': 'chicken', 'price': 45, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
     def test_admin_successfully_deletes_a_meal(self):
@@ -120,9 +121,9 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        response = self.client().delete('/api/v2/meals/1', headers=headers, 
+        response = self.client().delete('/api/v2/meals/1', headers=headers,
         content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
@@ -133,7 +134,7 @@ class MealsTests(BaseTests):
         response = self.logged_in_admin()
         token = json.loads(response.data.decode('utf-8'))['token']
         headers = {'Content-Type': 'application/json', 'x-access-token': token}
-        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90}), content_type='application/json')
+        response = self.client().post('/api/v2/meals', headers=headers, data=json.dumps({'mealname': 'chicken', 'price': 90, 'image': 'https://images-na.ssl-images-amazon.com/images/I/811UdGCb9LL._SL1500_.jpg'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = self.client().delete('/api/v2/meals/2', headers=headers, content_type='application/json')
         result = json.loads(response.data.decode('utf-8'))

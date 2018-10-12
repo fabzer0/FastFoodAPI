@@ -123,7 +123,7 @@ class MealsModel(BaseModel):
         meal = MealsModel.get_one('meals', id=meal_id)
         if not meal:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
-        if meal[3]:
+        if meal[4]:
             return make_response(jsonify({'message': 'meal already in menu'}), 409)
         data = {'in_menu': True}
         MealsModel.update('meals', id=meal[0], data=data)
@@ -135,7 +135,7 @@ class MealsModel(BaseModel):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
-        if not meal[3]:
+        if not meal[4]:
             return make_response(jsonify({'message': 'meal already not in menu'}), 400)
         data = {'in_menu': False}
         MealsModel.update('meals', id=meal[0], data=data)
@@ -147,7 +147,7 @@ class MealsModel(BaseModel):
         meal = MealsModel.get_one('meals', id=meal_id)
         if meal is None:
             return make_response(jsonify({'message': 'meal does not exist'}), 404)
-        if not meal[3]:
+        if not meal[4]:
             return make_response(jsonify({'message': 'kindly ensure this meal is in the menu'}), 400)
         return make_response(jsonify({'menu': MealsModel.menu_details(meal)}), 200)
 
