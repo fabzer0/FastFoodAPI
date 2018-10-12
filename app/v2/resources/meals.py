@@ -42,7 +42,7 @@ class MealList(Resource):
         meals = MealsModel.get_all('meals')
         if not meals:
             return make_response(jsonify({'message': 'no meals yet'}), 404)
-        return make_response(jsonify({'all_meals': [MealsModel.meal_details(meal) for meal in meals]}), 200)
+        return [MealsModel.meal_details(meal) for meal in meals], 200
 
 class Meal(Resource):
 

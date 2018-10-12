@@ -76,7 +76,7 @@ class AllUsers(Resource):
         users = UserModel.get_all('users')
         if not users:
             return make_response(jsonify({'message': 'no users found in the system yet'}), 404)
-        return make_response(jsonify({'all_users': [UserModel.user_details(user) for user in users]}), 200)
+        return [UserModel.user_details(user) for user in users], 200
 
 class PromoteUser(Resource):
 
