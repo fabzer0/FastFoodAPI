@@ -7,7 +7,8 @@ editMealForm.addEventListener('submit', event => {
     method: 'put',
     body: JSON.stringify({
       mealname: document.getElementById('editmealname').value,
-      price: document.getElementById('editmealprice').value
+      price: document.getElementById('editmealprice').value,
+      image: document.getElementById('editmealimage').value
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
   })

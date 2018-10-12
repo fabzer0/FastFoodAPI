@@ -14,7 +14,7 @@ request.onload = function () {
             menuImage.setAttribute('class', 'meal-image');
 
             let img = document.createElement('img');
-            img.src = 'static/css/img/milk_tea.jpeg';
+            img.src = menuItem.image;
 
             menu.appendChild(menuImage);
             menuImage.appendChild(img);

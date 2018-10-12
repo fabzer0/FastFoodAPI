@@ -7,7 +7,8 @@ mealForm.addEventListener('submit', event => {
     method: 'post',
     body: JSON.stringify({
       mealname: document.getElementById('mealname').value,
-      price: document.getElementById('mealprice').value
+      price: document.getElementById('mealprice').value,
+      image: document.getElementById('mealimage').value  
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
   })
