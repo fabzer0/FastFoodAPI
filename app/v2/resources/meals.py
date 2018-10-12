@@ -20,6 +20,12 @@ class MealList(Resource):
             type=int,
             help='kindly provide a price(should be a valid number)',
             location=['form', 'json'])
+        self.reqparse.add_argument(
+            'image',
+            required=True,
+            type=str,
+            help='kindly include an image',
+            location=['form', 'json'])
         super(MealList, self).__init__()
 
     @admin_required
@@ -27,12 +33,13 @@ class MealList(Resource):
         kwargs = self.reqparse.parse_args()
         mealname = kwargs.get('mealname')
         price = kwargs.get('price')
+        image = kwargs.get('image')
         if price < 0:
             return make_response(jsonify({'message': 'price field cannot be a negative number'}), 400)
         meal = MealsModel.get_one('meals', mealname=mealname)
         if meal:
             return make_response(jsonify({'message': 'meal with that name already exist'}), 409)
-        meal = MealsModel(mealname=mealname, price=price)
+        meal = MealsModel(mealname=mealname, price=price, image=image)
         meal.create_meal()
         meal = MealsModel.get_one('meals', mealname=mealname)
         return make_response(jsonify({'message': 'meal successfully created', 'meal': MealsModel.meal_details(meal)}), 201)

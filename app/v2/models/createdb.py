@@ -26,6 +26,7 @@ def create_meals_table(cur):
             id serial PRIMARY KEY,
             mealname VARCHAR(50) NOT NULL UNIQUE,
             price INTEGER NOT NULL,
+            image TEXT NOT NULL UNIQUE,
             in_menu BOOLEAN DEFAULT FALSE
         );''')
 

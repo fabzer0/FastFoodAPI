@@ -91,12 +91,13 @@ class UserModel(BaseModel):
 
 class MealsModel(BaseModel):
 
-    def __init__(self, mealname, price):
+    def __init__(self, mealname, price, image):
         self.mealname = mealname
         self.price = price
+        self.image = image
 
     def create_meal(self):
-        cur.execute('INSERT INTO meals (mealname, price) VALUES (%s, %s)', (self.mealname, self.price))
+        cur.execute('INSERT INTO meals (mealname, price, image) VALUES (%s, %s, %s)', (self.mealname, self.price, self.image))
         self.save()
 
     @staticmethod
@@ -105,14 +106,16 @@ class MealsModel(BaseModel):
             id=meal[0],
             mealname=meal[1],
             price=meal[2],
-            in_menu=meal[3]
+            image=meal[3],
+            in_menu=meal[4]
         )
 
     @staticmethod
     def menu_details(meal):
         return dict(
             mealname=meal[1],
-            price=meal[2]
+            price=meal[2],
+            image=meal[3]
         )
 
     @staticmethod
