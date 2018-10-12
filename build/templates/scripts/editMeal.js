@@ -11,7 +11,6 @@ editMealForm.addEventListener('submit', event => {
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
   })
-  
   .then(response => response.json())
   .then(response => {
     console.log(response.message)

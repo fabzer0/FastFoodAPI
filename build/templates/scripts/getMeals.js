@@ -13,7 +13,7 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
         let mealImage = document.createElement('div');
         mealImage.setAttribute('class', 'meal-a-img');
         let img = document.createElement('img');
-        img.src = 'styles/img/chapati-chiken.jpg';
+        img.src = '../styles/img/chapati-chiken.jpg';
 
         mealImage.appendChild(img);
         mealColumn.appendChild(mealImage);
