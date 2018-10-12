@@ -17,7 +17,6 @@ def token_required(f):
         return f(user_id=user_id, *args, **kwargs)
     return decorated
 
-
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
