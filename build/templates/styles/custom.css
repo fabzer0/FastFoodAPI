@@ -816,6 +816,16 @@ html, body
   margin-left: 10px;
 }
 
+#editingbtn a {
+  text-decoration: none;
+  color: black;
+}
+
+#addingbtn a {
+  text-decoration: none;
+  color: black;
+}
+
 .meal-a-img img {
   height: 130px;
   width: 100%;

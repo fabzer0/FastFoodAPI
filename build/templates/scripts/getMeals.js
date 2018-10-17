@@ -29,6 +29,7 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
         let thirdSpan = document.createElement('span');
         thirdSpan.setAttribute('id', 'accept');
         let buttonOne = document.createElement('button');
+        buttonOne.setAttribute('id', 'editingbtn');
         let a = document.createElement('a');
         a.href = 'edit-meal-form.html';
         a.textContent = 'Edit';
@@ -39,11 +40,12 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
         let fifthSpan = document.createElement('div');
         fifthSpan.setAttribute('id', 'menu');
         let buttonThree = document.createElement('button');
-        let a2 = document.createElement('a');
-        a2.href = 'add-to-menu';
-        a.textContent = 'Add To Menu';
+        buttonThree.setAttribute('id', 'addingbtn');
+        let anchor = document.createElement('a');
+        anchor.href = 'add-to-menu.html';
+        anchor.textContent = 'Add To Menu';
 
-        buttonThree.appendChild(a2);
+        buttonThree.appendChild(anchor);
         fifthSpan.appendChild(buttonThree);
         fourthSpan.appendChild(buttonTwo);
         buttonOne.appendChild(a);
