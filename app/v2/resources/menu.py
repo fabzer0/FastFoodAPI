@@ -5,6 +5,24 @@ from ..models.models import MealsModel
 
 class MenuList(Resource):
 
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument(
+            'meal_id',
+            required=True,
+            type=int,
+            help='kindly provide a valid meal id',
+            location=['form', 'json'])
+        super(MenuList, self).__init__()
+
+    @admin_required
+    def post(self):
+
+        kwargs = self.reqparse.parse_args()
+        meal_id = kwargs.get('meal_id')
+        response = MealsModel.add_to_menu(meal_id=meal_id)
+        return response
+
     def get(self):
         meals = MealsModel.get_all('meals')
         if not meals:
@@ -20,11 +38,6 @@ class MenuList(Resource):
 
 class Menu(Resource):
 
-    @admin_required
-    def post(self, meal_id):
-        response = MealsModel.add_to_menu(meal_id=meal_id)
-        return response
-        
     def get(self, meal_id):
 
         response = MealsModel.get_menu(meal_id)
