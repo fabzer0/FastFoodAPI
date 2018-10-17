@@ -11,7 +11,6 @@ html, body
     width: 100%;
     font-family: 'Overlock', cursive;
     background-color: black;
-    border-bottom: 1px solid grey;
 }
 
 .navbar {
@@ -174,8 +173,8 @@ html, body
 }
 
 .myfooter{
-  height: 50px;
-  background-color: black;
+  height: 68px;
+  background-color: green;
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -186,7 +185,7 @@ html, body
 
 .footer {
     height: 50px;
-    background-color: black;
+    background-color: green;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -222,7 +221,7 @@ html, body
 
 .sidebar-directions {
     float: left;
-    width: 40%;
+    width: 30%;
     height: 1000px;
     overflow: hidden;
     position: relative;
@@ -230,7 +229,7 @@ html, body
   }
 
 .navigation-links {
-    width: 60%;
+    width: 70%;
     overflow: hidden;
     float: left;
     height: 1000px;
@@ -331,16 +330,10 @@ html, body
 
 }
 
-.nav-links #one {
-    text-transform: uppercase;
-    padding-top: 10px;
-    padding-left: 50px;
-}
-
 .nav-links #two {
     text-transform: uppercase;
     margin-top: 10px;
-    padding-left: 20px;
+    padding-left: 150px;
 }
 .nav-links #three {
     text-transform: uppercase;
@@ -378,6 +371,7 @@ html, body
   height: 850px;
   width: 100%;
   overflow: hidden;
+  margin-right: 0;
   position: relative;
   top: 0;
 }
@@ -471,7 +465,7 @@ html, body
 
 .meal-center-bar {
   float: left;
-  width: 57.78%;
+  width: 50%;
   height: 790px;
   overflow: hidden;
   position: relative;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Put Meal</title>
+    <title>Post Meal</title>
     <link href="https://fonts.googleapis.com/css?family=Overlock" rel="stylesheet">
     <link rel="stylesheet" href="styles/custom.css">
     <link rel="stylesheet" href="styles/responsive.css">
@@ -15,27 +15,26 @@
           <h2>Fast-Food-Fast</h2>
           <ul>
             <li><a href="index.html">Home</a></li>
+            <li><a href="admin-list-orders.html">Admin</a></li>
           </ul>
           <button id="button1" type="button" name="button"><a href="login.html">Logout</a></button>
         </div>
         <div class="signing-form">
-            <form action="" id="edit-meal-form">
+            <form action="" id="add-to-menu-form">
                 <div class="signup">
-                    <div id="one">Edit Existing Meal in System</div>
+                    <div id="one">Append Meal to Menu</div>
                     <div id="two">
-                        <input type="text" id="editmealname"><br><br>
-                        <input type="text" id="editmealprice"><br><br>
-                        <input type="text" id="editmealimage"><br><br>
+                        <label for="mealId">MealId:</label><br>
+                        <input type="text" id="mealid"><br><br>
                     </div><br>
-                    <div><button>Submit</button></div>
+                    <div><button>Post</button></div>
                 </div>
             </form>
         </div>
-
         <div class="myfooter">
             <p>Andela Kenya Inc.</p>
         </div>
     </div>
-    <script src="scripts/editMeal.js" charset="utf-8"></script>
+    <script src="scripts/addToMenu.js" charset="utf-8"></script>
 </body>
 </html>

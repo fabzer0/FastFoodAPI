@@ -39,8 +39,11 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
         let fifthSpan = document.createElement('div');
         fifthSpan.setAttribute('id', 'menu');
         let buttonThree = document.createElement('button');
-        buttonThree.textContent = '+ Menu';
+        let a2 = document.createElement('a');
+        a2.href = 'add-to-menu';
+        a.textContent = 'Add To Menu';
 
+        buttonThree.appendChild(a2);
         fifthSpan.appendChild(buttonThree);
         fourthSpan.appendChild(buttonTwo);
         buttonOne.appendChild(a);
@@ -58,7 +61,6 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
         mealsCred.appendChild(p);
         mealColumn.appendChild(mealsCred);
       });
-
     } else {
       console.log(response.message)
       const errorMessage = document.createElement('div');
@@ -66,26 +68,4 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/meals', {
       errorMessage.textContent = response.message;
       mealColumn.appendChild(errorMessage);
     }
-  })
-  .then(response => {
-    response.forEach(data => {
-      const addToMenu = document.getElementById('menu');
-      addToMenu.addEventListener('click', event => {
-        const token = localStorage.getItem('token');
-        const meal_id = sessionStorage.getItem('id');
-        event.preventDefault();
-        fetch(`https://fast-food-fast-v2-api.herokuapp.com/api/v2/menu/${meal_id}`, {
-          method: 'post',
-          headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
-        })
-        .then(response => response.json())
-        .then(response => {
-          console.log(response.message)
-          if (response.message === 'meal has been updated successfully') {
-            window.location.href = './add-edit-delete.html';
-          }
-        })
-      })
-    })
-
   })
