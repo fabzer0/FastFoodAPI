@@ -15,7 +15,8 @@ orderForm.addEventListener('submit', event => {
   .then(response => {
     console.log(response.message)
     if (response.message === 'order has been successfully added') {
-        
+      const orderBar = document.getElementById('meal-right-bar');
+      
       window.location.href = './user-order-food.html';
     }
   })
