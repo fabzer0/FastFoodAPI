@@ -34,6 +34,8 @@ request.onload = function () {
             thirdSpan.setAttribute('id', 'add-to-cart');
             let button = document.createElement('button');
             button.textContent = 'Add To Cart';
+            button.setAttribute('onclick', "location.href = 'input-order.html';"
+            )
 
             menuCreds.appendChild(lineBreaker);
             menuCreds.appendChild(p);

@@ -1,18 +1,21 @@
-const addToMenu = document.getElementById('add-to-menu-form');
-addToMenu.addEventListener('submit', event => {
+const orderForm = document.getElementById('order-form');
+
+orderForm.addEventListener('submit', event => {
   const token = localStorage.getItem('token');
   event.preventDefault();
-  fetch(`https://fast-food-fast-v2-api.herokuapp.com/api/v2/menu`, {
+  fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/user/orders', {
     method: 'post',
     body: JSON.stringify({
-      meal_id: document.getElementById('mealid').value,
+      item: document.getElementById('item').value,
+      quantity: document.getElementById('quantity').value
     }),
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'x-access-token': token }
   })
   .then(response => response.json())
   .then(response => {
     console.log(response.message)
-    if (response.message === 'meal successfully added to menu') {
+    if (response.message === 'order has been successfully added') {
+        
       window.location.href = './user-order-food.html';
     }
   })
