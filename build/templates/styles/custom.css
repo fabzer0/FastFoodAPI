@@ -1,9 +1,8 @@
-html, body
+body
 {
     margin: 0;
     padding: 0;
-    height: 100%;
-    width: 100%;
+  
 }
 
 .container-signing {
@@ -23,7 +22,7 @@ html, body
 }
 
 .navbar h2 {
-  margin-left: 20%;
+  margin-left: 10%;
   float: left;
   width: 30%
 }
@@ -55,12 +54,12 @@ html, body
   margin-top: 25px;
   border-radius: 30px;
   height: 30px;
-  background-color: lightblue;
+  background-color: grey;
 
 }
 
 .navbar #button1 {
-  margin-left: 30%;
+  margin-left: 10%;
   width: 90px;
 }
 
@@ -70,7 +69,7 @@ html, body
 }
 
 .navbar #button1:hover {
-  background-color: blue;
+  background-color: darkgrey;
 }
 
 .navbar button a {
@@ -190,25 +189,23 @@ html, body
     overflow: hidden;
     position: relative;
     top: 0;
-    color: white;
     text-align: center;
 }
 
 .container {
-    height: 100%;
-    max-height: 100%;
+    height: 890px;
     width: 100%;
-    max-width: 100%;
     font-family: 'Overlock', cursive;
     position: relative;
+    background-color: yellow;
 }
 
 
 .bg-image {
-    height: 1000px;
+    height: 800px;
     width: 100%;
     background-image: url("img/home_bg.jpg");
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7))
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -219,6 +216,27 @@ html, body
     top: 0;
 }
 
+#cart-button {
+  background-color: grey;
+  width: 500px;
+}
+
+#cart-button:hover {
+  background-color: darkgrey;
+}
+
+#cart-display {
+  height: 900px;
+  width: 250px;
+  background-color: yellow;
+  float: right;
+  
+
+}
+
+#font-awesome {
+  padding-left: 10px;
+}
 .sidebar-directions {
     float: left;
     width: 30%;
@@ -237,7 +255,7 @@ html, body
 }
 
 .inner-right-dir {
-    height: 1000px;
+    height: 800px;
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 50%;
@@ -368,7 +386,7 @@ html, body
 }
 
 .meal-order-menu {
-  height: 850px;
+  height: 650px;
   width: 100%;
   overflow: hidden;
   margin-right: 0;
@@ -378,7 +396,7 @@ html, body
 
 .meal-table {
   width: 100%;
-  height: 850px;
+  height: 650px;
   margin-left: 0;
   margin-top: 10px;
   background-color: black;
@@ -596,6 +614,11 @@ html, body
 
 #meal-in-cart-one #two {
   padding-left: 20px;
+}
+
+#meal-in-cart-one #three {
+  padding-left: 90px;
+  color: green;
 }
 
 #meal-in-cart-two #two {

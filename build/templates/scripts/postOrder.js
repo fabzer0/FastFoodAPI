@@ -16,8 +16,33 @@ orderForm.addEventListener('submit', event => {
     console.log(response.message)
     if (response.message === 'order has been successfully added') {
       const orderBar = document.getElementById('meal-right-bar');
+
+      let div = document.createElement('div');
+      div.setAttribute('id', 'meal-in-cart-one');
+      let p = document.createElement('p');
+      let spanOne = document.createElement('span');
+      spanOne.setAttribute('id', 'one');
+      let spanTwo = document.createElement('span');
+      spanTwo.setAttribute('id', 'two');
+      let br = document.createElement('br');
+      let spanThree = document.createElement('span');
+      spanThree.setAttribute('id', 'three');
+    
+      
+      spanThree.textContent = 'New';
+      spanTwo.textContent = 'Ksh. 500';
+      spanOne.textContent = 'Chapati';
+
+      p.appendChild(spanOne);
+      p.appendChild(spanTwo);
+      p.appendChild(br);
+      p.appendChild(spanThree);
+      div.appendChild(p);
+
+      orderBar.appendChild(div);
       
       window.location.href = './user-order-food.html';
     }
   })
 })
+
