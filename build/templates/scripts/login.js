@@ -14,7 +14,13 @@ loginForm.addEventListener('submit', event => {
       console.log(response.message)
       if (response.token) {
         localStorage.setItem('token', response.token);
-        window.location.href = './user-order-food.html';
+        if (response.message === 'login was successful') {
+          window.location.href = './user-order-food.html';
+        } else {
+          let hiddenMessage = document.getElementById('log-alert');
+          hiddenMessage.textContent = response.message;
+          hiddenMessage.style.display = 'block';
+        }   
       }
     });
 })

@@ -33,6 +33,7 @@ request.onload = function () {
             let thirdSpan = document.createElement('span');
             thirdSpan.setAttribute('id', 'add-to-cart');
             let button = document.createElement('button');
+            button.setAttribute('id', 'addcart')
             button.textContent = 'Add To Cart';
             button.setAttribute('onclick', "location.href = 'input-order.html';"
             )

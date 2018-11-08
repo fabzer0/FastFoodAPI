@@ -15,12 +15,9 @@ regForm.addEventListener('submit', event => {
     .then(response => response.json())
     .then(response => {
       console.log(response.message)
-      if (response.message === 'you are successfully registered') {
-        window.location.href = './login.html';
-        let sucessMessage = document.createElement('p');
-        sucessMessage.textContent = response.message;
-        hostSucess.appendChild(sucessMessage);
-      }
+      let resMessage = document.getElementById('reg-alert');
+      resMessage.textContent = response.message;
+      resMessage.style.display = 'block'; 
     });
 
 })
