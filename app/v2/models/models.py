@@ -110,6 +110,7 @@ class MealsModel(BaseModel):
             in_menu=meal[4]
         )
 
+
     @staticmethod
     def menu_details(meal):
         return dict(
@@ -186,6 +187,7 @@ class OrdersModel(BaseModel):
             totalprice=order[3],
             status=order[4]
         )
+
 
     @staticmethod
     def admin_order_details(order):
