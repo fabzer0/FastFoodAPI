@@ -17,7 +17,7 @@ def create_app():
     app.register_blueprint(orders_api, url_prefix='/api/v2')
     app.register_blueprint(users_api, url_prefix='/api/v2')
     app.register_blueprint(meals_api, url_prefix='/api/v2')
-    # main()
+    main()
 
     @app.route('/', methods=['GET'])
     def index_info():
