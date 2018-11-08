@@ -12,11 +12,11 @@ request.onload = function () {
 
             let spanOne = document.createElement('span');
             spanOne.setAttribute('id', 'one');
-            spanOne.textContent = order.mealname;
+            spanOne.textContent = order.item;
 
             let spanTwo = document.createElement('span');
             spanTwo.setAttribute('id', 'two');
-            spanTwo.textContent = order.quantity;
+            spanTwo.textContent = order.price;
 
             let spanThree = document.createElement('span');
             spanThree.setAttribute('id', 'three');
