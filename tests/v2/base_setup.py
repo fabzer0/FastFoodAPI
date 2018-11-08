@@ -25,6 +25,7 @@ class BaseTests(unittest.TestCase):
             'password': 'secretsanta',
             'confirm_password': 'secretsanta'
         }
+        
 
         self.admin_data = {
             'username': 'admin',
