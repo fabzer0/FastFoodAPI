@@ -171,6 +171,28 @@ body
   margin-left: 20%;
 }
 
+#cartholder {
+  height: 60px;
+  width: 50%;
+  background-color: purple;
+  margin-left: 345px;
+  margin-top: 40px;
+}
+
+#cartholder #one {
+  padding-left: 100px;
+}
+
+#cartholder #two {
+  padding-left: 20px;
+}
+#cartholder #three {
+  padding-left: 20px;
+}
+#cartholder #four {
+  padding-left: 20px;
+}
+
 .myfooter{
   height: 68px;
   background-color: green;
@@ -178,6 +200,17 @@ body
   overflow: hidden;
   position: relative;
   top: 0;
+  color: white;
+  text-align: center;
+}
+
+.thefooter {
+  height: 70px;
+  background-color: green;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  top: 50px;
   color: white;
   text-align: center;
 }
