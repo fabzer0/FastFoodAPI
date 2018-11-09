@@ -173,9 +173,9 @@ body
 
 #cartholder {
   height: 60px;
-  width: 50%;
+  width: 38%;
   background-color: purple;
-  margin-left: 345px;
+  margin-left: 390px;
   margin-top: 40px;
 }
 
@@ -189,9 +189,7 @@ body
 #cartholder #three {
   padding-left: 20px;
 }
-#cartholder #four {
-  padding-left: 20px;
-}
+
 
 .myfooter{
   height: 68px;
@@ -210,7 +208,7 @@ body
   width: 100%;
   overflow: hidden;
   position: relative;
-  top: 600px;
+  top: 300px;
   color: white;
   text-align: center;
 }
