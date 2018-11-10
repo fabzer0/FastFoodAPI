@@ -174,7 +174,7 @@ body
 #cartholder {
   height: 60px;
   width: 38%;
-  background-color: purple;
+  background-color: gold;
   margin-left: 390px;
   margin-top: 40px;
 }
@@ -208,7 +208,7 @@ body
   width: 100%;
   overflow: hidden;
   position: relative;
-  top: 300px;
+  top: 80px;
   color: white;
   text-align: center;
 }
