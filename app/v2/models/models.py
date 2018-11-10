@@ -188,7 +188,6 @@ class OrdersModel(BaseModel):
             status=order[4]
         )
 
-
     @staticmethod
     def admin_order_details(order):
         return dict(
