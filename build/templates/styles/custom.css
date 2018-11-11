@@ -190,6 +190,54 @@ body
   padding-left: 20px;
 }
 
+#user-orders #one {
+  padding-left: 80px;
+}
+
+#user-orders #two {
+  padding-left: 20px;
+}
+#user-orders #three {
+  padding-left: 20px;
+}
+
+#user-orders #four {
+  padding-left: 20px;
+}
+
+#user-orders #five {
+  padding-left: 200px;
+}
+
+#user-orders #five button {
+  background-color: green;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+}
+
+#user-orders #six {
+  padding-left: 20px;
+}
+
+#user-orders #six button {
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+}
+
+#user-orders #seven {
+  padding-left: 20px;
+}
+
+#all-users {
+  height: 100px;
+  width: 700px;
+  background-color: orange;
+  margin-top: 30px;
+  margin-left: 300px;
+}
 
 .myfooter{
   height: 68px;
