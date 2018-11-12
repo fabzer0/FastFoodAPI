@@ -34,7 +34,10 @@ fetch('https://fast-food-fast-v2-api.herokuapp.com/api/v2/orders', {
         let spanFive = document.createElement('span');
         spanFive.setAttribute('id', 'five');
         let buttonOne = document.createElement('button');
-        buttonOne.textContent = 'Accept';
+        let a = document.createElement('a');
+        a.href = 'edit-user-orders.html';
+        a.textContent = 'Accept';
+        buttonOne.appendChild(a);;
         spanFive.appendChild(buttonOne);
 
         let spanSix = document.createElement('span');
